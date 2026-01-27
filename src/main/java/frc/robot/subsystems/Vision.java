@@ -111,6 +111,7 @@ public class Vision extends SubsystemBase {
         double currentTime = Utils.getCurrentTimeSeconds();
         timestampToReEnable = currentTime + seconds;
     }
+    
     public void updateAutoStartPosition(String autoName) {
 
         // Instant Command is the name of the "None" Auto
