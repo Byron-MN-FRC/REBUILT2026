@@ -12,6 +12,7 @@ package frc.robot;
 
 import java.util.ArrayList;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 
 /**
@@ -31,11 +32,18 @@ public class Constants {
 
     public static final class VisionConstants {
         
-        public static final AprilTagFields APRIL_TAG_FIELD_MAP = AprilTagFields.k2026RebuiltWelded;
+        public static final AprilTagFields APRIL_TAG_FIELD_MAP = AprilTagFields.k2026RebuiltAndymark;
+        public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT = AprilTagFieldLayout
+            .loadField(APRIL_TAG_FIELD_MAP);
 
         // TODO Add where to find the field dimensions
-        public static final double fieldWidthMeters = 8.069;
-        public static final double fieldLengthMeters = 16.541;
+        public static final double FIELD_WIDTH_METERS = 8.069;
+        // TODO test this
+        public static final double w = APRIL_TAG_FIELD_LAYOUT.getFieldWidth();
+        public static final double FIELD_LENGTH_METERS = 16.541;
+
+        // This variable assumes the robot is a square
+        public static final double ROBOT_WIDTH_METERS = 0.5;
 
         public static final String LIMELIGHT_NAME = "limelight";
         public static final double[] CAMERA_POSE_ROBOT_SPACE = {

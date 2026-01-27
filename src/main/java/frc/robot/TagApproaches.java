@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.TagApproach.gameTarget;
 
 public class TagApproaches {
-    public AprilTagFieldLayout FieldLayout = AprilTagFieldLayout
-            .loadField(Constants.VisionConstants.APRIL_TAG_FIELD_MAP);
+    public AprilTagFieldLayout FieldLayout = Constants.VisionConstants.APRIL_TAG_FIELD_LAYOUT;
     private TagApproach[] tagArray;
 
     private static TagApproaches _TagApproaches = new TagApproaches();
@@ -21,7 +20,6 @@ public class TagApproaches {
     }
 
     // distance in meters from robot center to front edge of bumper.
-    public final double robotWidth = 0.5;
     Pose2d pose;
     double poseOffsetx;
     double poseOffsety;
@@ -138,7 +136,6 @@ public class TagApproaches {
         tagArray[31] = new TagApproach(32, Alliance.Red, gameTarget.None, pose);
     }
 
-    // TODO fix angle is unused
     private Pose2d calcNewPose(int id, double arbX, double arbY, double arbAngle) {
         Pose2d tagPose = FieldLayout.getTagPose(id).get().toPose2d();
 
@@ -147,7 +144,7 @@ public class TagApproaches {
                 new Rotation2d(tagPose.getRotation().getRadians() + Math.toRadians(arbAngle) + Math.PI));
     }
 
-    /*
+    /**
      * used to return a pose when the goal position is not measured from an April
      * Tag
      */
@@ -191,10 +188,9 @@ public class TagApproaches {
     }
 
     // TODO document this method in the code and on GitHub
-    public Pose2d addTagCentricOffset(Pose2d goalBeforeShift, Pose2d offsetTagRelative) { // goalBeforeShift if field
-                                                                                          // relative |||
-                                                                                          // offsetTagRelative is
-                                                                                          // tagRelative
+    // goalBeforeShift is field relative
+    // offsetTagRelative is tag relative
+    public Pose2d addTagCentricOffset(Pose2d goalBeforeShift, Pose2d offsetTagRelative) { 
 
         Rotation2d TagAngle = goalBeforeShift.getRotation();
         Translation2d offsetTagRelativeTranslation = offsetTagRelative.getTranslation();
@@ -222,14 +218,14 @@ public class TagApproaches {
     // if (Constants.Selector.PlacementSelector.getScoringPose() ==
     // Constants.Selector.PlacementSelector.left) {
     // offset = 0.1234;
-    // // if (Robot.VISIONTEST) System.out.println("moving left");
+    // System.out.println("moving left");
     // } else if (Constants.Selector.PlacementSelector.getScoringPose() ==
     // Constants.Selector.PlacementSelector.right) {
     // offset = -0.235;
-    // // if (Robot.VISIONTEST) System.out.println("moving right");
+    // System.out.println("moving right");
     // } else {
     // offset = 0;
-    // // if (Robot.VISIONTEST) System.out.println("staying in the center");
+    // System.out.println("staying in the center");
 
     // }
 
