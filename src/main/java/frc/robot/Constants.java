@@ -32,15 +32,12 @@ public class Constants {
 
     public static final class VisionConstants {
         
-        public static final AprilTagFields APRIL_TAG_FIELD_MAP = AprilTagFields.k2026RebuiltAndymark;
+        public static final AprilTagFields APRIL_TAG_FIELD = AprilTagFields.k2026RebuiltAndymark;
         public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT = AprilTagFieldLayout
-            .loadField(APRIL_TAG_FIELD_MAP);
+            .loadField(APRIL_TAG_FIELD);
 
-        // TODO Add where to find the field dimensions
-        public static final double FIELD_WIDTH_METERS = 8.069;
-        // TODO test this
-        public static final double w = APRIL_TAG_FIELD_LAYOUT.getFieldWidth();
-        public static final double FIELD_LENGTH_METERS = 16.541;
+        public static final double FIELD_WIDTH_METERS = APRIL_TAG_FIELD_LAYOUT.getFieldWidth();
+        public static final double FIELD_LENGTH_METERS = APRIL_TAG_FIELD_LAYOUT.getFieldLength();
 
         // This variable assumes the robot is a square
         public static final double ROBOT_WIDTH_METERS = 0.5;

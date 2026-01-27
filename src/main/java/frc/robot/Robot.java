@@ -62,6 +62,8 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             CommandScheduler.getInstance().cancel(m_autonomousCommand);
         }
+        System.out.println(Constants.VisionConstants.FIELD_WIDTH_METERS);
+        System.out.println(Constants.VisionConstants.w);
     }
 
     @Override
