@@ -24,7 +24,7 @@ public class Vision extends SubsystemBase {
     public double timestampToReEnable;
 
     private Pose2d autoStartPose = new Pose2d();
-    public int lastAllignmentTarget = 1;
+    public int lastAlignmentTarget = 1;
 
     public static Vision getInstance() {
         return m_Vision;
@@ -44,7 +44,7 @@ public class Vision extends SubsystemBase {
     @Override
     public void periodic() {
         updatePoseEstimator(Constants.VisionConstants.LIMELIGHT_NAME);
-        scanForAllignmentTargets(Constants.VisionConstants.LIMELIGHT_NAME);
+        scanForAlignmentTargets(Constants.VisionConstants.LIMELIGHT_NAME);
 
         // TODO fix
         if (timestampToReEnable < Utils.getCurrentTimeSeconds() && tempDisable == true) {
@@ -66,12 +66,23 @@ public class Vision extends SubsystemBase {
         }
     }
 
-    // TODO document
-    public void scanForAllignmentTargets(String llName) {
+    /**
+     * If the Limelight reports a valid target and its fiducial ID matches any
+     * in {@code TAGS_FOR_AUTO_ALIGNMENT}, update {@link #lastAlignmentTarget}.
+     * Otherwise do nothing.
+     * 
+     * This is intented to be called periodically and used when only a certain
+     * subset of April Tags are intended to be valid alignment spots.
+     * Using only this small subset of targets defined in {@code TAGS_FOR_AUTO_ALIGNMENT}
+     * increases the likelihood that the robot will align to the correct target.
+     *
+     * @param llName Limelight camera name
+     */
+    public void scanForAlignmentTargets(String llName) {
         if (LimelightHelpers.getTV(llName)) {
             for (int fidID : Constants.VisionConstants.TAGS_FOR_AUTO_ALIGNMENT) {
                 if (LimelightHelpers.getFiducialID(llName) == fidID) {
-                    lastAllignmentTarget = fidID;
+                    lastAlignmentTarget = fidID;
                     return;
                 }
             }
@@ -157,9 +168,8 @@ public class Vision extends SubsystemBase {
 
         LimelightHelpers.SetRobotOrientation(llName, headingDeg, 0, 0, 0, 0, 0);
         var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(llName);
-        if (llMeasurement != null && llMeasurement.tagCount > 0 && omegaRps < 1.5 && !tempDisable) {
-            Robot.getInstance().drivetrain.addVisionMeasurement(llMeasurement.pose,
-                    Utils.fpgaToCurrentTime(llMeasurement.timestampSeconds));
+        if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 1.5 /* Originally 2.0 */ && !tempDisable) {
+            Robot.getInstance().drivetrain.addVisionMeasurement(llMeasurement.pose,llMeasurement.timestampSeconds);
         }
     }
 }

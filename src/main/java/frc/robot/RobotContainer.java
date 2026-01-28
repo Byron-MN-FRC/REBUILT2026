@@ -12,17 +12,17 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.DriveToPosition;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Vision;
 
 public class RobotContainer {
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -40,6 +40,9 @@ public class RobotContainer {
     public final CommandXboxController gamepad = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+
+    // TODO fix
+    public TagApproaches tagApproaches = new TagApproaches();
 
     public RobotContainer() {
         configureBindings();
@@ -64,7 +67,7 @@ public class RobotContainer {
             drivetrain.applyRequest(() -> idle).ignoringDisable(true)
         );
 
-        gamepad.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        // gamepad.a().whileTrue(drivetrain.applyRequest(() -> brake));
         gamepad.b().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-gamepad.getLeftY(), -gamepad.getLeftX()))
         ));
@@ -79,6 +82,10 @@ public class RobotContainer {
         // Reset the field-centric heading on left bumper press.
         gamepad.a().toggleOnTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         gamepad.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+
+        gamepad.y()
+            .whileTrue(new DriveToPosition(drivetrain, TagApproaches.getInstance().DesiredRobotPos(Vision.getInstance().lastAlignmentTarget))
+            .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
