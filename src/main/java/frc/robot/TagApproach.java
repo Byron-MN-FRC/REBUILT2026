@@ -7,7 +7,7 @@ public class TagApproach {
     enum gameTarget {
         Hub,
         Trench,
-        Oupost, 
+        Outpost, 
         Tower,
         None
     }
