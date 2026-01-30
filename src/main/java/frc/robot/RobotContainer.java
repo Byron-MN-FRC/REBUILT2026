@@ -78,7 +78,7 @@ public class RobotContainer {
 
         // Reset the field-centric heading on left bumper press.
         gamepad.a().toggleOnTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        gamepad.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+        gamepad.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
