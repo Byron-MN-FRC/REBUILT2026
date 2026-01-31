@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
     private AddressableLEDPattern m_redChasePattern = new ChasePattern(redWhiteArray, 4);
 
     private static final RobotContainer m_robotContainer = new RobotContainer();
+    //public static final ColorLED ColorLED = new ColorLED();
     //private RobotContainer m_robotContainer;
     /* log and replay timestamp and joystick data */
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
