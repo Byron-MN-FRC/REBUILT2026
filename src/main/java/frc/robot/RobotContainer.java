@@ -11,6 +11,7 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.XboxController;
@@ -24,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.AutonShoot;
 import frc.robot.commands.Climb;
 import frc.robot.commands.ClimbLowerAuto;
 import frc.robot.commands.ClimbRaiseAuto;
@@ -32,12 +34,15 @@ import frc.robot.commands.RainbowTest;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.climb;
 import frc.robot.subsystems.leds;
 
 public class RobotContainer {
 
     public final climb m_climb = new climb();
+
+    public final Shooter m_shooter = new Shooter();
     
     public final leds m_leds = new leds();
     SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -71,6 +76,8 @@ public class RobotContainer {
     // Configure the button bindings
     configureBindings();
     SmartDashboard.putData("Auto Mode", m_chooser);
+
+    NamedCommands.registerCommand("AutonShoot", new AutonShoot(m_shooter));
     }
 
     private void configureBindings() {
