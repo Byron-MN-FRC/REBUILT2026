@@ -57,13 +57,15 @@ public class leds extends SubsystemBase {
         lightStrip = new ColorLED(Constants.LEDConstants.LED_PORT, Constants.LEDConstants.LED_LENGTHS);
 
         hexValue = "#000000";
+
+        
         // Configs
     }
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
         SmartDashboard.putString("LED Hex Value", lightStrip.getCurrentColor().toHexString());  
-        if (ledColor == LedColor.rainbow) {
+        if (ledColor == LedColor.rainbow || ledColor == LedColor.none) {
             lightStrip.rainbow();
         }
     }

@@ -68,13 +68,13 @@ public class Climb extends Command {
         System.out.println("+----------------+");
         System.out.println("Mode:");
         if (!m_climb.isClimbing()) {   
-            m_leds.setColorPurple();
+            m_leds.setColorOrange();
             System.out.println("<<<< Climbing up >>>>");
             System.out.println("<");
             System.out.println("<");
         }
         else {
-            m_leds.setColorPink();
+            m_leds.setColorYellow();
             System.out.println(">>>> Climbing down <<<<");
             System.out.println(">");
             System.out.println(">");
@@ -111,8 +111,9 @@ public class Climb extends Command {
         System.out.println("=");
         System.out.println("Incrementing climb stage...");
         m_climb.climbStageIncrement();
-        System.out.println("Disabling lights...");
-        m_leds.setColorNone();
+        if (m_climb.getClimbStage() == 0) {
+            m_leds.setColorNone();
+        }
     }
 
     // Returns true when the command should end.
