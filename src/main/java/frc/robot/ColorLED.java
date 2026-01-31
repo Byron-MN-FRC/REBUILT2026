@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj.AddressableLEDBufferView;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.util.Color;
-import frc.robot.leds.AddressableLEDPattern;
-import frc.robot.leds.ChasePattern;
 import frc.robot.subsystems.leds;
 
 

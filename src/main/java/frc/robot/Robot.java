@@ -18,18 +18,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.leds.AddressableLEDPattern;
-import frc.robot.leds.ChasePattern;
 
 public class Robot extends TimedRobot {
     
+
+    public AddressableLED m_led;
     private Command m_autonomousCommand;
     private AddressableLEDBuffer m_ledBuffer;
-    public AddressableLED m_led;
     private int m_rainbowFirstPixelHue;
     private Color[] redWhiteArray = {Color.kBlueViolet, Color.kBlue};
     private Color[] blueWhiteArray = {Color.kBlue, Color.kWhite};
-    private AddressableLEDPattern m_redChasePattern = new ChasePattern(redWhiteArray, 4);
 
     private static final RobotContainer m_robotContainer = new RobotContainer();
     //public static final ColorLED ColorLED = new ColorLED();
@@ -64,32 +62,32 @@ public class Robot extends TimedRobot {
         //Must be a PWM header, not MXP or DIO
 
         //PORT
-        m_led = new AddressableLED(1);
+        //m_led = new AddressableLED(1);
 
-       // Reuse buffer
+        // Reuse buffer
 
         //Default to a length of 60, start empty output
 
         //Length is expensive to set, so only set it once, then just update data
 
-        m_ledBuffer = new AddressableLEDBuffer(24);
+        //m_ledBuffer = new AddressableLEDBuffer(24);
 //144 lights on big strand
 //75 seems to be max amount before something explodes
 //8 lights on small strand
-        m_led.setLength(m_ledBuffer.getLength());
+        //m_led.setLength(m_ledBuffer.getLength());
 
         // Set the data
 
-        m_led.setData(m_ledBuffer);
+        //m_led.setData(m_ledBuffer);
 
-        m_led.start();
+        //m_led.start();
 
-        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the HSV values for red
-            m_ledBuffer.setHSV(i, 0, 100, 100);
-        }
+        //for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+        //    // Sets the specified LED to the HSV values for red
+        //    m_ledBuffer.setHSV(i, 0, 100, 100);
+        //}
 
-        m_led.setData(m_ledBuffer);
+        //m_led.setData(m_ledBuffer);
     }
 
     @Override
