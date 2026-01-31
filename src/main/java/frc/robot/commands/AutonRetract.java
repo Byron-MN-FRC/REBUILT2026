@@ -1,36 +1,35 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Hopper;
 
-public class autonIntake extends Command {
+public class AutonRetract extends Command {
     private final Hopper m_hopper;
     private final Timer m_timer = new Timer();
-    private final double m_duration;
 
-    public autonIntake(Hopper hopper, double duration) {
+
+    public AutonRetract(Hopper hopper) {
         m_hopper = hopper;
-        m_duration = duration;
         addRequirements(m_hopper);
     }
 
-    @Override
+    @Override 
     public void initialize() {
         m_timer.reset();
         m_timer.start();
-        m_hopper.setHopperExtend();
+        m_hopper.setHopperRetract();
     }
 
     @Override
     public void execute() {
-        m_hopper.setFuelGrabberSpeed();
+        // m_hopper.setFuelGrabberSpeed();
     }
 
     @Override
     public void end(boolean interrupted) {
         m_hopper.stopFuelGrabber();
         m_timer.stop();
+        m_hopper.stopHopperFloorTransferSecure();
     }
 
     @Override

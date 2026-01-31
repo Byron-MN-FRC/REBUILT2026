@@ -20,6 +20,9 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public class Constants {
+    public static final class HopperConstants {
+        public static final double HopperFloorTransferSecureSpeed = 0.1;
+    }
     public static final class LEDConstants {
         public static final int LED_PORT = 2;
         public static final int[] LED_LENGTHS = {8, 8};

@@ -24,6 +24,7 @@ public class leds extends SubsystemBase {
         none, //no color, lights are off and the smartdashboard displays black.
         red,
         blue,
+        lightblue,
         green,
         orange,
         gold,
@@ -107,6 +108,11 @@ public class leds extends SubsystemBase {
         ledColor = LedColor.blue;
         lightStrip.blue();
         hexValue = "#0000FF";
+    }
+    public void setColorLightBlue() {
+        ledColor = LedColor.lightblue;
+        lightStrip.lightblue();
+        hexValue = "#00FFFF";
     }
     public void setColorPurple() {
         ledColor = LedColor.purple;
