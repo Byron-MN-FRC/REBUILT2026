@@ -24,7 +24,8 @@ public class DriveToPosition extends Command {
 
     private static final TrapezoidProfile.Constraints Magnitude_Constraints = new TrapezoidProfile.Constraints(3, 2);
     private static final TrapezoidProfile.Constraints OMEGA_CONSTRAINTS = new TrapezoidProfile.Constraints(8, 8);
-    
+
+    // TODO think about name magnitude vs. distance
     private final ProfiledPIDController magnitudeController = new ProfiledPIDController(2.75, 0, 0, Magnitude_Constraints);
     private final ProfiledPIDController omegaController = new ProfiledPIDController(4, 0, .1, OMEGA_CONSTRAINTS);
 
@@ -74,6 +75,7 @@ public class DriveToPosition extends Command {
         double currentDistance = currentPose.getTranslation().getDistance(goalPose.getTranslation());
         double yDistance = goalPose.getTranslation().getY() - currentPose.getTranslation().getY();
         double xDistance = goalPose.getTranslation().getX() - currentPose.getTranslation().getX();
+        // TODO explain
         double angle = Math.atan2(yDistance, xDistance);
         
         // Calculate speeds from controllers
@@ -88,6 +90,7 @@ public class DriveToPosition extends Command {
         }
 
         var omegaSpeed = omegaController.calculate(currentPose.getRotation().getRadians());
+        
         if (omegaController.atGoal()) {
             omegaSpeed = 0;
         }
