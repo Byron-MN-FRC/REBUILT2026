@@ -67,10 +67,10 @@ public class Vision extends SubsystemBase {
     }
 
     /**
-     * If the Limelight reports a valid target and its fiducial ID matches any
-     * in {@code TAGS_FOR_AUTO_ALIGNMENT}, update {@link #lastAlignmentTarget}.
+     * If the Limelight reports a valid target and its tag ID matches any
+     * in {@code Constants.VisionConstants.TAGS_FOR_AUTO_ALIGNMENT}, update {@link #lastAlignmentTarget}.
      * Otherwise do nothing.
-     * 
+     * <p>
      * This is intented to be called periodically and used when only a certain
      * subset of April Tags are intended to be valid alignment spots.
      * Using only this small subset of targets defined in {@code TAGS_FOR_AUTO_ALIGNMENT}
