@@ -128,6 +128,14 @@ public class TagApproaches {
         tagArray[31] = new TagApproach(32, Alliance.Blue, gameTarget.Tower, pose);
     }
 
+    /**
+     * Generates a new position relative to an specified April Tag
+     * @param id The target tag's ID
+     * @param arbX where positive values are closer to the RED alliance wall.
+     * @param arbY where positive values move to the left from a BLUE alliance perspective
+     * @param arbAngle (degrees, CCW+)
+     * @return the calculated Pose2d
+     */
     private Pose2d calcNewPose(int id, double arbX, double arbY, double arbAngle) {
         Pose2d tagPose = FieldLayout.getTagPose(id).get().toPose2d();
 
@@ -137,8 +145,16 @@ public class TagApproaches {
     }
 
     /**
-     * used to return a pose when the goal position is not measured from an April
-     * Tag
+     * <p>
+     * Generates a new position in the field-relative coordinate system.
+     *</p><p>
+     * Essentially just a wrapper for {@code new Pose2d(x, y, θ)},
+     * but it uses degrees instead of radians.
+     * </p>
+     * @param arbX where positive values are closer to the RED alliance wall.
+     * @param arbY where positive values move to the left from a BLUE alliance perspective
+     * @param arbAngle (CCW+)
+     * @return the calculated Pose2d
      */
     private Pose2d calcNewPose(double arbX, double arbY, double arbAngle) {
         return new Pose2d(arbX, arbY, new Rotation2d(Math.toRadians(arbAngle)));
@@ -189,23 +205,25 @@ public class TagApproaches {
     /**
      * Apply an offset given relative to a tag to a field-relative goal pose.
      * The offset is rotated into the field frame and added to the goal pose.
-     * 
+     * <p>
      * This method of adding an offset that is relative to the coordinate
      * frame of the tag is useful for scoring positions that are not aligned
      * with the field axes. (e.g., an AprilTag mounted at a 45 degree angle).
-     *
+     * </p><p>
+     * <b>TODO</b> specify the directions that X and Y offset are relative to the tag
+     * </p>
      * @param goalBeforeShift   field-relative goal pose
-     * @param offsetTagRelative offset expressed relative to the tag
+     * @param tagRelativeOffset offset expressed relative to the tag
      * @return new field-relative pose after applying the offset
      */
-    public Pose2d addTagCentricOffset(Pose2d goalBeforeShift, Pose2d offsetTagRelative) { 
-
-        Rotation2d TagAngle = goalBeforeShift.getRotation();
-        Translation2d offsetTagRelativeTranslation = offsetTagRelative.getTranslation();
-        Rotation2d offsetRotation = offsetTagRelative.getRotation();
+    public Pose2d addTagCentricOffset(Pose2d goalBeforeShift, Pose2d tagRelativeOffset) { 
 
         Translation2d TagTranslation = goalBeforeShift.getTranslation();
-        Translation2d fieldOrientedOffset = offsetTagRelativeTranslation
+        Rotation2d TagAngle = goalBeforeShift.getRotation();
+        Translation2d tagRelativeOffsetTranslation = tagRelativeOffset.getTranslation();
+        Rotation2d offsetRotation = tagRelativeOffset.getRotation();
+
+        Translation2d fieldOrientedOffset = tagRelativeOffsetTranslation
                 .rotateBy(TagAngle.minus(new Rotation2d(Math.PI / 2)));
         Translation2d newTranslation = TagTranslation.plus(fieldOrientedOffset);
         Pose2d newPose = new Pose2d(newTranslation, TagAngle.plus(offsetRotation));

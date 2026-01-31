@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 /**
  * CombinedStallHandler - Detects motor stalling by monitoring current draw and motion over time.
  * 
- * <p>Instantiate as a member variable in motor subsystems requiring stall detection.
+ * <p>Create as a variable in motor subsystems requiring stall detection.
  * Call {@link #isStalled()} from commands to check for stall conditions.</p>
  * <p><strong>Note:</strong> This class only works with TalonFX motors due to its reliance on
  * TalonFX-specific fault detection and velocity monitoring methods.</p>
