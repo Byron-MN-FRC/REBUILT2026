@@ -93,6 +93,11 @@ public class ColorLED {
         // m_led.setData(m_ledBuffer);
     // ==========================================================================================================================================================================================
 
+     public Color getCurrentColor() {
+        Color firstLEDColor = m_ledBuffer.getLED(0);
+        return firstLEDColor;
+     }
+
      public void none() {
 
         // For every pixel
@@ -100,7 +105,6 @@ public class ColorLED {
             // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 0, 0, 0);
         }
-        System.out.print("none");
         m_led.setData(m_ledBuffer);
     }
 
@@ -117,7 +121,7 @@ public class ColorLED {
              m_ledBuffer.setHSV(i, hue, 255, 128);
         }
         // Increase by to make the rainbow "move"
-        m_rainbowFirstPixelHue += 6;
+        m_rainbowFirstPixelHue += 3; //higher number = faster
             
         // Check bounds
         m_rainbowFirstPixelHue %= 180;
@@ -132,7 +136,6 @@ public class ColorLED {
             m_ledBuffer.setRGB(i, 255, 0, 0);
         }
         
-        System.out.print("red");
         m_led.setData(m_ledBuffer);
     }
 
@@ -143,7 +146,6 @@ public class ColorLED {
             // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 255, 165, 0);
          }
-         System.out.print("orange");
          m_led.setData(m_ledBuffer);
     }
 
@@ -154,7 +156,6 @@ public class ColorLED {
             // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 255, 255, 0);
          }
-         System.out.print("yellow");
          m_led.setData(m_ledBuffer);
     }
     
@@ -165,7 +166,6 @@ public class ColorLED {
             // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 0, 255, 0);
         }
-        System.out.print("green");
         m_led.setData(m_ledBuffer);
     }
         
@@ -176,7 +176,6 @@ public class ColorLED {
             // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 0, 0, 255);
         }
-        System.out.print("blue");
         m_led.setData(m_ledBuffer);
     }
 
@@ -185,9 +184,28 @@ public class ColorLED {
         // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             // Sets the specified LED to the RGB values for red
+            m_ledBuffer.setRGB(i, 128, 0, 128);
+         }
+         m_led.setData(m_ledBuffer);
+    }
+
+    public void pink() {
+
+        // For every pixel
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            // Sets the specified LED to the RGB values for red
+            m_ledBuffer.setRGB(i, 255, 145, 255);
+         }
+         m_led.setData(m_ledBuffer);
+    }
+
+    public void magenta() {
+
+        // For every pixel
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 255, 0, 255);
          }
-         System.out.print("purple");
          m_led.setData(m_ledBuffer);
     }
     
@@ -198,7 +216,6 @@ public class ColorLED {
             // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 255, 255, 255);
         }
-        System.out.print("white");
         m_led.setData(m_ledBuffer);
     }
     
@@ -209,7 +226,6 @@ public class ColorLED {
             // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 255, 215, 0);
          }
-         System.out.print("gold");
          m_led.setData(m_ledBuffer);
     }
 

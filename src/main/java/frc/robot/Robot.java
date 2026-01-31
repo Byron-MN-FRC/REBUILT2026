@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
     public AddressableLED m_led;
     private Command m_autonomousCommand;
     private AddressableLEDBuffer m_ledBuffer;
-    private int m_rainbowFirstPixelHue;
+    //private int m_rainbowFirstPixelHue;
     private Color[] redWhiteArray = {Color.kBlueViolet, Color.kBlue};
     private Color[] blueWhiteArray = {Color.kBlue, Color.kWhite};
 

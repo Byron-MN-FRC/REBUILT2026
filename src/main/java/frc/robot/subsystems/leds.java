@@ -12,6 +12,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ColorLED;
@@ -20,7 +21,7 @@ import frc.robot.Robot;
 
 public class leds extends SubsystemBase {
     public enum LedColor {
-        none,
+        none, //no color, lights are off and the smartdashboard displays black.
         red,
         blue,
         green,
@@ -28,8 +29,25 @@ public class leds extends SubsystemBase {
         gold,
         white,
         purple,
+        pink,
+        magenta,
         yellow,
         rainbow
+    };
+    public String hexValue;
+
+    public String[
+    ] rainbowStrings = {
+            "#000000", //none
+            "#FF0000", //red
+            "#0000FF", //blue
+            "#00FF00", //green
+            "#FFA500", //orange
+            "#FFD700", //gold
+            "#FFFFFF", //white
+            "#FF00FF", //purple
+            "#FF91FF", //pink
+            "#FFFF00"  //yellow
     };
 
     public LedColor ledColor = LedColor.none;
@@ -38,11 +56,16 @@ public class leds extends SubsystemBase {
     public leds() {
         lightStrip = new ColorLED(Constants.LEDConstants.LED_PORT, Constants.LEDConstants.LED_LENGTHS);
 
+        hexValue = "#000000";
         // Configs
     }
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        SmartDashboard.putString("LED Hex Value", lightStrip.getCurrentColor().toHexString());  
+        if (ledColor == LedColor.rainbow) {
+            lightStrip.rainbow();
+        }
     }
 
     @Override
@@ -51,44 +74,65 @@ public class leds extends SubsystemBase {
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+
+
     public void setColorNone() {
         ledColor = LedColor.none;
         lightStrip.none();
+        hexValue = "#000000";
     }
     public void setColorRed() {
         ledColor = LedColor.red;
         lightStrip.red();
+        hexValue = "#FF0000";
     }
     public void setColorOrange() {
         ledColor = LedColor.orange;
         lightStrip.orange();
+        hexValue = "#FFA500";
     }
     public void setColorYellow() {
         ledColor = LedColor.yellow;
         lightStrip.yellow();
+        hexValue = "#FFFF00";
+    }
+    public void setColorGreen() { //more of a lime for a notice
+        ledColor = LedColor.green;
+        lightStrip.green(); 
+        hexValue = "#00FF00";
     }
     public void setColorBlue() {
         ledColor = LedColor.blue;
         lightStrip.blue();
-    }
-    public void setColorGreen() {
-        ledColor = LedColor.green;
-        lightStrip.green(); 
-    }
-    public void setColorGold() {
-        ledColor = LedColor.gold;
-        lightStrip.gold();
-    }
-    public void setColorWhite() {
-        ledColor = LedColor.white;
-        lightStrip.white();
+        hexValue = "#0000FF";
     }
     public void setColorPurple() {
         ledColor = LedColor.purple;
         lightStrip.purple();
+        hexValue = "#800080";  
+    }
+    public void setColorWhite() {
+        ledColor = LedColor.white;
+        lightStrip.white();
+        hexValue = "#FFFFFF";
+    }
+    public void setColorPink() {
+        ledColor = LedColor.pink;
+        lightStrip.pink();
+        hexValue = "#FF91FF";
+    }
+    public void setColorMagenta() {
+        ledColor = LedColor.magenta;
+        lightStrip.pink();
+        hexValue = "#ff00ff";
+    }
+    public void setColorGold() {
+        ledColor = LedColor.gold;
+        lightStrip.gold();
+        hexValue = "#FFD700";
     }
     public void setColorRainbow() {
         ledColor = LedColor.rainbow;
-        lightStrip.rainbow();
+        //hexValue = "#FFFFFF";
     }
 }

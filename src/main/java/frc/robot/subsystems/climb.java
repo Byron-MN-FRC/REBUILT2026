@@ -123,6 +123,7 @@ public class climb extends SubsystemBase {
         setLockdownMode();
         SmartDashboard.putString("Lockdown Stage", currentLockdownMode.name());
         SmartDashboard.putNumber("Climb Stage", climbStage);
+        SmartDashboard.putNumber("Height Positions", raiser.getPosition().getValueAsDouble());
     }
 
     @Override
