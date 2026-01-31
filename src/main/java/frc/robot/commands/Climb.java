@@ -75,7 +75,7 @@ public class Climb extends Command {
         }
         System.out.println("Lights on");
         lightStrip = Robot.getInstance().lightStrip;
-        lightStrip.setLED(ColorLED.CLIMB, 255, 255, 0); //yellow lights during climb
+        lightStrip.setLED(ColorLED.CLIMB, 0, 255, 0); //lime green lights during climb
     }
 
     // Called every time the scheduler runs while the command is scheduled.
