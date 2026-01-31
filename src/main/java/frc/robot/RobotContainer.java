@@ -8,6 +8,7 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
+import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
@@ -75,7 +77,7 @@ public class RobotContainer {
         gamepad.back().and(gamepad.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
         gamepad.start().and(gamepad.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         gamepad.start().and(gamepad.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
-
+        gamepad.start().and(gamepad.back()).onTrue(new InstantCommand(() -> SignalLogger.stop()).andThen(new InstantCommand(() ->System.out.println("Stopping Loger"))));
         // Reset the field-centric heading on left bumper press.
         gamepad.a().toggleOnTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         gamepad.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
