@@ -13,6 +13,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.PneumaticHub;
@@ -24,9 +25,9 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.AutonShoot;
 import frc.robot.commands.AutonRetract;
 import frc.robot.commands.AutonExtend;
 import frc.robot.commands.Climb;
@@ -34,6 +35,9 @@ import frc.robot.commands.ClimbLowerAuto;
 import frc.robot.commands.ClimbRaiseAuto;
 import frc.robot.commands.ClimbZeroing;
 import frc.robot.commands.Lock45Degrees;
+import frc.robot.commands.RainbowTest;
+import frc.robot.commands.ShooterSpin;
+import frc.robot.commands.TrackHub;
 import frc.robot.commands.FuelGRAB;
 import frc.robot.commands.Intake;
 // import frc.robot.commands.Retract;
@@ -41,11 +45,15 @@ import frc.robot.commands.Intake;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.climb;
 import frc.robot.subsystems.leds;
 
 public class RobotContainer {
 
+    public final Shooter m_shooter = new Shooter();
+    public final Turret m_turret = new Turret();
     public final climb m_climb = new climb();
     public final Hopper m_hopper = new Hopper();
     public final leds m_leds = new leds();
@@ -75,7 +83,8 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("AutonRetract", new AutonRetract(m_hopper));
         NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper));
-    
+        NamedCommands.registerCommand("AutonShoot", new AutonShoot(m_shooter));
+
         ph.enableCompressorAnalog(100, 120);
 
         SmartDashboard.putData("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
@@ -133,16 +142,21 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
-        final JoystickButton climb = new JoystickButton(accessory.getHID(), XboxController.Button.kA.value);        
-        climb.onTrue(new Climb(m_climb,m_leds,m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.a().onTrue(new Climb(m_climb,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        final JoystickButton climbZero = new JoystickButton(accessory.getHID(), XboxController.Button.kB.value);        
-        climbZero.onTrue(new ClimbZeroing(m_climb,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.b().onTrue(new ClimbZeroing(m_climb,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        final JoystickButton fuelGrabButton = new JoystickButton(accessory.getHID(), XboxController.Button.kX.value);        
-        fuelGrabButton.whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.start().onTrue(m_turret.checkZeroLeft().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                         
-        accessory.rightTrigger().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+                        
+        accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        accessory.back().whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        
+        accessory.rightTrigger().whileTrue(new FuelGrab(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+      
+        accessory.x().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
     public CommandXboxController getaccessory() {
       return accessory;
