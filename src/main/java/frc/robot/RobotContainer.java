@@ -14,7 +14,6 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.AutonShoot;
@@ -30,20 +28,23 @@ import frc.robot.commands.Climb;
 import frc.robot.commands.ClimbLowerAuto;
 import frc.robot.commands.ClimbRaiseAuto;
 import frc.robot.commands.ClimbZeroing;
-import frc.robot.commands.RainbowTest;
 import frc.robot.commands.Lock45Degrees;
+import frc.robot.commands.RainbowTest;
+import frc.robot.commands.ShooterSpin;
+import frc.robot.commands.TrackHub;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.climb;
 import frc.robot.subsystems.leds;
 
 public class RobotContainer {
 
+    public final Shooter m_shooter = new Shooter();
+    public final Turret m_turret = new Turret();
     public final climb m_climb = new climb();
 
-    public final Shooter m_shooter = new Shooter();
-    
     public final leds m_leds = new leds();
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -60,12 +61,15 @@ public class RobotContainer {
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
     public final CommandXboxController gamepad = new CommandXboxController(0);
-    private final XboxController accessory = new XboxController(1);
+    private final CommandXboxController accessory = new CommandXboxController(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     //public final ColorLED lightStrip = new ColorLED(LED_PORT, LED_LENGTHS);
 
     public RobotContainer() {
+        
+    NamedCommands.registerCommand("AutonShoot", new AutonShoot(m_shooter));
+
     SmartDashboard.putData("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
     SmartDashboard.putData("ClimbLowerAuto", new ClimbLowerAuto(m_climb, m_leds));
 
@@ -117,14 +121,20 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
-        final JoystickButton climb = new JoystickButton(accessory, XboxController.Button.kA.value);        
-        climb.onTrue(new Climb(m_climb,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.a().onTrue(new Climb(m_climb,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        final JoystickButton climbZero = new JoystickButton(accessory, XboxController.Button.kB.value);        
-        climbZero.onTrue(new ClimbZeroing(m_climb,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.b().onTrue(new ClimbZeroing(m_climb,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        accessory.start().onTrue(m_turret.checkZeroLeft().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+                        
+        accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+                        
+        accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        accessory.back().whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
     }
-    public XboxController getaccessory() {
+    public CommandXboxController getaccessory() {
       return accessory;
     }
 
