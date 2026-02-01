@@ -8,8 +8,6 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
-import com.pathplanner.lib.auto.NamedCommands;
-
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -17,7 +15,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -27,24 +24,23 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.AutonShoot;
-import frc.robot.commands.AutonRetract;
 import frc.robot.commands.AutonExtend;
+import frc.robot.commands.AutonRetract;
+import frc.robot.commands.AutonShoot;
 import frc.robot.commands.Climb;
 import frc.robot.commands.ClimbLowerAuto;
 import frc.robot.commands.ClimbRaiseAuto;
 import frc.robot.commands.ClimbZeroing;
-import frc.robot.commands.Lock45Degrees;
-import frc.robot.commands.RainbowTest;
-import frc.robot.commands.ShooterSpin;
-import frc.robot.commands.TrackHub;
 import frc.robot.commands.FuelGRAB;
 import frc.robot.commands.Intake;
+import frc.robot.commands.Lock45Degrees;
+import frc.robot.commands.ShooterSpin;
+import frc.robot.commands.TrackHub;
 // import frc.robot.commands.Retract;
 // import frc.robot.commands.Extend;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.climb;
@@ -142,7 +138,7 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
-        accessory.a().onTrue(new Climb(m_climb,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.a().onTrue(new Climb(m_climb, m_leds, m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.b().onTrue(new ClimbZeroing(m_climb,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
@@ -154,7 +150,7 @@ public class RobotContainer {
 
         accessory.back().whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
-        accessory.rightTrigger().whileTrue(new FuelGrab(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.rightTrigger().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
         accessory.x().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
