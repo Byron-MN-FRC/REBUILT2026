@@ -33,7 +33,7 @@ private final Hopper m_hopper;
     @Override
     public void execute() {
         m_hopper.setFuelGrabberSpeed();
-        m_hopper.setHopperFloorTransferSecureSpeed(Constants.HopperConstants.HopperFloorTransferSecureSpeed);
+        m_hopper.setHopperFloorTransferSecureSpeed(Constants.IntakeHopperConstants.HopperFloorTransferSecureSpeed);
     }
 
     // Called once the command ends or is interrupted.
