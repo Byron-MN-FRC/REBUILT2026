@@ -23,7 +23,9 @@ public class Constants {
 
     public static final class DriveConstants {}
 
-    public static final class IntakeHopperConstants {}
+    public static final class IntakeHopperConstants {
+        public static final double HopperFloorTransferSecureSpeed = 0.1;
+    }
 
     public static final class TurretShooterConstants {
         public static final int SENSOR_TO_MECH_RATIO = 10;
@@ -36,7 +38,6 @@ public class Constants {
             return rotations * 360.0;
         }
     }
-
 
     public static final class LEDConstants {
         public static final int LED_PORT = 2;

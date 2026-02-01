@@ -209,6 +209,10 @@ public class climb extends SubsystemBase {
         return climbStage = 0;
     }
 
+    public int getClimbStage() {
+        return climbStage;
+    }
+
 
 
 
