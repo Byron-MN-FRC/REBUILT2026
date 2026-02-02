@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ShowcasePath"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbRaiseAuto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbLowerAuto"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

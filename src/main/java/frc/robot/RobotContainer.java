@@ -11,6 +11,7 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.XboxController;
@@ -70,6 +71,8 @@ public class RobotContainer {
     SmartDashboard.putData("RainbowTest", new RainbowTest(m_climb,m_leds));
     // Configure the button bindings
     configureBindings();
+    //TODO add default auton path
+    m_chooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Mode", m_chooser);
     }
 
