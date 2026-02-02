@@ -55,6 +55,9 @@ public class Vision extends SubsystemBase {
             checkAutoStartPose();
         }
 
+        SmartDashboard.putNumber("Gyro", Robot.getInstance().drivetrain.getPigeon2().getYaw().getValueAsDouble());
+        SmartDashboard.putNumber("BotRot", Robot.getInstance().drivetrain.getState().Pose.getRotation().getDegrees());
+        // Try with stdvs
     }
 
     public Alliance MyAlliance() {
