@@ -26,6 +26,8 @@ public class Vision extends SubsystemBase {
     private Pose2d autoStartPose = new Pose2d();
     public int lastAlignmentTarget = 1;
 
+    private Alert rotDrift = new Alert("Drifting", AlertType.kWarning);
+
     public static Vision getInstance() {
         return m_Vision;
     }
@@ -57,6 +59,7 @@ public class Vision extends SubsystemBase {
 
         SmartDashboard.putNumber("Gyro", Robot.getInstance().drivetrain.getPigeon2().getYaw().getValueAsDouble());
         SmartDashboard.putNumber("BotRot", Robot.getInstance().drivetrain.getState().Pose.getRotation().getDegrees());
+        SmartDashboard.putNumber("GyroProper", Robot.getInstance().drivetrain.getRotation3d().toRotation2d().getDegrees());
         // Try with stdvs
     }
 
@@ -168,11 +171,18 @@ public class Vision extends SubsystemBase {
         var driveState = Robot.getInstance().drivetrain.getState();
         double headingDeg = driveState.Pose.getRotation().getDegrees();
         double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
+        SmartDashboard.putNumber("headingDegreesBefore", headingDeg);
 
         LimelightHelpers.SetRobotOrientation(llName, headingDeg, 0, 0, 0, 0, 0);
+
         var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(llName);
-        if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 1.5 /* Originally 2.0 */ && !tempDisable) {
+        SmartDashboard.putNumber("llHeadingDegrees", llMeasurement.pose.getRotation().getDegrees());
+
+        if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 1.5 /* Originally 2.0 */ && !tempDisable) {    
             Robot.getInstance().drivetrain.addVisionMeasurement(llMeasurement.pose,llMeasurement.timestampSeconds);
+            SmartDashboard.putNumber(Robot.getInstance().drivetrain.getState().Pose.getRotation().getDegrees();        
+            System.out.println("\n\n\n headingDeg\nllmeasurement\n" + Robot.getInstance().drivetrain.getState().Pose.getRotation().getDegrees() + "\n\n" + Robot.getInstance().drivetrain.getPigeon2().getYaw().getValueAsDouble() + "\n\n");
         }
+        
     }
 }
