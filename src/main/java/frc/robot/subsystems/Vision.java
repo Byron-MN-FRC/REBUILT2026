@@ -26,8 +26,6 @@ public class Vision extends SubsystemBase {
     private Pose2d autoStartPose = new Pose2d();
     public int lastAlignmentTarget = 1;
 
-    private Alert rotDrift = new Alert("Drifting", AlertType.kWarning);
-
     public static Vision getInstance() {
         return m_Vision;
     }
