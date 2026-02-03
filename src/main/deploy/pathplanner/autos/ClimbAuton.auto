@@ -11,6 +11,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "AutonShoot"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 3.0
@@ -20,6 +26,18 @@
           "type": "path",
           "data": {
             "pathName": "ClimbPath2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbRaiseAuto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbLowerAuto"
           }
         }
       ]
