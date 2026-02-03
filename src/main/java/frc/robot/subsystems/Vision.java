@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
@@ -178,7 +179,7 @@ public class Vision extends SubsystemBase {
 
         if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 1.5 /* Originally 2.0 */ && !tempDisable) {    
             Robot.getInstance().drivetrain.addVisionMeasurement(llMeasurement.pose,llMeasurement.timestampSeconds);
-            SmartDashboard.putNumber(Robot.getInstance().drivetrain.getState().Pose.getRotation().getDegrees();        
+            SmartDashboard.putNumber("Drivestatedeg", Robot.getInstance().drivetrain.getState().Pose.getRotation().getDegrees());        
             System.out.println("\n\n\n headingDeg\nllmeasurement\n" + Robot.getInstance().drivetrain.getState().Pose.getRotation().getDegrees() + "\n\n" + Robot.getInstance().drivetrain.getPigeon2().getYaw().getValueAsDouble() + "\n\n");
         }
         
