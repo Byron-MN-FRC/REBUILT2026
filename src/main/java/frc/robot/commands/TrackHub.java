@@ -11,16 +11,20 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.TurretCam;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.leds;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class TrackHub extends Command {
 
   private Turret m_turret;
+  private final leds m_leds;
 
   /** Creates a new trackHub. */
-  public TrackHub(Turret subsystem) {
+  public TrackHub(Turret subsystem, leds leds) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
+    addRequirements(leds);
+    m_leds = leds;
     m_turret = subsystem;
   }
 
@@ -32,6 +36,15 @@ public class TrackHub extends Command {
   @Override
   public void execute() {
     m_turret.aim((m_turret.rotateShooterMotor.getPosition().getValueAsDouble() * 360) + TurretCam.getAngleError());
+    if (TurretCam.getAngleError() == 0 && TurretCam.targetLocated() == true) {
+      m_leds.setColorGreen();
+    }
+    else if(TurretCam.getAngleError() <= 5 && TurretCam.targetLocated() == false) {
+      m_leds.setColorYellow();
+    }
+    else{
+      m_leds.setColorRed();
+    }
   }
 
   // Called once the command ends or is interrupted.

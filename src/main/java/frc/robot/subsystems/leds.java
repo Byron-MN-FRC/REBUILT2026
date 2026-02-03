@@ -26,6 +26,7 @@ public class leds extends SubsystemBase {
         blue,
         lightblue,
         green,
+        lime,
         orange,
         gold,
         white,
@@ -78,7 +79,8 @@ public class leds extends SubsystemBase {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-
+    //red, orange, yellow, green, blue, purple, pink
+    //white, gold, lightblue, magenta, lime, rainbow, none
     public void setColorNone() {
         ledColor = LedColor.none;
         lightStrip.none();
@@ -99,9 +101,14 @@ public class leds extends SubsystemBase {
         lightStrip.yellow();
         hexValue = "#FFFF00";
     }
-    public void setColorGreen() { //more of a lime for a notice
+    public void setColorGreen() {
         ledColor = LedColor.green;
         lightStrip.green(); 
+        hexValue = "#117d00";
+    }
+    public void setColorLime() {
+        ledColor = LedColor.lime;
+        lightStrip.lime(); 
         hexValue = "#00FF00";
     }
     public void setColorBlue() {

@@ -78,7 +78,7 @@ public class RobotContainer {
     public RobotContainer() {
 
         NamedCommands.registerCommand("AutonRetract", new AutonRetract(m_hopper));
-        NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper));
+        NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper, m_leds));
         NamedCommands.registerCommand("AutonShoot", new AutonShoot(m_shooter));
 
         ph.enableCompressorAnalog(100, 120);
@@ -144,9 +144,9 @@ public class RobotContainer {
 
         accessory.start().onTrue(m_turret.checkZeroLeft().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                         
-        accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                         
-        accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.back().whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         

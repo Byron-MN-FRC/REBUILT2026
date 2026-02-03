@@ -63,7 +63,7 @@ public class ClimbLowerAuto extends Command {
         System.out.println("+---------------------+");
         System.out.println("| Auto Climb Engaging |");
         System.out.println("+---------------------+");
-        m_leds.setColorGreen();
+        m_leds.setColorLime();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
