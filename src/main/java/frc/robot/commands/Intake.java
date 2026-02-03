@@ -44,12 +44,17 @@ public class Intake extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        m_leds.hopperRequestingLeds();
         if (!m_hopper.isExtending()) {   
-            m_leds.setColorMagenta();
+            if (m_leds.usingSubsystem == leds.SubsystemUsingLEDS.hopper) {
+                m_leds.setColorMagenta();
+            }
             m_hopper.setHopperExtend();
         }
         else {
-            m_leds.setColorLightBlue();
+            if (m_leds.usingSubsystem == leds.SubsystemUsingLEDS.hopper) {
+                m_leds.setColorLightBlue();
+            }
             m_hopper.setHopperRetract();
         }
         System.out.println("Lights on");
@@ -63,6 +68,7 @@ public class Intake extends Command {
     @Override
     public void end(boolean interrupted) {
         m_leds.setColorNone();
+        m_leds.noSubsystemUsingLeds();
     }
 
     // Returns true when the command should end.

@@ -50,7 +50,7 @@ public class climb extends SubsystemBase {
 
     private DigitalInput armBottomSwitch;
     public double raiserUpperTarget;
-    public double raiserLowerTarget;
+    public double raiserLowerTarget; 
     public boolean climbing;
     public boolean isOnTower;
     public int climbStage = 0;

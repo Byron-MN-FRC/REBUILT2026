@@ -23,27 +23,34 @@ public class TrackHub extends Command {
   public TrackHub(Turret subsystem, leds leds) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
-    addRequirements(leds);
     m_leds = leds;
     m_turret = subsystem;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_leds.turretRequestingLeds();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     m_turret.aim((m_turret.rotateShooterMotor.getPosition().getValueAsDouble() * 360) + TurretCam.getAngleError());
     if (TurretCam.getAngleError() == 0 && TurretCam.targetLocated() == true) {
-      m_leds.setColorGreen();
+      if (m_leds.usingSubsystem == leds.SubsystemUsingLEDS.turret) {
+        m_leds.setColorGreen();
+      }
     }
     else if(TurretCam.getAngleError() <= 5 && TurretCam.targetLocated() == false) {
-      m_leds.setColorYellow();
+      if (m_leds.usingSubsystem == leds.SubsystemUsingLEDS.turret) {
+        m_leds.setColorYellow();
+      }
     }
     else{
-      m_leds.setColorRed();
+      if (m_leds.usingSubsystem == leds.SubsystemUsingLEDS.turret) {
+        m_leds.setColorRed();
+      }
     }
   }
 
@@ -51,6 +58,7 @@ public class TrackHub extends Command {
   @Override
   public void end(boolean interrupted) {
     m_turret.spinStop();
+    m_leds.noSubsystemUsingLeds();
   }
 
   // Returns true when the command should end.

@@ -32,6 +32,7 @@ private final leds m_leds;
     @Override
     public void initialize() {
         m_hopper.setHopperExtend();
+        m_leds.hopperRequestingLeds();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -44,6 +45,7 @@ private final leds m_leds;
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        m_leds.noSubsystemUsingLeds();
     }
 
     // Returns true when the command should end.

@@ -43,8 +43,11 @@ public class FuelGRAB extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_leds.setColorRed();
-         }
+        m_leds.hopperRequestingLeds();
+        if (m_leds.usingSubsystem == leds.SubsystemUsingLEDS.hopper) {
+            m_leds.setColorRed();
+        }
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
@@ -57,6 +60,7 @@ public class FuelGRAB extends Command {
     public void end(boolean interrupted) {
         m_subsystem.stopFuelGrabber();
         m_leds.setColorNone();
+        m_leds.noSubsystemUsingLeds();
     }
 
     // Returns true when the command should end.

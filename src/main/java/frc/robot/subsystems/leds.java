@@ -36,6 +36,14 @@ public class leds extends SubsystemBase {
         yellow,
         rainbow
     };
+    public enum SubsystemUsingLEDS {
+        drive,
+        turret,
+        shooter,
+        climb,
+        hopper,
+        none
+    };
     public String hexValue;
 
     public String[
@@ -53,6 +61,7 @@ public class leds extends SubsystemBase {
     };
 
     public LedColor ledColor = LedColor.none;
+    public SubsystemUsingLEDS usingSubsystem = SubsystemUsingLEDS.none;
     public final ColorLED lightStrip;
 
     public leds() {
@@ -66,6 +75,7 @@ public class leds extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        SmartDashboard.putString("Subsystem Using LEDs", usingSubsystem.name());
         SmartDashboard.putString("LED Hex Value", lightStrip.getCurrentColor().toHexString());  
         if (ledColor == LedColor.rainbow || ledColor == LedColor.none) {
             lightStrip.rainbow();
@@ -78,6 +88,52 @@ public class leds extends SubsystemBase {
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+
+    //priority from least to greatest: none, drive, hopper, turret, shooter, climb
+
+    //rank 5
+    public void noSubsystemUsingLeds() {
+        if (usingSubsystem != SubsystemUsingLEDS.none) {
+            usingSubsystem = SubsystemUsingLEDS.none;
+        }
+    }
+
+    //rank 4
+    public void driveTrainRequestingLeds() {
+        if (usingSubsystem != SubsystemUsingLEDS.climb || usingSubsystem != SubsystemUsingLEDS.shooter || usingSubsystem != SubsystemUsingLEDS.turret || usingSubsystem != SubsystemUsingLEDS.hopper) {
+            usingSubsystem = SubsystemUsingLEDS.drive;
+        }
+    }
+
+    //rank 3
+    public void hopperRequestingLeds() {
+        if (usingSubsystem != SubsystemUsingLEDS.climb || usingSubsystem != SubsystemUsingLEDS.shooter || usingSubsystem != SubsystemUsingLEDS.turret) {
+            usingSubsystem = SubsystemUsingLEDS.hopper;
+        }
+    }
+
+    //rank 2
+    public void turretRequestingLeds() {
+        if (usingSubsystem != SubsystemUsingLEDS.climb || usingSubsystem != SubsystemUsingLEDS.shooter) {
+            usingSubsystem = SubsystemUsingLEDS.turret;
+        }
+    }
+
+    //rank 1
+    public void shooterRequestingLeds() {
+        if (usingSubsystem != SubsystemUsingLEDS.climb) {
+            usingSubsystem = SubsystemUsingLEDS.shooter; 
+        }
+    }
+
+    //rank 0
+    public void climbRequestingLeds() { //nothing can override climb, this only sets the enum to climb
+        if (usingSubsystem != SubsystemUsingLEDS.climb) {
+            usingSubsystem = SubsystemUsingLEDS.climb; 
+        }
+    }
+
+    //===============================================================================================================================================================================
 
     //red, orange, yellow, green, blue, purple, pink
     //white, gold, lightblue, magenta, lime, rainbow, none

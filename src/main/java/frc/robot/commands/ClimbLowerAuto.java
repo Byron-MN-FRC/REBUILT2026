@@ -63,7 +63,10 @@ public class ClimbLowerAuto extends Command {
         System.out.println("+---------------------+");
         System.out.println("| Auto Climb Engaging |");
         System.out.println("+---------------------+");
-        m_leds.setColorLime();
+        m_leds.climbRequestingLeds();
+        if (m_leds.usingSubsystem == leds.SubsystemUsingLEDS.climb) {
+            m_leds.setColorLime();
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -82,6 +85,7 @@ public class ClimbLowerAuto extends Command {
             m_leds.setColorNone();
         }
         m_climb.setBottom();
+        m_leds.noSubsystemUsingLeds();
         System.out.println("+------------------------+");
         System.out.println("| Auto Climb Disengaging |");
         System.out.println("+------------------------+");

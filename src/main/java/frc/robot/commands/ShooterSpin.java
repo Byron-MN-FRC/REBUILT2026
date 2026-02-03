@@ -56,7 +56,10 @@ public class ShooterSpin extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_leds.setColorRainbow();
+        m_leds.turretRequestingLeds();
+        if (m_leds.usingSubsystem == leds.SubsystemUsingLEDS.turret) {
+            m_leds.setColorRainbow();
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -84,6 +87,7 @@ public class ShooterSpin extends Command {
     @Override
     public void end(boolean interrupted) {
         m_leds.setColorNone();
+        m_leds.noSubsystemUsingLeds();
     }
 
     // Returns true when the command should end.

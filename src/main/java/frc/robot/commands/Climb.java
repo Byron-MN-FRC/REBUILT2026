@@ -46,7 +46,6 @@ public class Climb extends Command {
         m_leds = ledSubsystem;
         m_hopper = hopperSubsystem;
         addRequirements(m_climb);
-        addRequirements(m_leds);
         addRequirements(m_hopper);
     
 
@@ -67,17 +66,22 @@ public class Climb extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        m_leds.climbRequestingLeds();
         System.out.println("+----------------+");
         System.out.println("| Climb engaging |");
         System.out.println("+----------------+");
         if (!m_climb.isClimbing()) {   
-            m_leds.setColorOrange();
+            if (m_leds.usingSubsystem == leds.SubsystemUsingLEDS.climb) {
+                m_leds.setColorOrange();
+            }
             System.out.println("<<<< Climbing up >>>>");
             System.out.println("<");
             System.out.println("<");
         }
         else {
-            m_leds.setColorYellow();
+            if (m_leds.usingSubsystem == leds.SubsystemUsingLEDS.climb) {
+                m_leds.setColorYellow();
+            }
             System.out.println(">>>> Climbing down <<<<");
             System.out.println(">");
             System.out.println(">");
@@ -114,6 +118,7 @@ public class Climb extends Command {
     @Override
     public void end(boolean interrupted) {
         m_climb.toggleClimbing();
+        m_leds.noSubsystemUsingLeds();
         System.out.println("+-------------------+");
         System.out.println("| Climb disengaging |");
         System.out.println("+-------------------+");

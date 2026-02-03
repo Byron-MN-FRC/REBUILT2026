@@ -79,7 +79,7 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("AutonRetract", new AutonRetract(m_hopper));
         NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper, m_leds));
-        NamedCommands.registerCommand("AutonShoot", new AutonShoot(m_shooter));
+        NamedCommands.registerCommand("AutonShoot", new AutonShoot(m_shooter, m_leds));
 
         ph.enableCompressorAnalog(100, 120);
 
