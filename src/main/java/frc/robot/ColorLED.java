@@ -179,6 +179,16 @@ public class ColorLED {
         m_led.setData(m_ledBuffer);
     }
 
+    public void lightblue() {
+
+        // For every pixel
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            // Sets the specified LED to the RGB values for red
+            m_ledBuffer.setRGB(i, 0, 255, 255);
+        }
+        m_led.setData(m_ledBuffer);
+    }
+
     public void purple() {
 
         // For every pixel

@@ -38,6 +38,7 @@ public class Robot extends TimedRobot {
         .withJoystickReplay();
 
     public Robot() {
+        // This is literally the government tracker
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         enableLiveWindowInTest(true);
     }
@@ -48,13 +49,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        // Instantiate our RobotContainer. This will perform all our button bindings,
-        // and put our
-        // autonomous chooser on the dashboard.
-        //m_robotContainer = RobotContainer.getInstance();
-        HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
-        enableLiveWindowInTest(true);
-
        // GenericEntry myEntry  = mytab.add("LEDs", 1).getEntry();
        // Double red = myEntry.getDouble(0);
         //PWM port 9

@@ -20,29 +20,46 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public class Constants {
+
+    public static final class DriveConstants {}
+
+    public static final class IntakeHopperConstants {
+        public static final double HopperFloorTransferSecureSpeed = 0.1;
+    }
+
+    public static final class TurretShooterConstants {
+        public static final int SENSOR_TO_MECH_RATIO = 10;
+
+        public static final double degreesToRotations(double degrees) {
+            return degrees / 360.0;
+        }
+
+        public static final double rotationsToDegrees(double rotations) {
+            return rotations * 360.0;
+        }
+    }
+
     public static final class LEDConstants {
         public static final int LED_PORT = 2;
         public static final int[] LED_LENGTHS = {8, 8};
     }
+    
+    public static final class VisionConstants {
+        public static final String TURRET_CAM = "limelight-turret";
+    }
+    
     public static final class ClimbConstants {
-
+        
         public static final double raiserUpperTarget = 100.0;
         public static final double raiserLowerTarget = 0.0;
-
+        
         //public static final double climbUpperLimit = 205.0;
         //public static final double climbLowerLimit = 0.06;
         //public static final double climbSensorLimit = 0;
-
+        
         public static final double climbCurrentLimit = 25;
-
+        
     }
-   /**
-    * public static final class DriveConstants {
-    *   public static final int kLeftMotor1Port = 0;
-    *   public static final int kLeftMotor2Port = 1;
-    *   public static final int kRightMotor1Port = 2;
-    *   public static final int kRightMotor2Port = 3; 
-    * }
-    */ 
+
 }
 
