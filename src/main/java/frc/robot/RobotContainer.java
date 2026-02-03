@@ -11,6 +11,7 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -98,6 +99,8 @@ public class RobotContainer {
 
         // Configure the button bindings
         configureBindings();
+        
+        m_chooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Mode", m_chooser);
     }
 
