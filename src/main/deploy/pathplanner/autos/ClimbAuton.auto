@@ -7,19 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ShowcasePath"
+            "pathName": "ClimbPath1"
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "ClimbRaiseAuto"
+            "waitTime": 3.0
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "ClimbLowerAuto"
+            "pathName": "ClimbPath2"
           }
         }
       ]

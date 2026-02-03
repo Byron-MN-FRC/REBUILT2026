@@ -3,7 +3,8 @@
   "robotLength": 0.885,
   "holonomicMode": true,
   "pathFolders": [
-    "TestAutonFolder"
+    "ClimbAuton",
+    "DepotAuton"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.0,
