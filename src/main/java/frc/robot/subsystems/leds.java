@@ -99,7 +99,7 @@ public class leds extends SubsystemBase {
     }
 
     //rank 4
-    public void driveTrainRequestingLeds() {
+    public void driveTrainRequestingLeds() { // the ORs may need to be ANDs?
         if (usingSubsystem != SubsystemUsingLEDS.climb || usingSubsystem != SubsystemUsingLEDS.shooter || usingSubsystem != SubsystemUsingLEDS.turret || usingSubsystem != SubsystemUsingLEDS.hopper) {
             usingSubsystem = SubsystemUsingLEDS.drive;
         }
