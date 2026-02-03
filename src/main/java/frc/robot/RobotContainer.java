@@ -150,7 +150,7 @@ public class RobotContainer {
 
         accessory.back().whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
-        accessory.rightTrigger().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        gamepad.rightBumper().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
         accessory.x().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }

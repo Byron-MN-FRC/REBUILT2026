@@ -93,28 +93,28 @@ public class leds extends SubsystemBase {
 
     //rank 5
     public void noSubsystemUsingLeds() {
-        if (usingSubsystem != SubsystemUsingLEDS.none) {
+        if (usingSubsystem != SubsystemUsingLEDS.none) { //put all conditions here! From drive and drive itself
             usingSubsystem = SubsystemUsingLEDS.none;
         }
     }
 
     //rank 4
     public void driveTrainRequestingLeds() { // the ORs may need to be ANDs?
-        if (usingSubsystem != SubsystemUsingLEDS.climb || usingSubsystem != SubsystemUsingLEDS.shooter || usingSubsystem != SubsystemUsingLEDS.turret || usingSubsystem != SubsystemUsingLEDS.hopper) {
+        if (usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret && usingSubsystem != SubsystemUsingLEDS.hopper) {
             usingSubsystem = SubsystemUsingLEDS.drive;
         }
     }
 
     //rank 3
     public void hopperRequestingLeds() {
-        if (usingSubsystem != SubsystemUsingLEDS.climb || usingSubsystem != SubsystemUsingLEDS.shooter || usingSubsystem != SubsystemUsingLEDS.turret) {
+        if (usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret) {
             usingSubsystem = SubsystemUsingLEDS.hopper;
         }
     }
 
     //rank 2
     public void turretRequestingLeds() {
-        if (usingSubsystem != SubsystemUsingLEDS.climb || usingSubsystem != SubsystemUsingLEDS.shooter) {
+        if (usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter) {
             usingSubsystem = SubsystemUsingLEDS.turret;
         }
     }
