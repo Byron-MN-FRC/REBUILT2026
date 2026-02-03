@@ -41,7 +41,6 @@ public class ClimbLowerAuto extends Command {
         m_climb = subsystem;
         m_leds = leds;
         addRequirements(m_climb);
-        addRequirements(m_leds);
 
         
 

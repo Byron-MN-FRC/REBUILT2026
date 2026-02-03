@@ -36,7 +36,6 @@ public class FuelGRAB extends Command {
         m_leds = ledSubsystem;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_subsystem);
-        addRequirements(m_leds);
     
     }
 

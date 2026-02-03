@@ -41,7 +41,6 @@ public class ClimbZeroing extends Command {
         m_climb = subsystem;
         m_leds = ledSubsystem;
         addRequirements(m_climb);
-        addRequirements(m_leds);
 
         
 
