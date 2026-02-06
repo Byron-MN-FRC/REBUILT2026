@@ -93,7 +93,7 @@ public class leds extends SubsystemBase {
 
     //rank 5
     public void noSubsystemUsingLeds() {
-        if (usingSubsystem != SubsystemUsingLEDS.none) { //put all conditions here! From drive and drive itself
+        if (usingSubsystem != SubsystemUsingLEDS.none && usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret && usingSubsystem != SubsystemUsingLEDS.hopper && usingSubsystem != SubsystemUsingLEDS.drive) {
             usingSubsystem = SubsystemUsingLEDS.none;
         }
     }
