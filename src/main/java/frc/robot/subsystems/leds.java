@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ColorLED;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.subsystems.climb;
 
 public class leds extends SubsystemBase {
     public enum LedColor {
@@ -34,7 +35,9 @@ public class leds extends SubsystemBase {
         pink,
         magenta,
         yellow,
-        rainbow
+        rainbow,
+        fasterfaster,
+        climbProgressBar
     };
     public enum SubsystemUsingLEDS {
         drive,
@@ -88,6 +91,8 @@ public class leds extends SubsystemBase {
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+    
+    //===============================================================================================================================================================================
 
     //priority from least to greatest: none, drive, hopper, turret, shooter, climb
 
@@ -202,8 +207,17 @@ public class leds extends SubsystemBase {
         lightStrip.gold();
         hexValue = "#FFD700";
     }
-    public void setColorRainbow() {
+    public void setModeRainbow() {
         ledColor = LedColor.rainbow;
+        lightStrip.rainbow();
         //hexValue = "#FFFFFF";
+    }
+    public void setModeFasterFaster() {
+        ledColor = LedColor.fasterfaster;
+        lightStrip.fasterfaster();
+    }
+    public void setModeClimbProgressBar() {
+        ledColor = LedColor.climbProgressBar;
+        lightStrip.climbProgressBar();
     }
 }

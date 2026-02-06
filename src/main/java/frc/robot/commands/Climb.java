@@ -72,7 +72,8 @@ public class Climb extends Command {
         System.out.println("+----------------+");
         if (!m_climb.isClimbing()) {   
             if (m_leds.usingSubsystem == leds.SubsystemUsingLEDS.climb) {
-                m_leds.setColorOrange();
+                //m_leds.setColorOrange();
+                m_leds.setModeClimbProgressBar();
             }
             System.out.println("<<<< Climbing up >>>>");
             System.out.println("<");
