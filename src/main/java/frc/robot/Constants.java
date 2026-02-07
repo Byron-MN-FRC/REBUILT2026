@@ -40,8 +40,11 @@ public class Constants {
         public static final double FIELD_LENGTH_METERS = APRIL_TAG_FIELD_LAYOUT.getFieldLength();
 
         // This variable assumes the robot is a square
+        // TODO: adjust for actual robot dimensions
         public static final double ROBOT_WIDTH_METERS = 0.5;
 
+        // TODO: adjust if the limelight name changes
+        // TODO: adjust for actual camera position and orientation on the robot
         public static final String LIMELIGHT_NAME = "limelight";
         public static final double[] CAMERA_POSE_ROBOT_SPACE = {
                 0.0, // X position of camera on robot in meters
@@ -53,6 +56,14 @@ public class Constants {
         };
 
         public static final int[] TAGS_FOR_AUTO_ALIGNMENT = {15, 16, 31, 32};
+
+        // Currently Excluded: 20, 21, 30
+        public static final int[] TAGS_FOR_POSE_ESTIMATION = {
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+            11, 12, 13, 14, 15, 16, 17, 18, 19,
+            22, 23, 24, 25, 26, 27, 28, 29,
+            31, 32
+        };
 
         
    }

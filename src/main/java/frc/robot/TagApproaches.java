@@ -67,10 +67,10 @@ public class TagApproaches {
         pose = calcNewPose(14, 0, 0, 0);
         tagArray[13] = new TagApproach(14, Alliance.Red, gameTarget.Outpost, pose);
 
-        pose = calcNewPose(15, 0, 0, 0);
+        pose = calcNewPose(15, -1.5, 0, 0);
         tagArray[14] = new TagApproach(15, Alliance.Red, gameTarget.Tower, pose);
 
-        pose = calcNewPose(16, 0, 0, 0);
+        pose = calcNewPose(16, -1.5, 0, 0);
         tagArray[15] = new TagApproach(16, Alliance.Red, gameTarget.Tower, pose);
 
         pose = calcNewPose(17, 0, 0, 0);
@@ -121,10 +121,10 @@ public class TagApproaches {
         pose = calcNewPose(30, 0, 0, 0);
         tagArray[29] = new TagApproach(30, Alliance.Blue, gameTarget.Outpost, pose);
 
-        pose = calcNewPose(31, 0, 0, 0);
+        pose = calcNewPose(31, 1.5, 0, 0);
         tagArray[30] = new TagApproach(31, Alliance.Blue, gameTarget.Tower, pose);
 
-        pose = calcNewPose(32, 0, 0, 0);
+        pose = calcNewPose(32, 1.5, 0, 0);
         tagArray[31] = new TagApproach(32, Alliance.Blue, gameTarget.Tower, pose);
     }
 

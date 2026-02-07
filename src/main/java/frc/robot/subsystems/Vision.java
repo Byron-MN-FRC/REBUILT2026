@@ -18,7 +18,6 @@ import frc.robot.Robot;
 
 public class Vision extends SubsystemBase {
 
-    private static final Vision m_Vision = new Vision();
     // TODO fix
     public boolean tempDisable = false;
     public double timestampToReEnable;
@@ -26,9 +25,7 @@ public class Vision extends SubsystemBase {
     private Pose2d autoStartPose = new Pose2d();
     public int lastAlignmentTarget = 1;
 
-    public static Vision getInstance() {
-        return m_Vision;
-    }
+    // TODO: add field image to dashboard
 
     public Vision() {
         LimelightHelpers.setCameraPose_RobotSpace(
@@ -39,6 +36,10 @@ public class Vision extends SubsystemBase {
                 Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[3],
                 Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[4],
                 Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[5]);
+
+        LimelightHelpers.SetFiducialIDFiltersOverride(
+                Constants.VisionConstants.LIMELIGHT_NAME, 
+                Constants.VisionConstants.TAGS_FOR_POSE_ESTIMATION);
     }
 
     @Override

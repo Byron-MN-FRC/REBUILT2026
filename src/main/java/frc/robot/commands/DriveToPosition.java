@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
+import frc.robot.TagApproaches;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -40,9 +41,8 @@ public class DriveToPosition extends Command {
      * @param subsystem
      * @param goalPose
      */
-    public DriveToPosition(CommandSwerveDrivetrain subsystem, Pose2d goalPose) {
+    public DriveToPosition(CommandSwerveDrivetrain subsystem) {
         drivetrain = subsystem;
-        this.goalPose = goalPose;
 
         omegaController.setTolerance(Units.degreesToRadians(1.5));
         omegaController.enableContinuousInput(-Math.PI, Math.PI);
@@ -55,6 +55,8 @@ public class DriveToPosition extends Command {
     @Override
     public void initialize() {
 
+        goalPose = TagApproaches.getInstance().DesiredRobotPos(Robot.getInstance().m_vision.lastAlignmentTarget);
+        
         currentPose = drivetrain.getState().Pose;
         magnitudeController.reset(currentPose.getTranslation().getDistance(goalPose.getTranslation()));
         omegaController.reset(currentPose.getRotation().getRadians());

@@ -40,6 +40,7 @@ public class RobotContainer {
     public final CommandXboxController gamepad = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    public final Vision m_vision = new Vision();
 
     // TODO fix
     public TagApproaches tagApproaches = new TagApproaches();
@@ -84,7 +85,7 @@ public class RobotContainer {
         gamepad.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         gamepad.y()
-            .whileTrue(new DriveToPosition(drivetrain, TagApproaches.getInstance().DesiredRobotPos(Vision.getInstance().lastAlignmentTarget))
+            .whileTrue(new DriveToPosition(drivetrain)
             .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         drivetrain.registerTelemetry(logger::telemeterize);
