@@ -37,6 +37,7 @@ import frc.robot.commands.Intake;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.ShooterSpin;
 import frc.robot.commands.TrackHub;
+import frc.robot.commands.ledtestcommands.fasterfaster;
 // import frc.robot.commands.Retract;
 // import frc.robot.commands.Extend;
 import frc.robot.generated.TunerConstants;
@@ -79,8 +80,8 @@ public class RobotContainer {
     public RobotContainer() {
 
         NamedCommands.registerCommand("AutonRetract", new AutonRetract(m_hopper));
-        NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper));
-        NamedCommands.registerCommand("AutonShoot", new AutonShoot(m_shooter));
+        NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper, m_leds));
+        NamedCommands.registerCommand("AutonShoot", new AutonShoot(m_shooter, m_leds));
 
         ph.enableCompressorAnalog(100, 120);
 
@@ -97,6 +98,9 @@ public class RobotContainer {
 
         SmartDashboard.putData("Intake", new Intake(m_hopper, m_leds));
 
+        SmartDashboard.putData("FasterFasterLights", new fasterfaster(m_leds));
+
+
         // Configure the button bindings
         configureBindings();
         
@@ -110,9 +114,10 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-gamepad.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-gamepad.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-gamepad.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                
+                drive.withVelocityX(-gamepad.getLeftY() * MaxSpeed * m_climb.lockdownDriveControl) // Drive forward with negative Y (forward)
+                    .withVelocityY(-gamepad.getLeftX() * MaxSpeed * m_climb.lockdownDriveControl) // Drive left with negative X (left)
+                    .withRotationalRate(-gamepad.getRightX() * MaxAngularRate * m_climb.lockdownDriveControl) // Drive counterclockwise with negative X (left)
             )
         );
 
@@ -147,13 +152,13 @@ public class RobotContainer {
 
         accessory.start().onTrue(m_turret.checkZeroLeft().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                         
-        accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                         
-        accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.back().whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
-        accessory.rightTrigger().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        gamepad.rightBumper().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
         accessory.x().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }

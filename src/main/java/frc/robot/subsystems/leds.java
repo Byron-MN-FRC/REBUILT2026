@@ -18,22 +18,36 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ColorLED;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.subsystems.climb;
 
 public class leds extends SubsystemBase {
     public enum LedColor {
         none, //no color, lights are off and the smartdashboard displays black.
         red,
-        blue,
-        lightblue,
-        green,
+            maroon,
         orange,
+        yellow,
+        green,
+            lime,
+        blue,
+            lightblue,
+        purple,
+            pink,
+            magenta,
         gold,
         white,
-        purple,
-        pink,
-        magenta,
-        yellow,
-        rainbow
+        rainbow,
+        fasterfaster,
+        climbProgressBar,
+        redFlashing
+    };
+    public enum SubsystemUsingLEDS {
+        drive,
+        turret,
+        shooter,
+        climb,
+        hopper,
+        none
     };
     public String hexValue;
 
@@ -52,6 +66,7 @@ public class leds extends SubsystemBase {
     };
 
     public LedColor ledColor = LedColor.none;
+    public SubsystemUsingLEDS usingSubsystem = SubsystemUsingLEDS.none;
     public final ColorLED lightStrip;
 
     public leds() {
@@ -65,9 +80,16 @@ public class leds extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        SmartDashboard.putString("Subsystem Using LEDs", usingSubsystem.name());
         SmartDashboard.putString("LED Hex Value", lightStrip.getCurrentColor().toHexString());  
         if (ledColor == LedColor.rainbow || ledColor == LedColor.none) {
             lightStrip.rainbow();
+        }
+        if (ledColor == LedColor.fasterfaster) {
+            lightStrip.fasterfaster();
+        }
+        if (ledColor == LedColor.redFlashing) {
+            lightStrip.redFlashing();
         }
     }
 
@@ -77,8 +99,57 @@ public class leds extends SubsystemBase {
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+    
+    //===============================================================================================================================================================================
 
+    //priority from least to greatest: none, drive, hopper, turret, shooter, climb
 
+    //rank 5
+    public void noSubsystemUsingLeds() {
+        if (usingSubsystem != SubsystemUsingLEDS.none && usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret && usingSubsystem != SubsystemUsingLEDS.hopper && usingSubsystem != SubsystemUsingLEDS.drive) {
+            usingSubsystem = SubsystemUsingLEDS.none;
+        }
+    }
+
+    //rank 4
+    public void driveTrainRequestingLeds() { // the ORs may need to be ANDs?
+        if (usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret && usingSubsystem != SubsystemUsingLEDS.hopper) {
+            usingSubsystem = SubsystemUsingLEDS.drive;
+        }
+    }
+
+    //rank 3
+    public void hopperRequestingLeds() {
+        if (usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret) {
+            usingSubsystem = SubsystemUsingLEDS.hopper;
+        }
+    }
+
+    //rank 2
+    public void turretRequestingLeds() {
+        if (usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter) {
+            usingSubsystem = SubsystemUsingLEDS.turret;
+        }
+    }
+
+    //rank 1
+    public void shooterRequestingLeds() {
+        if (usingSubsystem != SubsystemUsingLEDS.climb) {
+            usingSubsystem = SubsystemUsingLEDS.shooter; 
+        }
+    }
+
+    //rank 0
+    public void climbRequestingLeds() { //nothing can override climb, this only sets the enum to climb
+        if (usingSubsystem != SubsystemUsingLEDS.climb) {
+            usingSubsystem = SubsystemUsingLEDS.climb; 
+        }
+    }
+
+    //===============================================================================================================================================================================
+
+    //red, orange, yellow, green, blue, purple, pink
+    //white, gold, lightblue, magenta, lime, rainbow, none
     public void setColorNone() {
         ledColor = LedColor.none;
         lightStrip.none();
@@ -88,6 +159,11 @@ public class leds extends SubsystemBase {
         ledColor = LedColor.red;
         lightStrip.red();
         hexValue = "#FF0000";
+    }
+    public void setColorMaroon() {
+        ledColor = LedColor.maroon;
+        lightStrip.maroon();
+        hexValue = "#800000";
     }
     public void setColorOrange() {
         ledColor = LedColor.orange;
@@ -99,9 +175,14 @@ public class leds extends SubsystemBase {
         lightStrip.yellow();
         hexValue = "#FFFF00";
     }
-    public void setColorGreen() { //more of a lime for a notice
+    public void setColorGreen() {
         ledColor = LedColor.green;
         lightStrip.green(); 
+        hexValue = "#117d00";
+    }
+    public void setColorLime() {
+        ledColor = LedColor.lime;
+        lightStrip.lime(); 
         hexValue = "#00FF00";
     }
     public void setColorBlue() {
@@ -139,8 +220,18 @@ public class leds extends SubsystemBase {
         lightStrip.gold();
         hexValue = "#FFD700";
     }
-    public void setColorRainbow() {
+    public void setModeRainbow() {
         ledColor = LedColor.rainbow;
-        //hexValue = "#FFFFFF";
+    }
+    public void setModeFasterFaster() {
+        ledColor = LedColor.fasterfaster;
+    }
+    public void setModeClimbProgressBar() {
+        ledColor = LedColor.climbProgressBar;
+        lightStrip.climbProgressBar();
+    }
+    public void setModeRedFlashing() {
+        ledColor = LedColor.redFlashing;
+        //lightStrip.redFlashing();
     }
 }

@@ -14,19 +14,24 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.leds;
 
 public class AutonExtend extends Command {
 private final Hopper m_hopper;
+private final leds m_leds;
 
-    public AutonExtend(Hopper hopper) {
+
+    public AutonExtend(Hopper hopper, leds m_leds) {
         m_hopper = hopper;
         addRequirements(m_hopper);
+        this.m_leds = m_leds;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         m_hopper.setHopperExtend();
+        m_leds.hopperRequestingLeds();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -39,6 +44,7 @@ private final Hopper m_hopper;
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        m_leds.noSubsystemUsingLeds();
     }
 
     // Returns true when the command should end.

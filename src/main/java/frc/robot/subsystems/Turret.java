@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.climb.LockdownMode;
 
 /**
  *
@@ -80,7 +81,7 @@ public class Turret extends SubsystemBase {
         StatusCode status = StatusCode.StatusCodeNotInitialized;
         for (int i = 0; i < 5; ++i) {
             status = rotateShooterMotor.getConfigurator().apply(configs);
-            if (status.isOK())
+            if (status.isOK()) 
                 break;
         }
         if (!status.isOK()) {

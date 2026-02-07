@@ -6,9 +6,12 @@ import java.util.List;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.AddressableLEDBufferView;
+import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.subsystems.climb;
 import frc.robot.subsystems.leds;
 
 
@@ -17,6 +20,7 @@ import frc.robot.subsystems.leds;
  */
 public class ColorLED {
     private AddressableLEDBuffer m_ledBuffer;
+    private final Timer m_timer = new Timer();
     public AddressableLED m_led;
     // public final leds m_leds = new leds();
     // Note: buffer views are necessary because the RIO only works with 1 LED strip, this will be unecessary when SystemCore is rolled out late 2026 2027
@@ -38,9 +42,6 @@ public class ColorLED {
         
         m_led = new AddressableLED(port);
         m_ledBuffer = new AddressableLEDBuffer(totalLength);
-        //144 lights on big strand
-        //75 seems to be max amount before something explodes
-        //8 lights on small strand
         m_led.setLength(m_ledBuffer.getLength());
 
         m_led.setData(m_ledBuffer);
@@ -108,8 +109,6 @@ public class ColorLED {
         m_led.setData(m_ledBuffer);
     }
 
-
-
     public void rainbow() {
         // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
@@ -127,6 +126,47 @@ public class ColorLED {
         m_rainbowFirstPixelHue %= 180;
         m_led.setData(m_ledBuffer);
     }
+
+    public void fasterfaster() {
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            var hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
+            m_ledBuffer.setHSV(i, hue, 255, 128);
+        }
+        m_rainbowFirstPixelHue += 6;
+        m_rainbowFirstPixelHue %= 180;
+        m_led.setData(m_ledBuffer);
+    }
+
+    public void climbProgressBar() {
+        // For every pixel
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            var progress = (Robot.getInstance().m_climb.getRaiserPositionAsInt() / Robot.getInstance().m_climb.getRaiserMaxHeightAsInt() * 180) % 180;
+            m_ledBuffer.setHSV(i, progress, 255, 128);
+        }
+        m_rainbowFirstPixelHue %= 180;
+        m_led.setData(m_ledBuffer);
+    }
+
+    public void redFlashing() {
+        m_timer.start();
+        if (m_timer.get() > 0.5) {
+            for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+                m_ledBuffer.setRGB(i, 0, 0, 0);
+            }
+            while (m_timer.get() > 1) {
+                m_timer.reset();
+            }
+        }
+        else if (m_timer.get() <= 0.5) {
+            for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+                m_ledBuffer.setRGB(i, 255, 0, 0);
+            }
+            while (m_timer.get() > 1) {
+                m_timer.reset();
+            }
+        }
+        m_led.setData(m_ledBuffer);
+    }
      
     public void red() {
         
@@ -134,6 +174,17 @@ public class ColorLED {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 255, 0, 0);
+        }
+        
+        m_led.setData(m_ledBuffer);
+    }
+
+    public void maroon() {
+        
+        // For every pixel
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            // Sets the specified LED to the RGB values for red
+            m_ledBuffer.setRGB(i, 128, 0, 0);
         }
         
         m_led.setData(m_ledBuffer);
@@ -164,11 +215,21 @@ public class ColorLED {
         // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             // Sets the specified LED to the RGB values for red
+            m_ledBuffer.setRGB(i, 17, 125, 0);
+        }
+        m_led.setData(m_ledBuffer);
+    }
+    
+    public void lime() {
+
+        // For every pixel
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 0, 255, 0);
         }
         m_led.setData(m_ledBuffer);
     }
-        
+      
     public void blue() {
 
         // For every pixel
@@ -237,42 +298,5 @@ public class ColorLED {
             m_ledBuffer.setRGB(i, 255, 215, 0);
          }
          m_led.setData(m_ledBuffer);
-    }
-
-    public void tomfoolery() {
-
-        // For every pixel
-        //Color x = new Color(0,0,0);
-        for (var i = 1; i <= 140; i++) {
-            if (i%20==0 && i>0) {
-                System.out.println("i="+ i);
-                m_ledBuffer.setRGB(i/20-3
-                , 0, 0, 0);
-                m_ledBuffer.setRGB(i/20, 255, 215, 0);                       
-                m_led.setData(m_ledBuffer);
-            }
-            //m_ledBuffer.setHSV(i, hue, 0, 128);
-//https://github.com/FRC-5013-Park-Hill-Robotics/5013-RapidReact/blob/main/src/main/java/frc/robot/trobot5013lib/led/ChasePattern.java
-            // Calculate the hue - hue is easier for rainbows because the color
-
-            // shape is a circle so only one value needs to precess
-
-            //final var hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
-
-            // Set the value
-
-            
-           
-
-        }
-
-        // Increase by to make the rainbow "move"
-
-        m_rainbowFirstPixelHue += 3;
-
-        // Check bounds
-
-        m_rainbowFirstPixelHue %= 180;
-
     }
 }
