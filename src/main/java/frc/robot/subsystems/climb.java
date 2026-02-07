@@ -55,6 +55,7 @@ public class climb extends SubsystemBase {
     public boolean climbing;
     public boolean isOnTower;
     public int climbStage = 0;
+    public int lockdownDriveControl = 1;
 
     public enum LockdownMode {
         none,
@@ -119,12 +120,13 @@ public class climb extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        SmartDashboard.putBoolean("Climbing at top", climbing);
+        SmartDashboard.putBoolean("Arm is raised", climbing);
         SmartDashboard.putBoolean("Arm Bottom Switch is triggered", getBottomSwitch());
-        setLockdownMode();
         SmartDashboard.putString("Lockdown Stage", currentLockdownMode.name());
         SmartDashboard.putNumber("Climb Stage", climbStage);
         SmartDashboard.putNumber("Height Positions", raiser.getPosition().getValueAsDouble());
+        setLockdownMode();
+        setLockdownDriveControl();
     }
 
     @Override
@@ -217,6 +219,7 @@ public class climb extends SubsystemBase {
     public float getRaiserMaxHeightAsFloat() {
         return (float) ClimbConstants.raiserUpperTarget;
     }
+
     public float getRaiserPosition() {
         return (float) raiser.getPosition().getValueAsDouble();
     }
@@ -224,6 +227,7 @@ public class climb extends SubsystemBase {
     public int getRaiserMaxHeightAsInt() {
         return (int) ClimbConstants.raiserUpperTarget;
     }
+
     public int getRaiserPositionAsInt() {
         return (int) raiser.getPosition().getValueAsDouble();
     }
@@ -252,7 +256,21 @@ public class climb extends SubsystemBase {
         }
     }
 
+    public int getLockdownDriveControl() {
+        if (climbStage == 0) {
+            return lockdownDriveControl = 1;
+        } else if (climbStage == 1 || climbStage == 3) {
+            return lockdownDriveControl = 1;
+        } else {
+            return lockdownDriveControl = 0;
+        }
+    }
+
     public void setLockdownMode() {
         currentLockdownMode = getLockdownMode();
+    }
+
+    public void setLockdownDriveControl() {
+        lockdownDriveControl = getLockdownDriveControl();
     }
 }

@@ -83,6 +83,9 @@ public class leds extends SubsystemBase {
         if (ledColor == LedColor.rainbow || ledColor == LedColor.none) {
             lightStrip.rainbow();
         }
+        if (ledColor == LedColor.fasterfaster) {
+            lightStrip.fasterfaster();
+        }
     }
 
     @Override
@@ -209,7 +212,6 @@ public class leds extends SubsystemBase {
     }
     public void setModeRainbow() {
         ledColor = LedColor.rainbow;
-        lightStrip.rainbow();
         //hexValue = "#FFFFFF";
     }
     public void setModeFasterFaster() {
