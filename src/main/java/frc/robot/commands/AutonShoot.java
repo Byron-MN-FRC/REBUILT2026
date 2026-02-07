@@ -60,18 +60,23 @@ public class AutonShoot extends Command {
     @Override
     public void initialize() {
         m_leds.shooterRequestingLeds();
+        if (m_leds.usingSubsystem == leds.SubsystemUsingLEDS.shooter) {
+            m_leds.setModeFasterFaster();
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         m_Shooter.openGates(2);
+        
     } 
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         m_Shooter.stopGates();
+        m_leds.setColorNone();
         m_leds.noSubsystemUsingLeds();
     }
 
