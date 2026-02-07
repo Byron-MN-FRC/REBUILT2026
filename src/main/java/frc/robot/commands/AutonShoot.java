@@ -61,7 +61,7 @@ public class AutonShoot extends Command {
     public void initialize() {
         m_leds.shooterRequestingLeds();
         if (m_leds.usingSubsystem == leds.SubsystemUsingLEDS.shooter) {
-            m_leds.setModeFasterFaster();
+            m_leds.setColorRed();
         }
     }
 
