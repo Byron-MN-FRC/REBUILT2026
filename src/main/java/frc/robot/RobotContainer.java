@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -102,6 +103,8 @@ public class RobotContainer {
         
         m_chooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Mode", m_chooser);
+
+        SmartDashboard.putData("Subsystem: Drivetrain", drivetrain.getCurrentCommand());
     }
 
     private void configureBindings() {
@@ -112,7 +115,7 @@ public class RobotContainer {
             drivetrain.applyRequest(() ->
                 drive.withVelocityX(-gamepad.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-gamepad.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-gamepad.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(gamepad.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
 

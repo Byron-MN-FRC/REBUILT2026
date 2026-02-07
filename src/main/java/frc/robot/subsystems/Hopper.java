@@ -108,10 +108,10 @@ public class Hopper extends SubsystemBase {
         // }
         
         if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.full || Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.partial) {
-            System.out.println("Hopper lockdown");
+            // System.out.println("Hopper lockdown");
         }
         else{
-            System.out.println("Hopper no lockdown");
+            // System.out.println("Hopper no lockdown");
         }
     }
 
