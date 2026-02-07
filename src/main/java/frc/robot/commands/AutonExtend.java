@@ -24,7 +24,6 @@ private final leds m_leds;
     public AutonExtend(Hopper hopper, leds m_leds) {
         m_hopper = hopper;
         addRequirements(m_hopper);
-        addRequirements(m_leds);
         this.m_leds = m_leds;
     }
 

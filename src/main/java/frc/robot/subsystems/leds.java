@@ -88,6 +88,9 @@ public class leds extends SubsystemBase {
         if (ledColor == LedColor.fasterfaster) {
             lightStrip.fasterfaster();
         }
+        if (ledColor == LedColor.redFlashing) {
+            lightStrip.redFlashing();
+        }
     }
 
     @Override
@@ -229,6 +232,6 @@ public class leds extends SubsystemBase {
     }
     public void setModeRedFlashing() {
         ledColor = LedColor.redFlashing;
-        lightStrip.redFlashing();
+        //lightStrip.redFlashing();
     }
 }

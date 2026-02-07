@@ -81,7 +81,7 @@ public class Turret extends SubsystemBase {
         StatusCode status = StatusCode.StatusCodeNotInitialized;
         for (int i = 0; i < 5; ++i) {
             status = rotateShooterMotor.getConfigurator().apply(configs);
-            if (status.isOK())
+            if (status.isOK()) 
                 break;
         }
         if (!status.isOK()) {
