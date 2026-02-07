@@ -24,20 +24,22 @@ public class leds extends SubsystemBase {
     public enum LedColor {
         none, //no color, lights are off and the smartdashboard displays black.
         red,
-        blue,
-        lightblue,
-        green,
-        lime,
+            maroon,
         orange,
+        yellow,
+        green,
+            lime,
+        blue,
+            lightblue,
+        purple,
+            pink,
+            magenta,
         gold,
         white,
-        purple,
-        pink,
-        magenta,
-        yellow,
         rainbow,
         fasterfaster,
-        climbProgressBar
+        climbProgressBar,
+        redFlashing
     };
     public enum SubsystemUsingLEDS {
         drive,
@@ -155,6 +157,11 @@ public class leds extends SubsystemBase {
         lightStrip.red();
         hexValue = "#FF0000";
     }
+    public void setColorMaroon() {
+        ledColor = LedColor.maroon;
+        lightStrip.maroon();
+        hexValue = "#800000";
+    }
     public void setColorOrange() {
         ledColor = LedColor.orange;
         lightStrip.orange();
@@ -212,14 +219,16 @@ public class leds extends SubsystemBase {
     }
     public void setModeRainbow() {
         ledColor = LedColor.rainbow;
-        //hexValue = "#FFFFFF";
     }
     public void setModeFasterFaster() {
         ledColor = LedColor.fasterfaster;
-        lightStrip.fasterfaster();
     }
     public void setModeClimbProgressBar() {
         ledColor = LedColor.climbProgressBar;
         lightStrip.climbProgressBar();
+    }
+    public void setModeRedFlashing() {
+        ledColor = LedColor.redFlashing;
+        lightStrip.redFlashing();
     }
 }
