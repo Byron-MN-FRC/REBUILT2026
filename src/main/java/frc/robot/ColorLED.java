@@ -18,7 +18,6 @@ import frc.robot.subsystems.leds;
  * Manages multiple LED strips on one PWM port using buffer views.
  */
 public class ColorLED {
-    public final climb m_climb = new climb();
     private AddressableLEDBuffer m_ledBuffer;
     public AddressableLED m_led;
     // public final leds m_leds = new leds();
@@ -139,7 +138,7 @@ public class ColorLED {
     public void climbProgressBar() {
         // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            var progress = (m_climb.getRaiserPositionAsInt() / m_climb.getRaiserMaxHeightAsInt() * 180) % 180;
+            var progress = (Robot.getInstance().m_climb.getRaiserPositionAsInt() / Robot.getInstance().m_climb.getRaiserMaxHeightAsInt() * 180) % 180;
             m_ledBuffer.setHSV(i, progress, 255, 128);
         }
         m_rainbowFirstPixelHue %= 180;
