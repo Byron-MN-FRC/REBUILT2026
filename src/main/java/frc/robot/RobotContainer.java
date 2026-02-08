@@ -15,6 +15,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -55,6 +56,7 @@ public class RobotContainer {
     public final climb m_climb = new climb();
     public final Hopper m_hopper = new Hopper();
     public final leds m_leds = new leds();
+    private final DigitalOutput pointer = new DigitalOutput(3);
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -78,7 +80,7 @@ public class RobotContainer {
     //public final ColorLED lightStrip = new ColorLED(LED_PORT, LED_LENGTHS);
 
     public RobotContainer() {
-
+        // pointer.set(true);
         NamedCommands.registerCommand("AutonRetract", new AutonRetract(m_hopper));
         NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper));
         NamedCommands.registerCommand("AutonShoot", new AutonShoot(m_shooter));
@@ -104,7 +106,6 @@ public class RobotContainer {
         m_chooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Mode", m_chooser);
 
-        SmartDashboard.putData("Subsystem: Drivetrain", drivetrain.getCurrentCommand());
     }
 
     private void configureBindings() {
@@ -115,7 +116,7 @@ public class RobotContainer {
             drivetrain.applyRequest(() ->
                 drive.withVelocityX(-gamepad.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-gamepad.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(gamepad.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(-gamepad.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
 
@@ -133,11 +134,11 @@ public class RobotContainer {
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
-        gamepad.back().and(gamepad.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        gamepad.back().and(gamepad.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        gamepad.start().and(gamepad.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        gamepad.start().and(gamepad.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
-        gamepad.start().and(gamepad.back()).onTrue(new InstantCommand(() -> SignalLogger.stop()).andThen(new InstantCommand(() ->System.out.println("Stopping Loger"))));
+        // gamepad.back().and(gamepad.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
+        // gamepad.back().and(gamepad.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+        // gamepad.start().and(gamepad.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+        // gamepad.start().and(gamepad.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        // gamepad.start().and(gamepad.back()).onTrue(new InstantCommand(() -> SignalLogger.stop()).andThen(new InstantCommand(() ->System.out.println("Stopping Loger"))));
         // Reset the field-centric heading on left bumper press.
         gamepad.a().toggleOnTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         gamepad.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
