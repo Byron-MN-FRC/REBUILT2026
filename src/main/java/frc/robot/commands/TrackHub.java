@@ -4,23 +4,19 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix6.mechanisms.swerve.LegacySwerveRequest.RobotCentric;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotContainer;
 import frc.robot.TurretCam;
+import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Turret;
-import frc.robot.subsystems.Leds;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class TrackHub extends Command {
 
   private Turret m_turret;
-  private final Leds m_leds;
+  private final LedsSubsystem m_leds;
 
   /** Creates a new trackHub. */
-  public TrackHub(Turret subsystem, Leds leds) {
+  public TrackHub(Turret subsystem, LedsSubsystem leds) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     m_leds = leds;
@@ -38,17 +34,17 @@ public class TrackHub extends Command {
   public void execute() {
     m_turret.aim((m_turret.rotateShooterMotor.getPosition().getValueAsDouble() * 360) + TurretCam.getAngleError());
     if (TurretCam.getAngleError() == 0 && TurretCam.targetLocated() == true) {
-      if (m_leds.usingSubsystem == Leds.SubsystemUsingLEDS.turret) {
+      if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
         m_leds.setColorGreen();
       }
     }
     else if(TurretCam.getAngleError() <= 5 && TurretCam.targetLocated() == false) {
-      if (m_leds.usingSubsystem == Leds.SubsystemUsingLEDS.turret) {
+      if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
         m_leds.setColorYellow();
       }
     }
     else{
-      if (m_leds.usingSubsystem == Leds.SubsystemUsingLEDS.turret) {
+      if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
         m_leds.setColorRed();
       }
     }

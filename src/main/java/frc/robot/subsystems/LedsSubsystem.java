@@ -13,14 +13,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ColorLED;
 import frc.robot.Constants;
-import frc.robot.Robot;
-import frc.robot.subsystems.Climb;
 
-public class Leds extends SubsystemBase {
+public class LedsSubsystem extends SubsystemBase {
     public enum LedColor {
         none, //no color, lights are off and the smartdashboard displays black.
         red,
@@ -69,7 +66,7 @@ public class Leds extends SubsystemBase {
     public SubsystemUsingLEDS usingSubsystem = SubsystemUsingLEDS.none;
     public final ColorLED lightStrip;
 
-    public Leds() {
+    public LedsSubsystem() {
         lightStrip = new ColorLED(Constants.LEDConstants.LED_PORT, Constants.LEDConstants.LED_LENGTHS);
 
         hexValue = "#000000";

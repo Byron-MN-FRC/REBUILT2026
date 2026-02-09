@@ -14,14 +14,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Hopper;
-import frc.robot.subsystems.Leds;
+import frc.robot.subsystems.LedsSubsystem;
 
 public class AutonExtend extends Command {
 private final Hopper m_hopper;
-private final Leds m_leds;
+private final LedsSubsystem m_leds;
 
 
-    public AutonExtend(Hopper hopper, Leds m_leds) {
+    public AutonExtend(Hopper hopper, LedsSubsystem m_leds) {
         m_hopper = hopper;
         addRequirements(m_hopper);
         this.m_leds = m_leds;
@@ -32,7 +32,7 @@ private final Leds m_leds;
     public void initialize() {
         m_hopper.setHopperExtend();
         m_leds.hopperRequestingLeds();
-        if (m_leds.usingSubsystem == Leds.SubsystemUsingLEDS.hopper) {
+        if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.hopper) {
             m_leds.setColorWhite();
         }
     }
