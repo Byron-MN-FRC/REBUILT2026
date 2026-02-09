@@ -70,14 +70,6 @@ public class Turret extends SubsystemBase {
         configs.Slot0.kI = 0; // No output for integrated error
         configs.Slot0.kD = 0.5; // A velocity error of 1 rps results in 0.5 V output
 
-        // // Peak output of 8 V
-        // configs.Voltage.withPeakForwardVoltage(Volts.of(8))
-        //         .withPeakReverseVoltage(Volts.of(-8));
-
-        // // Peak output of 120 A
-        // configs.TorqueCurrent.withPeakForwardTorqueCurrent(Amps.of(120))
-        //         .withPeakReverseTorqueCurrent(Amps.of(-120));
-
         // configs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
         // configs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 5; // 5 rotations
         // configs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
