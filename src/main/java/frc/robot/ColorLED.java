@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.util.Color;
-import frc.robot.subsystems.Climb;
-import frc.robot.subsystems.Leds;
+import frc.robot.subsystems.ClimbSubsystem;
+import frc.robot.subsystems.LedsSubsystem;
 
 
 /**

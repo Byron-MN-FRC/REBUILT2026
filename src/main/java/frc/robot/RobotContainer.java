@@ -8,7 +8,6 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
-import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -20,13 +19,9 @@ import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.AutonExtend;
 import frc.robot.commands.AutonRetract;
 import frc.robot.commands.AutonShoot;
@@ -43,20 +38,20 @@ import frc.robot.commands.ledtestcommands.fasterfaster;
 // import frc.robot.commands.Retract;
 // import frc.robot.commands.Extend;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
-import frc.robot.subsystems.Climb;
-import frc.robot.subsystems.Leds;
 
 public class RobotContainer {
 
     public final Shooter m_shooter = new Shooter();
     public final Turret m_turret = new Turret();
-    public final Climb m_climb = new Climb();
+    public final ClimbSubsystem m_climb = new ClimbSubsystem();
     public final Hopper m_hopper = new Hopper();
-    public final leds m_leds = new leds();
+    public final LedsSubsystem m_leds = new LedsSubsystem();
     private final DigitalOutput pointer = new DigitalOutput(3);
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 

@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.Climb.LockdownMode;
+import frc.robot.subsystems.ClimbSubsystem.LockdownMode;
 
 /**
  *
@@ -131,10 +131,13 @@ public class Turret extends SubsystemBase {
             if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.full || Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.partial) {
                 rotateShooterMotor.set(0);
                 isActive = false;
+            } else {
+                rotateShooterMotor.set(.04);
+                isActive = true;
             }
         } else {
-            rotateShooterMotor.set(.04);
-            isActive = true;
+            rotateShooterMotor.set(0);
+            isActive = false;
         }
 
     }
@@ -144,10 +147,13 @@ public class Turret extends SubsystemBase {
              if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.full || Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.partial) {
                 rotateShooterMotor.set(0);
                 isActive = false;
+             } else {
+                rotateShooterMotor.set(-0.04);
+                isActive = true;
              }
         } else {
-            rotateShooterMotor.set(-.04);
-            isActive = true;
+            rotateShooterMotor.set(0);
+            isActive = false;
         }
     }
 

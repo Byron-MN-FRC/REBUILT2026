@@ -18,9 +18,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ColorLED;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.ClimbSubsystem;
 
-public class Leds extends SubsystemBase {
+public class LedsSubsystem extends SubsystemBase {
     public enum LedColor {
         none, //no color, lights are off and the smartdashboard displays black.
         red,
@@ -69,7 +69,7 @@ public class Leds extends SubsystemBase {
     public SubsystemUsingLEDS usingSubsystem = SubsystemUsingLEDS.none;
     public final ColorLED lightStrip;
 
-    public Leds() {
+    public LedsSubsystem() {
         lightStrip = new ColorLED(Constants.LEDConstants.LED_PORT, Constants.LEDConstants.LED_LENGTHS);
 
         hexValue = "#000000";
