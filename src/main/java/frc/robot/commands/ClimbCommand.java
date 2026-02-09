@@ -12,15 +12,10 @@
 
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
-import java.util.function.DoubleSupplier;
-
 import frc.robot.ColorLED;
-import frc.robot.Constants;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.ClimbSubsystem;
-import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Turret;
 
 
