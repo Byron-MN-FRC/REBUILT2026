@@ -160,7 +160,6 @@ public class Turret extends SubsystemBase {
             }
         }).until(() -> zeroSwitch.get())
                 .finallyDo(() -> {
-                    System.out.println("FINISH");
                     rotateShooterMotor.setControl(m_motionMagicVoltage.withPosition(neutralPosition));
                 });
     }
