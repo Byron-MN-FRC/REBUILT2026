@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.26010184034544,
-        "y": 5.070215520262758
+        "x": 3.967834445248638,
+        "y": 4.975266004721135
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.5,
-        "y": 5.0
+        "x": 3.0,
+        "y": 5.25
       },
       "prevControl": {
-        "x": 0.2140335192515585,
-        "y": 4.996267197834041
+        "x": 2.750016397269181,
+        "y": 5.252863278840792
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 90.0
+    "rotation": 135.6
   },
   "reversed": false,
   "folder": "DepotAuton",

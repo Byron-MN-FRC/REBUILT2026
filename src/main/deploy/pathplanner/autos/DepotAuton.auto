@@ -5,65 +5,71 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "DepotPath1"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "DummyAutoShoot"
+            "name": "AutonShoot"
           }
         },
         {
-          "type": "parallel",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "DepotPath1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "DummyAutoExtendIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "DepotPath2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "DummyAutoIntake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "DummyAutoShoot"
-                }
-              }
-            ]
+            "waitTime": 3.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "DepotPath3"
+            "pathName": "DepotPath2"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "DepotPath3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonExtend"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "DepotPath4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonRetract"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "DummyAutoShoot"
+            "name": "AutonShoot"
           }
         }
       ]

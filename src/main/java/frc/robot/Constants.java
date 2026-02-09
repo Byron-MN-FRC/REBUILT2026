@@ -41,7 +41,7 @@ public class Constants {
 
     public static final class LEDConstants {
         public static final int LED_PORT = 2;
-        public static final int[] LED_LENGTHS = {8, 8};
+        public static final int[] LED_LENGTHS = {8};
     }
     
     public static final class VisionConstants {
