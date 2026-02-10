@@ -223,12 +223,11 @@ public class LedsSubsystem extends SubsystemBase {
     public void setModeFasterFaster() {
         ledColor = LedColor.fasterfaster;
     }
-    public void setModeClimbProgressBar() {
+    public void setModeClimbProgressBar() { //this might not work? I've not tested it yet.
         ledColor = LedColor.climbProgressBar;
         lightStrip.climbProgressBar();
     }
     public void setModeRedFlashing() {
         ledColor = LedColor.redFlashing;
-        //lightStrip.redFlashing();
     }
 }
