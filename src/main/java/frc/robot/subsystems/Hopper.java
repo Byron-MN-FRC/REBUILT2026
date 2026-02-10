@@ -72,8 +72,6 @@ public class Hopper extends SubsystemBase {
 
         // hopperLeftSolenoid = new DoubleSolenoid(20, PneumaticsModuleType.REVPH,3 ,4 );
 //        hopperRightSolenoid = new DoubleSolenoid(5, PneumaticsModuleType.REVPH, 12,13);
-        hopperExtendSwitch = new DigitalInput(0);
-        addChild("hopperExtendSwitch", hopperExtendSwitch);
 
         hopperRetractSwitch = new DigitalInput(1);
         addChild("hopperRetractSwitch", hopperRetractSwitch);
@@ -89,7 +87,6 @@ public class Hopper extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        SmartDashboard.putBoolean("Hopper Extended", isHopperExtended());
         SmartDashboard.putBoolean("Hopper Retracted", isHopperRetracted());
         SmartDashboard.putNumber("Hopper Floor Transfer Speed", hopperFloorTransferSecure.get());
 

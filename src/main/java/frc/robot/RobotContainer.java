@@ -16,6 +16,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -73,7 +74,6 @@ public class RobotContainer {
     private final CommandXboxController accessory = new CommandXboxController(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-    //public final ColorLED lightStrip = new ColorLED(LED_PORT, LED_LENGTHS);
 
     public RobotContainer() {
         // pointer.set(true);
@@ -99,11 +99,14 @@ public class RobotContainer {
         SmartDashboard.putData("FasterFasterLights", new fasterfaster(m_leds));
 
 
+
         // Configure the button bindings
         configureBindings();
         
         m_chooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Mode", m_chooser);
+
+        
 
     }
 
