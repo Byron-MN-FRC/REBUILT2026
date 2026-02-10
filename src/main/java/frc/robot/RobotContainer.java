@@ -35,6 +35,7 @@ import frc.robot.commands.ClimbLowerAuto;
 import frc.robot.commands.ClimbRaiseAuto;
 import frc.robot.commands.ClimbZeroing;
 import frc.robot.commands.FuelGRAB;
+import frc.robot.commands.FuelJAMMED;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.ShooterSpin;
@@ -160,6 +161,8 @@ public class RobotContainer {
         accessory.rightTrigger().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
         accessory.x().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+    
+        gamepad.rightTrigger().onTrue(new FuelJAMMED(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
     public CommandXboxController getaccessory() {
       return accessory;
