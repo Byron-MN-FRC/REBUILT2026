@@ -30,44 +30,64 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "ClimbPath2"
-          }
-        },
-        {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "wait",
+                "type": "path",
                 "data": {
-                  "waitTime": 3.0
+                  "pathName": "ClimbPath2"
                 }
               },
               {
-                "type": "named",
+                "type": "deadline",
                 "data": {
-                  "name": "ClimbRaiseAuto"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 3.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ClimbRaiseAuto"
+                      }
+                    }
+                  ]
                 }
               }
             ]
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "wait",
+                "type": "path",
                 "data": {
-                  "waitTime": 3.0
+                  "pathName": "ClimbPath3"
                 }
               },
               {
-                "type": "named",
+                "type": "deadline",
                 "data": {
-                  "name": "ClimbLowerAuto"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 3.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ClimbLowerAuto"
+                      }
+                    }
+                  ]
                 }
               }
             ]
