@@ -7,7 +7,7 @@ package frc.robot;
 import java.util.List;
 
 import com.ctre.phoenix6.HootAutoReplay;
-import com.pathplanner.lib.util.FlippingUtil;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
@@ -15,8 +15,6 @@ import edu.wpi.first.hal.HAL;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.util.Color;
@@ -41,23 +39,14 @@ public class Robot extends TimedRobot {
         .withTimestampReplay()
         .withJoystickReplay();
 
-    public final Field2d m_autoField = new Field2d();
-    public List<Pose2d> getPathPoses() {
-        return m_autoField.getObject("traj").getPoses();
-    }
-    
+
+
 
     public Robot() {
         // This is literally the government tracker
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         enableLiveWindowInTest(true);
 
-        m_autoField.getObject("traj").setPoses();
-        //setTrajectory(m_robotContainer.m_trajectory);
-
-       //if (DriverStation.getAlliance().get() == Alliance.Red) {
-        //       autoStartPose = FlippingUtil.flipFieldPose(autoStartPose);
-        // }
     }
 
     public static RobotContainer getInstance(){
