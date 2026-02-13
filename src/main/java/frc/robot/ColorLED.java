@@ -144,15 +144,15 @@ public class ColorLED {
 
     public void redFlashing() {
         m_timer.start();
-        if (m_timer.get() > 0.5) {
+        if (m_timer.get() > 0.25) {
             for (var i = 0; i < m_ledBuffer.getLength(); i++) {
                 m_ledBuffer.setRGB(i, 0, 0, 0);
             }
-            while (m_timer.get() > 1) {
+            while (m_timer.get() > 0.5) {
                 m_timer.reset();
             }
         }
-        else if (m_timer.get() <= 0.5) {
+        else if (m_timer.get() <= 0.25) {
             for (var i = 0; i < m_ledBuffer.getLength(); i++) {
                 m_ledBuffer.setRGB(i, 255, 0, 0);
             }
