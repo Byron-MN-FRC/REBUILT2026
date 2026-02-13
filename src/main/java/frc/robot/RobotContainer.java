@@ -40,6 +40,7 @@ import frc.robot.commands.Intake;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.ShooterSpin;
 import frc.robot.commands.TrackHub;
+import frc.robot.commands.FloorTransfer;
 // import frc.robot.commands.Retract;
 // import frc.robot.commands.Extend;
 import frc.robot.generated.TunerConstants;
@@ -146,23 +147,25 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
-        accessory.a().onTrue(new Climb(m_climb, m_leds, m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.y().onTrue(new Climb(m_climb, m_leds, m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.b().onTrue(new ClimbZeroing(m_climb,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
+        accessory.a().onTrue(new FloorTransfer(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
         accessory.start().onTrue(m_turret.checkZeroLeft().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                         
-        accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        //accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                         
         accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        accessory.back().whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.rightTrigger().whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
-        accessory.rightTrigger().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        gamepad.rightTrigger().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
-        accessory.x().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        gamepad.b().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     
-        gamepad.rightTrigger().onTrue(new FuelJAMMED(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        gamepad.rightBumper().onTrue(new FuelJAMMED(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
     public CommandXboxController getaccessory() {
       return accessory;
