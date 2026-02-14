@@ -21,6 +21,10 @@ package frc.robot;
  */
 public class Constants {
 
+    public static final class Debug {
+        public static final boolean DEBUG_MODE = false;
+    }
+
     public static final class DriveConstants {}
 
     public static final class IntakeHopperConstants {
