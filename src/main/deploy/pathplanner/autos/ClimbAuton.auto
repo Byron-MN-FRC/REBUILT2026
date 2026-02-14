@@ -40,22 +40,9 @@
                 }
               },
               {
-                "type": "deadline",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 3.0
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "ClimbRaiseAuto"
-                      }
-                    }
-                  ]
+                  "name": "ClimbRaiseAuto"
                 }
               }
             ]
@@ -72,22 +59,9 @@
                 }
               },
               {
-                "type": "deadline",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 3.0
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "ClimbLowerAuto"
-                      }
-                    }
-                  ]
+                  "name": "ClimbLowerAuto"
                 }
               }
             ]
