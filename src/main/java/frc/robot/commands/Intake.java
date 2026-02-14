@@ -13,6 +13,7 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.ColorLED;
+import frc.robot.Constants;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.LedsSubsystem;
 
@@ -51,7 +52,9 @@ public class Intake extends Command {
             }
             m_hopper.setHopperRetract();
         }
+        if (Constants.Debug.DEBUG_MODE) {
         System.out.println("Lights on");
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
