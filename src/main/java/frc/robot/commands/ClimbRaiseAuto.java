@@ -12,6 +12,7 @@
 
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.LedsSubsystem;
 
@@ -54,9 +55,11 @@ public class ClimbRaiseAuto extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        System.out.println("+---------------------+");
-        System.out.println("| Auto Climb Engaging |");
-        System.out.println("+---------------------+");
+        if (Constants.Debug.DEBUG_MODE) {
+            System.out.println("+---------------------+");
+            System.out.println("| Auto Climb Engaging |");
+            System.out.println("+---------------------+");
+        }
         m_leds.climbRequestingLeds();
         if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.climb) {
             m_leds.setColorLime();
@@ -67,21 +70,23 @@ public class ClimbRaiseAuto extends Command {
     @Override
     public void execute() {
         m_climb.setUpperPosition();
-        System.out.println("Raising Climb...");
+        if (Constants.Debug.DEBUG_MODE) {System.out.println("Raising Climb...");}
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        System.out.println("Auto incrementing climb stage...");
+        if (Constants.Debug.DEBUG_MODE) {System.out.println("Auto incrementing climb stage...");}
         m_climb.climbStageIncrement();
         m_climb.setTop();
         m_leds.setColorNone();
         m_leds.noSubsystemUsingLeds();
-        System.out.println("+------------------------+");
-        System.out.println("| Auto Climb Disengaging |");
-        System.out.println("+------------------------+");
-        System.out.println("=");
+        if (Constants.Debug.DEBUG_MODE) {
+            System.out.println("+------------------------+");
+            System.out.println("| Auto Climb Disengaging |");
+            System.out.println("+------------------------+");
+            System.out.println("=");
+        }
     }
 
     // Returns true when the command should end.

@@ -126,7 +126,7 @@ public class ClimbSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("Arm is raised", climbing);
         SmartDashboard.putBoolean("Arm Retracted", getBottomSwitch());
         SmartDashboard.putString("Lockdown Stage", currentLockdownMode.name());
-        SmartDashboard.putNumber("Climb Stage", climbStage);
+        if (Constants.Debug.DEBUG_MODE) {SmartDashboard.putNumber("Climb Stage", climbStage);}
         SmartDashboard.putNumber("Height Positions", raiser.getPosition().getValueAsDouble());
         setLockdownMode();
         setLockdownDriveControl();

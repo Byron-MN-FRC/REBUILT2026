@@ -13,6 +13,7 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.ColorLED;
+import frc.robot.Constants;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.LedsSubsystem;
@@ -66,24 +67,30 @@ public class ClimbCommand extends Command {
     @Override
     public void initialize() {
         m_leds.climbRequestingLeds();
-        System.out.println("+----------------+");
-        System.out.println("| Climb engaging |");
-        System.out.println("+----------------+");
+        if (Constants.Debug.DEBUG_MODE) {
+            System.out.println("+----------------+");
+            System.out.println("| Climb engaging |");
+            System.out.println("+----------------+");
+        }
         if (!m_climb.isClimbing()) {   
             if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.climb) {
                 m_leds.setColorMagenta();
             }
-            System.out.println("<<<< Climbing up >>>>");
-            System.out.println("<");
-            System.out.println("<");
+            if (Constants.Debug.DEBUG_MODE) {
+                System.out.println("<<<< Climbing up >>>>");
+                System.out.println("<");
+                System.out.println("<");
+            }  
         }
         else {
             if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.climb) {
                 m_leds.setColorPurple();
             }
-            System.out.println(">>>> Climbing down <<<<");
-            System.out.println(">");
-            System.out.println(">");
+            if (Constants.Debug.DEBUG_MODE) {
+                System.out.println(">>>> Climbing down <<<<");
+                System.out.println(">");
+                System.out.println(">");
+            }
         }
         System.out.println("Lights on");
 
@@ -119,11 +126,13 @@ public class ClimbCommand extends Command {
     public void end(boolean interrupted) {
         m_climb.toggleClimbing();
         m_leds.noSubsystemUsingLeds();
-        System.out.println("+-------------------+");
-        System.out.println("| Climb disengaging |");
-        System.out.println("+-------------------+");
-        System.out.println("=");
-        System.out.println("Incrementing climb stage...");
+        if (Constants.Debug.DEBUG_MODE) {
+            System.out.println("+-------------------+");
+            System.out.println("| Climb disengaging |");
+            System.out.println("+-------------------+");
+            System.out.println("=");
+            System.out.println("Incrementing climb stage...");
+        }
         m_climb.climbStageIncrement();
         if (m_climb.getClimbStage() == 0) {
             m_leds.setColorNone();
