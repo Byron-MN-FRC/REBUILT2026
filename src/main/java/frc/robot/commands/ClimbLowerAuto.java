@@ -59,7 +59,7 @@ public class ClimbLowerAuto extends Command {
         System.out.println("+---------------------+");
         m_leds.climbRequestingLeds();
         if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.climb) {
-            m_leds.setColorLime();
+            m_leds.setColorGreen();
         }
     }
 

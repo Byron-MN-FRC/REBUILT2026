@@ -44,7 +44,7 @@ public class FuelGRAB extends Command {
     public void initialize() {
         m_leds.hopperRequestingLeds();
         if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.hopper) {
-            m_leds.setColorRed();
+            m_leds.setColorOrange();
         }
     }
 

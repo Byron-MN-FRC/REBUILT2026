@@ -41,7 +41,7 @@ public class Intake extends Command {
         m_leds.hopperRequestingLeds();
         if (!m_hopper.isExtending()) {   
             if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.hopper) {
-                m_leds.setColorMagenta();
+                m_leds.setModeGreenFlashing();
             }
             m_hopper.setHopperExtend();
         }

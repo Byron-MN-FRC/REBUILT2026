@@ -58,7 +58,7 @@ public class ClimbZeroing extends Command {
         System.out.println("+---------------+");
         System.out.println("| Climb Zeroing |");
         System.out.println("+---------------+");
-        m_leds.setColorRed();
+        m_leds.setModeBlueFlashing();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
