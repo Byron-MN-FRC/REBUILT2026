@@ -13,6 +13,7 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
 
 public class Shooter extends SubsystemBase {
@@ -76,9 +77,12 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+    
+    if (Constants.Debug.DEBUG_MODE) {
     SmartDashboard.putNumber("Shooter RPM", leftShoot.getVelocity().getValueAsDouble() * 60.0);
     SmartDashboard.putBoolean("Shooter Ready", isAtTargetRPM());
-
+    }
+  
     spinKrakens(targetRPM);
 
   }

@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.ClimbSubsystem.LockdownMode;
 
@@ -96,9 +97,10 @@ public class Hopper extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        SmartDashboard.putBoolean("Hopper Retracted", isHopperRetracted());
-        SmartDashboard.putNumber("Hopper Floor Transfer Speed", hopperFloorTransferSecure.get());
-
+        if (Constants.Debug.DEBUG_MODE) {
+            SmartDashboard.putBoolean("Hopper Retracted", isHopperRetracted());
+            SmartDashboard.putNumber("Hopper Floor Transfer Speed", hopperFloorTransferSecure.get());
+        }
         // if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.partial) {
         //     // Apply partial lockdown behavior
         // } else if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.full) {
