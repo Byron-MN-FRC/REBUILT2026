@@ -17,6 +17,10 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+<<<<<<< AutonDevelopmentV5
+=======
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+>>>>>>> main
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -30,6 +34,8 @@ public class Robot extends TimedRobot {
     //private int m_rainbowFirstPixelHue;
     private Color[] redWhiteArray = {Color.kBlueViolet, Color.kBlue};
     private Color[] blueWhiteArray = {Color.kBlue, Color.kWhite};
+
+    public final Field2d field = new Field2d();
 
     private static final RobotContainer m_robotContainer = new RobotContainer();
     //public static final ColorLED ColorLED = new ColorLED();
@@ -46,7 +52,12 @@ public class Robot extends TimedRobot {
         // This is literally the government tracker
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         enableLiveWindowInTest(true);
+<<<<<<< AutonDevelopmentV5
 
+=======
+        SmartDashboard.putNumber("Robot Gyro", m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees());
+        SmartDashboard.putData("Robot Position", field);
+>>>>>>> main
     }
 
     public static RobotContainer getInstance(){

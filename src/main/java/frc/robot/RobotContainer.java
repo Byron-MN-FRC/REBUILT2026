@@ -43,6 +43,7 @@ import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.ShooterSpin;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.ledtestcommands.fasterfaster;
+import frc.robot.commands.ledtestcommands.flash;
 // import frc.robot.commands.Retract;
 // import frc.robot.commands.Extend;
 import frc.robot.generated.TunerConstants;
@@ -106,6 +107,8 @@ public class RobotContainer {
         SmartDashboard.putData("Intake", new Intake(m_hopper, m_leds));
 
         SmartDashboard.putData("FasterFasterLights", new fasterfaster(m_leds));
+        SmartDashboard.putData("Flashing lights", new flash(m_leds));
+
 
 
         // Configure the button bindings
@@ -119,6 +122,8 @@ public class RobotContainer {
             };
         });
         SmartDashboard.putData("Auto Mode", m_chooser);
+
+        
 
     }
 
