@@ -64,14 +64,14 @@ public class ShooterSpin extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        SmartDashboard.putNumber("Rotation", m_turret.rotateShooterMotor.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("Rotation", m_turret.getAngleRotations());
         if (Robot.getInstance().getaccessory().getHID().getRightBumperButtonPressed()) {
             m_turret.spinRight();
         }
         if (Robot.getInstance().getaccessory().getHID().getLeftBumperButtonPressed()) {
             m_turret.spinLeft();
-            if (m_turret.zeroSwitch.get() == true) {
-                m_turret.rotateShooterMotor.set(0);
+            if (m_turret.getZeroSwitch() == true) {
+                m_turret.spinStop();
             }
         }
         else if (Robot.getInstance().getaccessory().getHID().getLeftBumperButtonReleased() || Robot.getInstance().getaccessory().getHID().getRightBumperButtonReleased()) {

@@ -4,15 +4,16 @@
 
 package frc.robot;
 
-public class TurretCam {
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+public class TurretCam {
     /*
      * Returns the horizontal angle error from the Limelight.
      * Negative value indicates target is to the left (robot needs to turn counterclockwise to center).
      * Positive value indicates target is to the right (robot needs to turn clockwise to center).
      */
     public static double getAngleError() {
-        if (LimelightHelpers.getTV(Constants.VisionConstants.TURRET_CAM)) {
+        if (targetLocated()) {
             return -LimelightHelpers.getTX(Constants.VisionConstants.TURRET_CAM);
         } else {
             return 0;
@@ -22,4 +23,8 @@ public class TurretCam {
     public static boolean targetLocated() {
         return LimelightHelpers.getTV(Constants.VisionConstants.TURRET_CAM);
     } 
+
+    public static boolean targetLocked() {
+        return targetLocated() && Math.abs(getAngleError()) < Constants.VisionConstants.ANGLE_ERROR_THRESHOLD;
+    }
 }

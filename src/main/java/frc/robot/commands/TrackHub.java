@@ -4,7 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.TurretCam;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Turret;
@@ -14,6 +16,7 @@ public class TrackHub extends Command {
 
   private Turret m_turret;
   private final LedsSubsystem m_leds;
+  private Timer m_timer = new Timer();
 
   /** Creates a new trackHub. */
   public TrackHub(Turret subsystem, LedsSubsystem leds) {
@@ -27,23 +30,40 @@ public class TrackHub extends Command {
   @Override
   public void initialize() {
     m_leds.turretRequestingLeds();
+    m_timer.reset();
+    m_timer.stop();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_turret.aim((m_turret.rotateShooterMotor.getPosition().getValueAsDouble() * 360) + TurretCam.getAngleError());
+
+    if (TurretCam.targetLocated() == true) {
+      m_turret
+          .aimRelativeDegrees((m_turret.getAngleDegrees()) + TurretCam.getAngleError());
+      m_timer.stop();
+      m_timer.reset();
+
+    } else if (!TurretCam.targetLocated() && !m_timer.isRunning()) {
+      m_timer.start();
+    }
+
+    if (m_timer.hasElapsed(Constants.TurretShooterConstants.TURRET_CAM_TIMEOUT)) {
+      m_turret.aimDegrees(Constants.TurretShooterConstants.NEUTRAL_POSITION);
+    }
+
+
+    // Generate LED colors based on how close the turret angle is to the target.
+    // Green is on target, yellow is close, and red is far.
     if (TurretCam.getAngleError() == 0 && TurretCam.targetLocated() == true) {
       if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
         m_leds.setColorGreen();
       }
-    }
-    else if(TurretCam.getAngleError() <= 5 && TurretCam.targetLocated() == false) {
+    } else if (TurretCam.getAngleError() <= 5 && TurretCam.targetLocated() == false) {
       if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
         m_leds.setColorYellow();
       }
-    }
-    else{
+    } else {
       if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
         m_leds.setColorRed();
       }

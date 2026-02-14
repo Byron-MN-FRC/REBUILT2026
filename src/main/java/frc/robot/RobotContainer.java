@@ -8,15 +8,23 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.util.PathPlannerLogging;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -39,6 +47,7 @@ import frc.robot.commands.ShooterSpin;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.ledtestcommands.fasterfaster;
 import frc.robot.commands.FloorTransfer;
+import frc.robot.commands.ledtestcommands.flash;
 // import frc.robot.commands.Retract;
 // import frc.robot.commands.Extend;
 import frc.robot.generated.TunerConstants;
@@ -78,7 +87,8 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     //public final ColorLED lightStrip = new ColorLED(LED_PORT, LED_LENGTHS);
-    Field2d field = new Field2d();
+    public final Field2d field = new Field2d();
+    public final Field2d m_autoField = new Field2d();
 
     public RobotContainer() {
         // pointer.set(true);
@@ -103,13 +113,23 @@ public class RobotContainer {
         SmartDashboard.putData("Intake", new Intake(m_hopper, m_leds));
 
         SmartDashboard.putData("FasterFasterLights", new fasterfaster(m_leds));
+        SmartDashboard.putData("Flashing lights", new flash(m_leds));
+
 
 
         // Configure the button bindings
         configureBindings();
         
         m_chooser = AutoBuilder.buildAutoChooser();
+         m_chooser.onChange(new Consumer<Command>() {
+            public void accept(Command t) {
+                setFieldTrajectory(getPathPoses(m_chooser.getSelected().getName()), m_autoField);
+                //m_vision.updateAutoStartPosition(m_chooser.getSelected().getName());
+            };
+        });
         SmartDashboard.putData("Auto Mode", m_chooser);
+
+        
 
     }
 
@@ -177,5 +197,24 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         return m_chooser.getSelected();
+    }
+
+    public List<Pose2d> getPathPoses(String autoName) {
+        List<PathPlannerPath> paths;
+        try {
+            paths = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
+        } catch (Exception e){
+                System.out.println(e.getMessage());
+                paths = new ArrayList<>();
+        }
+        List<Pose2d> poses = new ArrayList<>();
+        for(PathPlannerPath path : paths) {
+            poses.addAll(path.getPathPoses());
+        }
+        return poses;
+    }
+
+    public void setFieldTrajectory(List<Pose2d> poses, Field2d field) {
+        field.getObject("traj").setPoses(poses);
     }
 }
