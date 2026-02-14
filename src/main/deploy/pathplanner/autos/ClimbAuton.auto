@@ -30,19 +30,13 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "ClimbPath2"
-          }
-        },
-        {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "wait",
+                "type": "path",
                 "data": {
-                  "waitTime": 3.0
+                  "pathName": "ClimbPath2"
                 }
               },
               {
@@ -55,13 +49,13 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "wait",
+                "type": "path",
                 "data": {
-                  "waitTime": 3.0
+                  "pathName": "ClimbPath3"
                 }
               },
               {
