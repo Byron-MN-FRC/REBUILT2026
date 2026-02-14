@@ -91,15 +91,12 @@ public class LedsSubsystem extends SubsystemBase {
         if (ledColor == LedColor.redFlashing) {
             lightStrip.redFlashing();
         }
-        // if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.full) {
-        //     lightStrip.redFlashing();
-        // }
-        // else if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.partial) {
-        //     lightStrip.red();
-        // }
-        // else{
-            
-        // }
+        if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.full) {
+            lightStrip.redFlashing();
+        }
+        else if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.partial) {
+            lightStrip.red();
+        }
     }
 
     @Override
