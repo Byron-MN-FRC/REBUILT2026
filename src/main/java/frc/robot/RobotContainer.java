@@ -16,6 +16,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,6 +36,7 @@ import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.ShooterSpin;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.ledtestcommands.fasterfaster;
+import frc.robot.commands.ledtestcommands.flash;
 // import frc.robot.commands.Retract;
 // import frc.robot.commands.Extend;
 import frc.robot.generated.TunerConstants;
@@ -73,7 +75,6 @@ public class RobotContainer {
     private final CommandXboxController accessory = new CommandXboxController(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-    //public final ColorLED lightStrip = new ColorLED(LED_PORT, LED_LENGTHS);
 
     public RobotContainer() {
         // pointer.set(true);
@@ -97,6 +98,8 @@ public class RobotContainer {
         SmartDashboard.putData("Intake", new Intake(m_hopper, m_leds));
 
         SmartDashboard.putData("FasterFasterLights", new fasterfaster(m_leds));
+        SmartDashboard.putData("Flashing lights", new flash(m_leds));
+
 
 
         // Configure the button bindings
@@ -104,6 +107,8 @@ public class RobotContainer {
         
         m_chooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Mode", m_chooser);
+
+        
 
     }
 

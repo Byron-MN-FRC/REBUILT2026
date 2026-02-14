@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.TurretCam;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ClimbSubsystem.LockdownMode;
 
@@ -110,6 +111,8 @@ public class Turret extends SubsystemBase {
         // This method will be called once per scheduler run
         SmartDashboard.putNumber("Rotation", rotateShooterMotor.getPosition().getValueAsDouble());
         SmartDashboard.putBoolean("Zero?", zeroSwitch.get());
+
+        SmartDashboard.putBoolean("Target Locked", TurretCam.targetLocked());
 
     }
 

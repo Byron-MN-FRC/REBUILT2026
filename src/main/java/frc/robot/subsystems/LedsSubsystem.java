@@ -36,7 +36,9 @@ public class LedsSubsystem extends SubsystemBase {
         rainbow,
         fasterfaster,
         climbProgressBar,
-        redFlashing
+        redFlashing,
+        blueFlashing,
+        greenFlashing
     };
     public enum SubsystemUsingLEDS {
         drive,
@@ -87,6 +89,12 @@ public class LedsSubsystem extends SubsystemBase {
         }
         if (ledColor == LedColor.redFlashing) {
             lightStrip.redFlashing();
+        }
+        if (ledColor == LedColor.blueFlashing) {
+            lightStrip.blueFlashing();
+        }
+        if (ledColor == LedColor.greenFlashing) {
+            lightStrip.greenFlashing();
         }
     }
 
@@ -229,5 +237,11 @@ public class LedsSubsystem extends SubsystemBase {
     }
     public void setModeRedFlashing() {
         ledColor = LedColor.redFlashing;
+    }
+    public void setModeBlueFlashing() {
+        ledColor = LedColor.blueFlashing;
+    }
+    public void setModeGreenFlashing() {
+        ledColor = LedColor.greenFlashing;
     }
 }
