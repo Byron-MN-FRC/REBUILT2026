@@ -29,9 +29,9 @@ public class Shooter extends SubsystemBase {
 
     shooterGateLeft = new SparkMax(21, com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
     shooterGateRight = new SparkMax(22, com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
-
+    
     TalonFXConfiguration configs = new TalonFXConfiguration();
-
+    configs.CurrentLimits.withStatorCurrentLimit(50);
     /*
      * Voltage-based velocity requires a velocity feed forward to account for the
      * back-emf of the motor

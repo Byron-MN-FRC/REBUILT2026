@@ -33,6 +33,7 @@ import frc.robot.commands.FuelGRAB;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.ShooterSpin;
+import frc.robot.commands.StopCommands;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.ledtestcommands.fasterfaster;
 // import frc.robot.commands.Retract;
@@ -160,7 +161,10 @@ public class RobotContainer {
         gamepad.rightBumper().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
         accessory.x().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        gamepad.back().onTrue(new StopCommands(m_hopper, m_shooter, m_climb, m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
+
     public CommandXboxController getaccessory() {
       return accessory;
     }

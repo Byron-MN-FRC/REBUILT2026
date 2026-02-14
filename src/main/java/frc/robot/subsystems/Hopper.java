@@ -15,8 +15,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.PositionVoltage;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -75,6 +79,27 @@ public class Hopper extends SubsystemBase {
         rightFuelGrabber = new SparkMax(15, MotorType.kBrushless);
         hopperFloorTransferSecure = new SparkMax(18, MotorType.kBrushless);
 
+        SparkMaxConfig leftFuelGrabberConfig = new SparkMaxConfig();
+        SparkMaxConfig rightFuelGrabberConfig = new SparkMaxConfig();
+        SparkMaxConfig hopperFloorTransferSecureConfig = new SparkMaxConfig();
+
+        leftFuelGrabberConfig.idleMode(IdleMode.kCoast);
+        leftFuelGrabberConfig.inverted(false);
+        leftFuelGrabberConfig.smartCurrentLimit(20);
+
+        rightFuelGrabberConfig.idleMode(IdleMode.kCoast);
+        rightFuelGrabberConfig.inverted(false);
+        rightFuelGrabberConfig.smartCurrentLimit(20);
+
+        hopperFloorTransferSecureConfig.idleMode(IdleMode.kBrake);
+        hopperFloorTransferSecureConfig.inverted(false);
+        hopperFloorTransferSecureConfig.smartCurrentLimit(20);
+
+        leftFuelGrabber.configure(leftFuelGrabberConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        rightFuelGrabber.configure(rightFuelGrabberConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        hopperFloorTransferSecure.configure(hopperFloorTransferSecureConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    
+        
         // hopperLeftSolenoid = new DoubleSolenoid(20, PneumaticsModuleType.REVPH,3 ,4 );
 //        hopperRightSolenoid = new DoubleSolenoid(5, PneumaticsModuleType.REVPH, 12,13);
         hopperExtendSwitch = new DigitalInput(0);
