@@ -29,6 +29,14 @@ public class Constants {
 
     public static final class TurretShooterConstants {
         public static final int SENSOR_TO_MECH_RATIO = 10;
+        
+        public static final double MAX_LEFT_POSITION = -0.25;
+        public static final double MAX_RIGHT_POSITION = 0.25;
+        public static final double NEUTRAL_POSITION = 0;
+        public static final double MAX_LEFT_DEGREES = MAX_LEFT_POSITION * 360;
+        public static final double MAX_RIGHT_DEGREES = MAX_RIGHT_POSITION * 360;
+
+        public static final double TURRET_CAM_TIMEOUT = 0.5;
 
         public static final double degreesToRotations(double degrees) {
             return degrees / 360.0;
@@ -43,22 +51,21 @@ public class Constants {
         public static final int LED_PORT = 2;
         public static final int[] LED_LENGTHS = {8};
     }
-    
+
     public static final class VisionConstants {
         public static final String TURRET_CAM = "limelight-turret";
+        public static final double ANGLE_ERROR_THRESHOLD = 3.0;
     }
-    
+
     public static final class ClimbConstants {
-        
         public static final double raiserUpperTarget = 100.0;
         public static final double raiserLowerTarget = 0.0;
-        
+
         //public static final double climbUpperLimit = 205.0;
         //public static final double climbLowerLimit = 0.06;
         //public static final double climbSensorLimit = 0;
-        
+
         public static final double climbCurrentLimit = 25;
-        
     }
 
 }
