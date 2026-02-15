@@ -8,15 +8,24 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package frc.robot;
 
+import java.util.Optional;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants.  This class should not be used for any other purpose.  All constants should be
- * declared globally (i.e. public static).  Do not put anything functional in this class.
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants
+ * should be
+ * declared globally (i.e. public static). Do not put anything functional in
+ * this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the
  * constants are needed, to reduce verbosity.
  */
 public class Constants {
@@ -25,7 +34,17 @@ public class Constants {
         public static final boolean DEBUG_MODE = false;
     }
 
-    public static final class DriveConstants {}
+    public static final class DriveConstants {
+
+        public static final Alliance MyAlliance() {
+            Optional<Alliance> ally = DriverStation.getAlliance();
+            if (ally.isPresent()) {
+                return ally.get() == Alliance.Red ? Alliance.Red : Alliance.Blue;
+            } else {
+                return null;
+            }
+        }
+    }
 
     public static final class IntakeHopperConstants {
         public static final double HopperFloorTransferSecureSpeed = 0.1;
@@ -33,7 +52,7 @@ public class Constants {
 
     public static final class TurretShooterConstants {
         public static final int SENSOR_TO_MECH_RATIO = 10;
-        
+
         public static final double MAX_LEFT_POSITION = -0.25;
         public static final double MAX_RIGHT_POSITION = 0.25;
         public static final double NEUTRAL_POSITION = 0;
@@ -53,7 +72,7 @@ public class Constants {
 
     public static final class LEDConstants {
         public static final int LED_PORT = 2;
-        public static final int[] LED_LENGTHS = {8};
+        public static final int[] LED_LENGTHS = { 8 };
     }
 
     public static final class VisionConstants {
@@ -65,12 +84,11 @@ public class Constants {
         public static final double raiserUpperTarget = 100.0;
         public static final double raiserLowerTarget = 0.0;
 
-        //public static final double climbUpperLimit = 205.0;
-        //public static final double climbLowerLimit = 0.06;
-        //public static final double climbSensorLimit = 0;
+        // public static final double climbUpperLimit = 205.0;
+        // public static final double climbLowerLimit = 0.06;
+        // public static final double climbSensorLimit = 0;
 
         public static final double climbCurrentLimit = 25;
     }
 
 }
-

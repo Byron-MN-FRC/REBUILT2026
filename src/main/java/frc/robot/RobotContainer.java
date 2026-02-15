@@ -16,7 +16,6 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
 
@@ -27,7 +26,6 @@ import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -39,14 +37,13 @@ import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.ClimbLowerAuto;
 import frc.robot.commands.ClimbRaiseAuto;
 import frc.robot.commands.ClimbZeroing;
+import frc.robot.commands.FloorTransfer;
 import frc.robot.commands.FuelGRAB;
 import frc.robot.commands.FuelJAMMED;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Lock45Degrees;
-import frc.robot.commands.ShooterSpin;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.ledtestcommands.fasterfaster;
-import frc.robot.commands.FloorTransfer;
 import frc.robot.commands.ledtestcommands.flash;
 // import frc.robot.commands.Retract;
 // import frc.robot.commands.Extend;
@@ -115,6 +112,7 @@ public class RobotContainer {
             // SmartDashboard.putData("Retract", new Retract(m_hopper));
 
             SmartDashboard.putData("Intake", new Intake(m_hopper, m_leds));
+
         }
 
         if (Constants.Debug.DEBUG_MODE) {
@@ -160,10 +158,10 @@ public class RobotContainer {
             drivetrain.applyRequest(() -> idle).ignoringDisable(true)
         );
 
-        gamepad.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        gamepad.b().whileTrue(drivetrain.applyRequest(() ->
-            point.withModuleDirection(new Rotation2d(-gamepad.getLeftY(), -gamepad.getLeftX()))
-        ));
+        //gamepad.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        // gamepad.b().whileTrue(drivetrain.applyRequest(() ->
+        //     point.withModuleDirection(new Rotation2d(-gamepad.getLeftY(), -gamepad.getLeftX()))
+        // ));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
@@ -173,7 +171,7 @@ public class RobotContainer {
         // gamepad.start().and(gamepad.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
         // gamepad.start().and(gamepad.back()).onTrue(new InstantCommand(() -> SignalLogger.stop()).andThen(new InstantCommand(() ->System.out.println("Stopping Loger"))));
         // Reset the field-centric heading on left bumper press.
-        gamepad.a().toggleOnTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        gamepad.a().whileTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         gamepad.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         drivetrain.registerTelemetry(logger::telemeterize);
