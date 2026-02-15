@@ -55,11 +55,14 @@ public class Lock45Degrees extends Command {
           targetAngle = new Rotation2d(-Math.PI / 4); // -45 degrees
       }
 
-      SmartDashboard.putNumber("current a", currentAngle);
-      SmartDashboard.putNumber("tar a", targetAngle.getDegrees());
+
+      if (Constants.Debug.DEBUG_MODE) {
+        SmartDashboard.putNumber("current a", currentAngle);
+        SmartDashboard.putNumber("target a", targetAngle.getDegrees());
+      }
 
       if (Constants.DriveConstants.MyAlliance() == DriverStation.Alliance.Red) {
-          // targetAngle = targetAngle.plus(new Rotation2d(Math.PI)); // Flip the angle for the red alliance
+          targetAngle = targetAngle.plus(new Rotation2d(Math.PI)); // Flip the angle for the red alliance
       }
 
   }
