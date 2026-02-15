@@ -16,6 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ColorLED;
 import frc.robot.Constants;
+import frc.robot.Robot;
+import frc.robot.subsystems.ClimbSubsystem.LockdownMode;
+// import frc.robot.subsystems.Climb.LockdownMode;
 
 public class LedsSubsystem extends SubsystemBase {
     public enum LedColor {
@@ -90,11 +93,11 @@ public class LedsSubsystem extends SubsystemBase {
         if (ledColor == LedColor.redFlashing) {
             lightStrip.redFlashing();
         }
-        if (ledColor == LedColor.blueFlashing) {
-            lightStrip.blueFlashing();
+        if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.full) {
+            lightStrip.redFlashing();
         }
-        if (ledColor == LedColor.greenFlashing) {
-            lightStrip.greenFlashing();
+        else if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.partial) {
+            lightStrip.red();
         }
     }
 
