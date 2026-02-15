@@ -10,11 +10,14 @@
 
 // ROBOTBUILDER TYPE: Command.
 
-package frc.robot.commands;
+package frc.robot.commands.ledtestcommands;
 import edu.wpi.first.wpilibj2.command.Command;
+import java.util.function.DoubleSupplier;
+
 import frc.robot.ColorLED;
 import frc.robot.Constants;
-import frc.robot.subsystems.Hopper;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.LedsSubsystem;
 
 
@@ -25,36 +28,18 @@ import frc.robot.subsystems.LedsSubsystem;
 /**
  *
  */
-public class Intake extends Command {
+public class flash extends Command {
     ColorLED lightStrip;
-    private final Hopper m_hopper;
     private final LedsSubsystem m_leds;
     
-    public Intake(Hopper hopperSubsystem, LedsSubsystem ledSubsystem)  {
-        m_hopper = hopperSubsystem;
+    public flash( LedsSubsystem ledSubsystem)  {
         m_leds = ledSubsystem;
-        addRequirements(m_hopper);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_leds.hopperRequestingLeds();
-        if (!m_hopper.isExtending()) {   
-            if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.hopper) {
-                m_leds.setModeGreenFlashing();
-            }
-            m_hopper.setHopperExtend();
-        }
-        else {
-            if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.hopper) {
-                m_leds.setColorLightBlue();
-            }
-            m_hopper.setHopperRetract();
-        }
-        if (Constants.Debug.DEBUG_MODE) {
-        System.out.println("Lights on");
-        }
+        m_leds.setModeRedFlashing();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -65,13 +50,12 @@ public class Intake extends Command {
     @Override
     public void end(boolean interrupted) {
         m_leds.setColorNone();
-        m_leds.noSubsystemUsingLeds();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override

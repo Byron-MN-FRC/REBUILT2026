@@ -55,10 +55,12 @@ public class ClimbZeroing extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        System.out.println("+---------------+");
-        System.out.println("| Climb Zeroing |");
-        System.out.println("+---------------+");
-        m_leds.setColorRed();
+        if (Constants.Debug.DEBUG_MODE) {
+            System.out.println("+---------------+");
+            System.out.println("| Climb Zeroing |");
+            System.out.println("+---------------+");
+        }
+        m_leds.setModeBlueFlashing();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -73,11 +75,13 @@ public class ClimbZeroing extends Command {
         m_climb.setBottom();
         m_climb.setRaiserPosition(Constants.ClimbConstants.raiserLowerTarget);
         m_climb.climbStageReset();
-        System.out.println("+--------------+");
-        System.out.println("| Climb Zeroed |");
-        System.out.println("+--------------+");
-        System.out.println("=");
-        System.out.println("Disabling lights...");
+        if (Constants.Debug.DEBUG_MODE) {
+            System.out.println("+--------------+");
+            System.out.println("| Climb Zeroed |");
+            System.out.println("+--------------+");
+            System.out.println("=");
+            System.out.println("Disabling lights...");
+        }
         m_leds.setColorNone();
     }
 

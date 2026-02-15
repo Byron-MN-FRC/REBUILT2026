@@ -39,7 +39,9 @@ public class LedsSubsystem extends SubsystemBase {
         rainbow,
         fasterfaster,
         climbProgressBar,
-        redFlashing
+        redFlashing,
+        blueFlashing,
+        greenFlashing
     };
     public enum SubsystemUsingLEDS {
         drive,
@@ -232,12 +234,17 @@ public class LedsSubsystem extends SubsystemBase {
     public void setModeFasterFaster() {
         ledColor = LedColor.fasterfaster;
     }
-    public void setModeClimbProgressBar() {
+    public void setModeClimbProgressBar() { //this might not work? I've not tested it yet.
         ledColor = LedColor.climbProgressBar;
         lightStrip.climbProgressBar();
     }
     public void setModeRedFlashing() {
         ledColor = LedColor.redFlashing;
-        //lightStrip.redFlashing();
+    }
+    public void setModeBlueFlashing() {
+        ledColor = LedColor.blueFlashing;
+    }
+    public void setModeGreenFlashing() {
+        ledColor = LedColor.greenFlashing;
     }
 }
