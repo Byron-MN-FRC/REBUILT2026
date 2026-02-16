@@ -31,7 +31,7 @@ public class Lock45Degrees extends Command {
   private final SwerveRequest.FieldCentricFacingAngle drive45 = new SwerveRequest.FieldCentricFacingAngle()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage) // Use open-loop control for drive motors
-            .withHeadingPID(10, 0, 0);
+            .withHeadingPID(7.5, 0, 0);
 
     /** Creates a new Lock45Degrees. */
   public Lock45Degrees(CommandSwerveDrivetrain drivetrain) {
@@ -44,7 +44,6 @@ public class Lock45Degrees extends Command {
   @Override
   public void initialize() {
       double currentAngle = drivetrain.getState().Pose.getRotation().getDegrees();
-      MathUtil.inputModulus(currentAngle, -180, 180);
       if (currentAngle >= 0 && currentAngle < 90) {
           targetAngle = new Rotation2d(Math.PI / 4); // 45 degrees
       } else if (currentAngle >= 90 && currentAngle < 180) {
@@ -72,8 +71,8 @@ public class Lock45Degrees extends Command {
   public void execute() {
     drivetrain.setControl(
                 drive45.withTargetDirection(targetAngle) // Lock the robot at 45 degrees
-                    .withVelocityX(-Robot.getInstance().gamepad.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-Robot.getInstance().gamepad.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                    .withVelocityX(-Robot.getInstance().gamepad.getLeftY() * MaxSpeed * 0.75) // Drive forward with negative Y (forward)
+                    .withVelocityY(-Robot.getInstance().gamepad.getLeftX() * MaxSpeed * 0.75) // Drive left with negative X (left)
             );
 
   }
