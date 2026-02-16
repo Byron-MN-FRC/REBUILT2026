@@ -170,9 +170,11 @@ public class RobotContainer {
         // gamepad.start().and(gamepad.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         // gamepad.start().and(gamepad.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
         // gamepad.start().and(gamepad.back()).onTrue(new InstantCommand(() -> SignalLogger.stop()).andThen(new InstantCommand(() ->System.out.println("Stopping Loger"))));
+        
         // Reset the field-centric heading on left bumper press.
-        gamepad.a().whileTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         gamepad.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+
+        gamepad.leftBumper().whileTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
