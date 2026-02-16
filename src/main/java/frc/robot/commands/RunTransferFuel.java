@@ -10,6 +10,7 @@ import frc.robot.subsystems.Hopper;
 public class RunTransferFuel extends Command {
   private static final double DEFAULT_SPEED = 0.5;
   private final Hopper m_subsystem;
+  
   public RunTransferFuel(Hopper subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
