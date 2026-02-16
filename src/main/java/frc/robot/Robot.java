@@ -44,44 +44,10 @@ public class Robot extends TimedRobot {
     }
     
     @Override
-    public void robotInit() {
-        // GenericEntry myEntry  = mytab.add("LEDs", 1).getEntry();
-        // Double red = myEntry.getDouble(0);
-        //PWM port 9
+    public void robotInit() {}
         
-        //Must be a PWM header, not MXP or DIO
-        
-        //PORT
-        //m_led = new AddressableLED(1);
-        
-        // Reuse buffer
-
-        //Default to a length of 60, start empty output
-        
-        //Length is expensive to set, so only set it once, then just update data
-        
-        //m_ledBuffer = new AddressableLEDBuffer(24);
-        //144 lights on big strand
-//75 seems to be max amount before something explodes
-//8 lights on small strand
-        //m_led.setLength(m_ledBuffer.getLength());
-        
-        // Set the data
-        
-        //m_led.setData(m_ledBuffer);
-        
-        //m_led.start();
-        
-        //for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            //    // Sets the specified LED to the HSV values for red
-            //    m_ledBuffer.setHSV(i, 0, 100, 100);
-            //}
-            
-            //m_led.setData(m_ledBuffer);
-        }
-        
-        @Override
-        public void robotPeriodic() {
+    @Override
+    public void robotPeriodic() {
             m_timeAndJoystickReplay.update();
             CommandScheduler.getInstance().run(); 
             m_robotContainer.m_field.setRobotPose(m_robotContainer.drivetrain.getState().Pose);
@@ -91,7 +57,7 @@ public class Robot extends TimedRobot {
             if (Constants.Debug.DEBUG_MODE) {
                 SmartDashboard.putNumber("Turret Distance to Hub", TurretCam.getDistance());
             }
-        }
+    }
         
         @Override
     public void disabledInit() {}
