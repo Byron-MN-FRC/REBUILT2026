@@ -32,8 +32,6 @@ public class Robot extends TimedRobot {
     private Color[] redWhiteArray = {Color.kBlueViolet, Color.kBlue};
     private Color[] blueWhiteArray = {Color.kBlue, Color.kWhite};
 
-    public final Field2d field = new Field2d();
-
     private static final RobotContainer m_robotContainer = new RobotContainer();
     //public static final ColorLED ColorLED = new ColorLED();
     //private RobotContainer m_robotContainer;
@@ -50,7 +48,6 @@ public class Robot extends TimedRobot {
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         enableLiveWindowInTest(true);
         SmartDashboard.putNumber("Robot Gyro", m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees());
-        SmartDashboard.putData("Robot Position", field);
     }
 
     public static RobotContainer getInstance(){
@@ -98,7 +95,7 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         m_timeAndJoystickReplay.update();
         CommandScheduler.getInstance().run(); 
-        m_robotContainer.field.setRobotPose(m_robotContainer.drivetrain.getState().Pose);
+        m_robotContainer.m_field.setRobotPose(m_robotContainer.drivetrain.getState().Pose);
 
     }
 
