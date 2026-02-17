@@ -5,8 +5,6 @@ import frc.robot.subsystems.Hopper;
 
 public class AutonRetract extends Command {
     private final Hopper m_hopper;
-    private final Timer m_timer = new Timer();
-
 
     public AutonRetract(Hopper hopper) {
         m_hopper = hopper;
@@ -15,26 +13,20 @@ public class AutonRetract extends Command {
 
     @Override 
     public void initialize() {
-        m_timer.reset();
-        m_timer.start();
+
         m_hopper.setHopperRetract();
     }
 
     @Override
-    public void execute() {
-        // m_hopper.setFuelGrabberSpeed();
-    }
+    public void execute() {}
 
     @Override
     public void end(boolean interrupted) {
-        m_hopper.stopFuelGrabber();
-        m_timer.stop();
-        m_hopper.stopHopperFloorTransferSecure();
     }
 
     @Override
     public boolean isFinished() {
-        return true;
+        return m_hopper.isHopperRetracted();
     }
 
 }

@@ -52,9 +52,7 @@ public class Intake extends Command {
             }
             m_hopper.setHopperRetract();
         }
-        if (Constants.Debug.DEBUG_MODE) {
-        System.out.println("Lights on");
-        }
+        if (Constants.Debug.DEBUG_MODE) System.out.println("Lights on");
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -71,7 +69,11 @@ public class Intake extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return true;
+        if (m_hopper.isExtending()) {
+            return m_hopper.isHopperExtended();
+        } else {
+            return m_hopper.isHopperRetracted();
+        }
     }
 
     @Override

@@ -39,10 +39,7 @@ private final LedsSubsystem m_leds;
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {
-        m_hopper.setFuelGrabberSpeed();
-        m_hopper.setHopperFloorTransferSecureSpeed(Constants.IntakeHopperConstants.HopperFloorTransferSecureSpeed);
-    }
+    public void execute() {}
 
     // Called once the command ends or is interrupted.
     @Override
@@ -54,11 +51,7 @@ private final LedsSubsystem m_leds;
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return m_hopper.isHopperExtended();
     }
 
-    @Override
-    public boolean runsWhenDisabled() {
-        return false;
-    }
 }
