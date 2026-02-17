@@ -54,8 +54,6 @@ public class Hopper extends SubsystemBase {
 
     public boolean isExtending;
     // TalonFX m_fx = new TalonFX(15, "rio");
-    /* Be able to switch which control request to use based on a button press */
-    /* Start at position 0, use slot 0 */
 
     final PositionVoltage m_positionVoltage = new PositionVoltage(0).withSlot(0);
     /* Start at position 0, use slot 1 */
@@ -98,6 +96,7 @@ public class Hopper extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         if (Constants.Debug.DEBUG_MODE) {
+            SmartDashboard.putBoolean("Hopper Extended", isHopperExtended());
             SmartDashboard.putBoolean("Hopper Retracted", isHopperRetracted());
             SmartDashboard.putNumber("Hopper Floor Transfer Speed", hopperFloorTransferSecure.get());
         }
