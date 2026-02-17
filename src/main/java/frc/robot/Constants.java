@@ -53,12 +53,9 @@ public class Constants {
         // Floor transfer constants
         public static final double HopperFloorTransferSecureSpeed = 0.1;
         
-        // Motor control constants for Kraken x44 that controls the hopper extension
-        public static final double EXTEND_SPEED = 0.5;
-        public static final double RETRACT_SPEED = -0.5;
-        public static final double HOLD_SPEED = 0.1; // Small positive speed to maintain extension
-        
-        // Current limit for the motor (10 amps as requested)
+        // Hopper extend/retract constants
+        public static final double EXTEND_SPEED = 0.4;
+        public static final double RETRACT_SPEED = -0.4;
         public static final int CURRENT_LIMIT = 20;
     }
 

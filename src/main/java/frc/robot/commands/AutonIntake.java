@@ -18,7 +18,7 @@ public class AutonIntake extends Command {
     public void initialize() {
         m_timer.reset();
         m_timer.start();
-        m_hopper.setHopperExtend();
+        // m_hopper.setHopperExtend();
     }
 
     @Override
