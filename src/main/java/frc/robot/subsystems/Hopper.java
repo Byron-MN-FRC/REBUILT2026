@@ -15,10 +15,15 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.controls.NeutralOut;
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -61,7 +66,22 @@ public class Hopper extends SubsystemBase {
 
         leftFuelGrabber = new SparkMax(16, MotorType.kBrushless);
         rightFuelGrabber = new SparkMax(15, MotorType.kBrushless);
-        hopperFloorTransferSecure = new SparkMax(18, MotorType.kBrushless);        
+
+
+SparkMaxConfig leftFuelGrabberConfigLeft = new SparkMaxConfig();
+    SparkMaxConfig rightFuelGrabberConfigRight = new SparkMaxConfig();
+
+
+    leftFuelGrabberConfigLeft.smartCurrentLimit(10); // Limit gate motor current to 10 A
+    rightFuelGrabberConfigRight.smartCurrentLimit(10); // Limit gate motor current to 10 A
+
+    leftFuelGrabber.configure(leftFuelGrabberConfigLeft, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    rightFuelGrabber.configure(rightFuelGrabberConfigRight, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        hopperFloorTransferSecure = new SparkMax(18, MotorType.kBrushless);
+        SparkMaxConfig hopperFloorTransferSecureConfig = new SparkMaxConfig();
+        hopperFloorTransferSecureConfig.smartCurrentLimit(10); // Limit gate motor current to 10 A
+        hopperFloorTransferSecure.configure(hopperFloorTransferSecureConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         hopperExtendMotor = new TalonFX(17);
         
         // Configure current limiting (10 amps)

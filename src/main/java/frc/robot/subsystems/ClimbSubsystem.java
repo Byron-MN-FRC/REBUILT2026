@@ -20,6 +20,7 @@ import static edu.wpi.first.units.Units.Volts;
 import java.util.concurrent.locks.Lock;
 
 import com.ctre.phoenix6.StatusCode;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -81,6 +82,10 @@ public class ClimbSubsystem extends SubsystemBase {
         raiserLowerTarget = Constants.ClimbConstants.raiserLowerTarget;
         climbing = false;
         isOnTower = false;
+        
+
+         CurrentLimitsConfigs currentLimits = new CurrentLimitsConfigs();
+        currentLimits.SupplyCurrentLimit = 40; // Limit motor supply current to 20
 
         // Configs
         // CurrentLimitsConfigs climbCurrent = climbConf.CurrentLimits;
