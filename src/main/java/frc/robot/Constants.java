@@ -50,7 +50,13 @@ public class Constants {
     }
 
     public static final class IntakeHopperConstants {
+        // Floor transfer constants
         public static final double HopperFloorTransferSecureSpeed = 0.1;
+        
+        // Hopper extend/retract constants
+        public static final double EXTEND_SPEED = 0.4;
+        public static final double RETRACT_SPEED = -0.4;
+        public static final int CURRENT_LIMIT = 20;
     }
 
     public static final class TurretShooterConstants {

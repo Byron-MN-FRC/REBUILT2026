@@ -80,8 +80,6 @@ public class RobotContainer {
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    public PneumaticHub ph = new PneumaticHub(20);
-
     public final CommandXboxController gamepad = new CommandXboxController(0);
     private final CommandXboxController accessory = new CommandXboxController(1);
 
@@ -97,8 +95,6 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutonShoot", new AutonShootCommand(m_shooter, m_leds));
         NamedCommands.registerCommand("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
         NamedCommands.registerCommand("ClimbLowerAuto", new ClimbLowerAuto(m_climb, m_leds));
-
-        ph.enableCompressorAnalog(100, 120);
 
         if (Constants.Debug.DEBUG_MODE) {
             SmartDashboard.putData("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
