@@ -235,6 +235,10 @@ public class ClimbSubsystem extends SubsystemBase {
         return (int) raiser.getPosition().getValueAsDouble();
     }
 
+    public void shutdownClimb() {
+        raiser.set(0);
+    }
+
 
 
 

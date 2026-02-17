@@ -62,7 +62,8 @@ public class Constants {
         public static final int CURRENT_LIMIT = 20;
     }
 
-    public static final class TurretShooterConstants {
+    public static final class TurretConstants {
+
         public static final int SENSOR_TO_MECH_RATIO = 10;
 
         public static final double MAX_LEFT_POSITION = -0.25;
@@ -80,6 +81,16 @@ public class Constants {
         public static final double rotationsToDegrees(double rotations) {
             return rotations * 360.0;
         }
+    }
+
+    public static final class ShooterConstants {
+        public static final double SHOOTER_IDLE_SPEED = 1.0;
+        public static final double SHOOTER_ACTIVE_SPEED = 1.0;
+    }
+
+    public static final class FloorConstants {
+        public static final double FLOOR_IDLE_SPEED = 0.4;
+        public static final double FLOOR_ACTIVE_SPEED = 0.04;
     }
 
     public static final class LEDConstants {

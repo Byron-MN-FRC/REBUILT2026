@@ -55,6 +55,11 @@ public class Hopper extends SubsystemBase {
 
     public boolean isExtending;
 
+     public enum HopperFloorState {
+        off, forward, reverse
+    };
+    public HopperFloorState currentHopperFloorState = HopperFloorState.off;
+
     /**
     *
     */
@@ -101,6 +106,14 @@ public class Hopper extends SubsystemBase {
         } else {
             // Normal operation - handle extension/retraction logic
         }
+
+        if (currentHopperFloorState == HopperFloorState.forward) {
+            setHopperFloorTransferSecureSpeed(Constants.IntakeHopperConstants.HopperFloorTransferSecureSpeed);
+        } else if (currentHopperFloorState == HopperFloorState.reverse) {
+            setHopperFloorTransferSecureSpeed(-Constants.IntakeHopperConstants.HopperFloorTransferSecureSpeed);
+        } else {
+            stopHopperFloorTransferSecure();
+        }
     }
 
     @Override
@@ -130,13 +143,15 @@ public class Hopper extends SubsystemBase {
     }
     
     public void ifIntakeJammed() {
-        leftFuelGrabber.set(-0.1);
-        rightFuelGrabber.set(-0.1);
+        currentHopperFloorState = HopperFloorState.reverse;
+        // leftFuelGrabber.set(-0.1);
+        // rightFuelGrabber.set(-0.1);
     }
     
     public void clearIntakeJam() {
-        leftFuelGrabber.set(0);
-        rightFuelGrabber.set(0);
+        currentHopperFloorState = HopperFloorState.forward;
+        // leftFuelGrabber.set(0);
+        // rightFuelGrabber.set(0);
     }
 
     public void ifHopperFloorTransferSecureIsBlocked() {

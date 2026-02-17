@@ -57,7 +57,7 @@ public class ShooterSpin extends Command {
     public void initialize() {
         m_leds.turretRequestingLeds();
         if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
-            m_leds.setModeRainbow();
+            m_leds.setModeFasterFaster();
         }
     }
 

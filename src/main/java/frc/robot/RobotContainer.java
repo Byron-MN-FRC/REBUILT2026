@@ -38,10 +38,10 @@ import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.ClimbLowerAuto;
 import frc.robot.commands.ClimbRaiseAuto;
 import frc.robot.commands.ClimbZeroing;
-import frc.robot.commands.FloorTransfer;
 import frc.robot.commands.FuelGRAB;
 import frc.robot.commands.FuelJAMMED;
 import frc.robot.commands.Intake;
+import frc.robot.commands.Idle;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.ledtestcommands.fasterfaster;
@@ -196,12 +196,12 @@ public class RobotContainer {
 
         accessory.b().onTrue(new ClimbZeroing(m_climb,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        accessory.a().onTrue(new FloorTransfer(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.a().onTrue(new Idle(m_hopper, m_shooter, m_leds, m_climb).withInterruptBehavior(InterruptionBehavior.kCancelSelf).andThen(new TrackHub(m_turret, m_leds)));
 
         accessory.start().onTrue(m_turret.checkZeroLeft().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                         
         //accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-                        
+
         accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.rightTrigger().whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));

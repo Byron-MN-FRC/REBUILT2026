@@ -17,6 +17,7 @@ public class TrackHub extends Command {
   private Turret m_turret;
   private final LedsSubsystem m_leds;
   private Timer m_timer = new Timer();
+  public boolean isActive;
 
   /** Creates a new trackHub. */
   public TrackHub(Turret subsystem, LedsSubsystem leds) {
@@ -32,6 +33,7 @@ public class TrackHub extends Command {
     m_leds.turretRequestingLeds();
     m_timer.reset();
     m_timer.stop();
+    isActive = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -48,8 +50,8 @@ public class TrackHub extends Command {
       m_timer.start();
     }
 
-    if (m_timer.hasElapsed(Constants.TurretShooterConstants.TURRET_CAM_TIMEOUT)) {
-      m_turret.aimDegrees(Constants.TurretShooterConstants.NEUTRAL_POSITION);
+    if (m_timer.hasElapsed(Constants.TurretConstants.TURRET_CAM_TIMEOUT)) {
+      m_turret.aimDegrees(Constants.TurretConstants.NEUTRAL_POSITION);
     }
 
 
@@ -75,6 +77,7 @@ public class TrackHub extends Command {
   public void end(boolean interrupted) {
     m_turret.spinStop();
     m_leds.noSubsystemUsingLeds();
+    isActive = false;
   }
 
   // Returns true when the command should end.
