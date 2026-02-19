@@ -63,6 +63,9 @@ public class Turret extends SubsystemBase {
         rotateShooterMotor = new TalonFX(23, Constants.TurretShooterConstants.CAN_BUS);
         
         TalonFXConfiguration configs = new TalonFXConfiguration();
+
+        configs.CurrentLimits = currentLimits;
+
         configs.Slot0.kS = 0.25; // Add 0.25 V output to overcome static friction
         configs.Slot0.kV = 0.12; // A velocity target of 1 rps results in 0.12 V output
         configs.Slot0.kA = 0.01; // An acceleration of 1 rps/s requires 0.01 V output

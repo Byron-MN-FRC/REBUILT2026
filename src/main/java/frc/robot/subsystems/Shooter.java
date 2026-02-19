@@ -45,18 +45,22 @@ public class Shooter extends SubsystemBase {
     shooterGateLeft = new SparkMax(21, MotorType.kBrushless);
     shooterGateRight = new SparkMax(22, MotorType.kBrushless);
 
-    
     SparkMaxConfig gateConfigLeft = new SparkMaxConfig();
     SparkMaxConfig gateConfigRight = new SparkMaxConfig();
-
 
     gateConfigLeft.smartCurrentLimit(10); // Limit gate motor current to 10 A
     gateConfigRight.smartCurrentLimit(10); // Limit gate motor current to 10 A
 
+    gateConfigLeft.inverted(true); // Invert left gate motor direction
+    gateConfigRight.inverted(true); // Invert right gate motor direction
+
     shooterGateLeft.configure(gateConfigLeft, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     shooterGateRight.configure(gateConfigRight, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+    leftShoot = new TalonFX(24, "CANivore2");
+    
     TalonFXConfiguration configs = new TalonFXConfiguration();
+    configs.CurrentLimits.SupplyCurrentLimit = 40; // Limit motor supply current to 40
     
     /*
     * Voltage-based velocity requires a velocity feed forward to account for the
@@ -72,17 +76,17 @@ public class Shooter extends SubsystemBase {
     configs.Voltage.withPeakForwardVoltage(Volts.of(8))
         .withPeakReverseVoltage(Volts.of(-8));
 
-    /*
-    * Torque-based velocity does not require a velocity feed forward, as torque
-    * will accelerate the rotor up to the desired velocity by itself
-     */
-    configs.Slot1.kS = 2.5; // To account for friction, add 2.5 A of static feedforward
-    configs.Slot1.kP = 5; // An error of 1 rotation per second results in 5 A output
-    configs.Slot1.kI = 0; // No output for integrated error
-    configs.Slot1.kD = 0; // No output for error derivative
-    // Peak output of 40 A
-    configs.TorqueCurrent.withPeakForwardTorqueCurrent(Amps.of(40))
-        .withPeakReverseTorqueCurrent(Amps.of(-40));
+    // /*
+    // * Torque-based velocity does not require a velocity feed forward, as torque
+    // * will accelerate the rotor up to the desired velocity by itself
+    //  */
+    // configs.Slot1.kS = 2.5; // To account for friction, add 2.5 A of static feedforward
+    // configs.Slot1.kP = 5; // An error of 1 rotation per second results in 5 A output
+    // configs.Slot1.kI = 0; // No output for integrated error
+    // configs.Slot1.kD = 0; // No output for error derivative
+    // // Peak output of 40 A
+    // configs.TorqueCurrent.withPeakForwardTorqueCurrent(Amps.of(40))
+    //     .withPeakReverseTorqueCurrent(Amps.of(-40));
 
     /* Retry config apply up to 5 times, report if failure */
     StatusCode status = StatusCode.StatusCodeNotInitialized;
