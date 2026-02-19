@@ -66,7 +66,6 @@ public class RobotContainer {
 
     private final DigitalOutput pointer = new DigitalOutput(3);
     SendableChooser<Command> m_chooser = new SendableChooser<>();
-    public final CANBus m_CANivore2 = new CANBus("CANivore");
 
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
