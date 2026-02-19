@@ -68,15 +68,15 @@ public class Hopper extends SubsystemBase {
         rightFuelGrabber = new SparkMax(15, MotorType.kBrushless);
 
 
-SparkMaxConfig leftFuelGrabberConfigLeft = new SparkMaxConfig();
-    SparkMaxConfig rightFuelGrabberConfigRight = new SparkMaxConfig();
+        SparkMaxConfig leftFuelGrabberConfigLeft = new SparkMaxConfig();
+        SparkMaxConfig rightFuelGrabberConfigRight = new SparkMaxConfig();
 
 
-    leftFuelGrabberConfigLeft.smartCurrentLimit(10); // Limit gate motor current to 10 A
-    rightFuelGrabberConfigRight.smartCurrentLimit(10); // Limit gate motor current to 10 A
+        leftFuelGrabberConfigLeft.smartCurrentLimit(10); // Limit gate motor current to 10 A
+        rightFuelGrabberConfigRight.smartCurrentLimit(10); // Limit gate motor current to 10 A
 
-    leftFuelGrabber.configure(leftFuelGrabberConfigLeft, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    rightFuelGrabber.configure(rightFuelGrabberConfigRight, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        leftFuelGrabber.configure(leftFuelGrabberConfigLeft, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        rightFuelGrabber.configure(rightFuelGrabberConfigRight, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         hopperFloorTransferSecure = new SparkMax(18, MotorType.kBrushless);
         SparkMaxConfig hopperFloorTransferSecureConfig = new SparkMaxConfig();
