@@ -60,7 +60,7 @@ public class Turret extends SubsystemBase {
         CurrentLimitsConfigs currentLimits = new CurrentLimitsConfigs();
         currentLimits.SupplyCurrentLimit = 5; // Limit motor supply current to 20
 
-        rotateShooterMotor = new TalonFX(23, "CANivore2");
+        rotateShooterMotor = new TalonFX(23, Constants.TurretShooterConstants.CAN_BUS);
         
         TalonFXConfiguration configs = new TalonFXConfiguration();
 
