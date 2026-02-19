@@ -60,7 +60,7 @@ public class Turret extends SubsystemBase {
         CurrentLimitsConfigs currentLimits = new CurrentLimitsConfigs();
         currentLimits.SupplyCurrentLimit = 5; // Limit motor supply current to 20
 
-        rotateShooterMotor = new TalonFX(23, Robot.getInstance().m_CANivore2);
+        rotateShooterMotor = new TalonFX(23, "CANivore2");
         
         TalonFXConfiguration configs = new TalonFXConfiguration();
         configs.Slot0.kS = 0.25; // Add 0.25 V output to overcome static friction
