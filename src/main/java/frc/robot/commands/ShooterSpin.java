@@ -64,9 +64,7 @@ public class ShooterSpin extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (Constants.Debug.DEBUG_MODE) {
-            SmartDashboard.putNumber("Rotation", m_turret.getAngleRotations());
-        }
+
         if (Robot.getInstance().getaccessory().getHID().getRightBumperButtonPressed()) {
             m_turret.spinRight();
         }

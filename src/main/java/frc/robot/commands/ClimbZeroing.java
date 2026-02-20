@@ -83,6 +83,8 @@ public class ClimbZeroing extends Command {
             System.out.println("Disabling lights...");
         }
         m_leds.setColorNone();
+
+        m_climb.stopClimbing();
     }
 
     // Returns true when the command should end.
