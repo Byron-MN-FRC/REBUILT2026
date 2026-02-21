@@ -81,7 +81,9 @@ public class Hopper extends SubsystemBase {
         hopperFloorTransferSecure = new SparkMax(18, MotorType.kBrushless);
         SparkMaxConfig hopperFloorTransferSecureConfig = new SparkMaxConfig();
         hopperFloorTransferSecureConfig.smartCurrentLimit(10); // Limit gate motor current to 10 A
+        hopperFloorTransferSecureConfig.inverted(true); //Invert direction of floor transfer motor
         hopperFloorTransferSecure.configure(hopperFloorTransferSecureConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        
         hopperExtendMotor = new TalonFX(17);
         
         // Configure current limiting (10 amps)
