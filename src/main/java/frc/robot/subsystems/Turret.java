@@ -60,7 +60,7 @@ public class Turret extends SubsystemBase {
         CurrentLimitsConfigs currentLimits = new CurrentLimitsConfigs();
         currentLimits.SupplyCurrentLimit = 5; // Limit motor supply current to 20
 
-        rotateShooterMotor = new TalonFX(23, Constants.TurretShooterConstants.CAN_BUS);
+        rotateShooterMotor = new TalonFX(23);
         
         TalonFXConfiguration configs = new TalonFXConfiguration();
 
@@ -115,7 +115,6 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putBoolean("Zero?", zeroSwitch.get());
 
         SmartDashboard.putBoolean("Target Locked", TurretCam.targetLocked());
-
     }
     
     @Override
@@ -183,6 +182,19 @@ public class Turret extends SubsystemBase {
                 rotateShooterMotor.setPosition(Constants.TurretShooterConstants.MAX_LEFT_POSITION);
             } else {
                 rotateShooterMotor.set(-0.04);
+            }
+        }).until(() -> zeroSwitch.get())
+                .finallyDo(() -> {
+                    rotateShooterMotor.setControl(m_motionMagicVoltage.withPosition(Constants.TurretShooterConstants.NEUTRAL_POSITION));
+                });
+    }
+
+    public Command checkZeroRight() {
+        return run(() -> {
+            if (zeroSwitch.get()) {
+                rotateShooterMotor.setPosition(Constants.TurretShooterConstants.MAX_RIGHT_POSITION);
+            } else {
+                rotateShooterMotor.set(0.04);
             }
         }).until(() -> zeroSwitch.get())
                 .finallyDo(() -> {

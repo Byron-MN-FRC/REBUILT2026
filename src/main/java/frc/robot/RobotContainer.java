@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -23,7 +22,6 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -197,7 +195,7 @@ public class RobotContainer {
 
         accessory.a().onTrue(new FloorTransfer(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        accessory.start().onTrue(m_turret.checkZeroLeft().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.start().onTrue(m_turret.checkZeroRight().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                         
         //accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                         

@@ -17,12 +17,13 @@ public class DistanceVelocityMap {
     };
 
     public static int getVelocity(double distance) {
-        // Find the closest distance in the map that is less than or equal to the input distance
-        Double closestDistance = distanceVelocityMap.floorKey(distance);
-        if (closestDistance == null) {
-            // If there is no such distance, return the velocity for the smallest distance
-            return distanceVelocityMap.firstEntry().getValue();
-        }
-        return distanceVelocityMap.get(closestDistance);
+        // // Find the closest distance in the map that is less than or equal to the input distance
+        // Double closestDistance = distanceVelocityMap.floorKey(distance);
+        // if (closestDistance == null) {
+        //     // If there is no such distance, return the velocity for the smallest distance
+        //     return distanceVelocityMap.firstEntry().getValue();
+        // }
+        // return distanceVelocityMap.get(closestDistance);
+        return 2000;
     }
 }
