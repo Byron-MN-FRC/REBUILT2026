@@ -223,6 +223,10 @@ public class Turret extends SubsystemBase {
         return zeroSwitch.get();
     }
 
+    public void resetPosition() {
+        rotateShooterMotor.setPosition(0);
+    }  
+      
     public void stopAll() {
         spinStop();
     }
