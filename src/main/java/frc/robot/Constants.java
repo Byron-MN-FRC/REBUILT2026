@@ -67,8 +67,8 @@ public class Constants {
 
         public static final int SENSOR_TO_MECH_RATIO = 10;
 
-        public static final double MAX_LEFT_POSITION = -0.1584;
-        public static final double MAX_RIGHT_POSITION = 0.3025;
+        public static final double MAX_LEFT_POSITION = -0.3303;
+        public static final double MAX_RIGHT_POSITION = 0.1062;
         public static final double NEUTRAL_POSITION = 0;
         public static final double MAX_LEFT_DEGREES = MAX_LEFT_POSITION * 360;
         public static final double MAX_RIGHT_DEGREES = MAX_RIGHT_POSITION * 360;

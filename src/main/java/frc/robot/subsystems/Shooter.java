@@ -57,14 +57,12 @@ public class Shooter extends SubsystemBase {
 
     shooterGateLeft.configure(gateConfigLeft, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     shooterGateRight.configure(gateConfigRight, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-    leftShoot = new TalonFX(24);
     
     TalonFXConfiguration configs = new TalonFXConfiguration();
     configs.CurrentLimits.SupplyCurrentLimit = 70; // Limit motor supply current to 40
     configs.CurrentLimits.StatorCurrentLimit = 40;
     
-    configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+    configs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
     /*
     * Voltage-based velocity requires a velocity feed forward to account for the
@@ -103,6 +101,7 @@ public class Shooter extends SubsystemBase {
       System.out.println("Could not apply configs, error code: " + status.toString());
     }
 
+    SmartDashboard.putData("Subsystem: Shooter", this);
     SmartDashboard.putNumber("Shooter Set RPM", 0);
   }
 
@@ -130,7 +129,8 @@ public class Shooter extends SubsystemBase {
     return (targetRPM > 0) && (Math.abs(currentRPM - targetRPM) <= rpmTol);
   }
 
-  public void openGates(double speed) {
+  public void 
+  openGates(double speed) {
     shooterGateLeft.set(speed);
     shooterGateRight.set(-speed);
   }
@@ -156,7 +156,10 @@ public class Shooter extends SubsystemBase {
   }
 
   public Command spinKraken() {
-    return run(() -> spinKrakens(targetRPM))
+    return run(() -> {
+      spinKrakens(targetRPM);
+      System.out.println("Spinning krakens to " + targetRPM + " RPM");
+    })
         .until(this::isAtTargetRPM)
         .andThen(
             run(() -> {
