@@ -163,7 +163,6 @@ public class Shooter extends SubsystemBase {
               spinKrakens(targetRPM);
               openGates(openGatesSpeed);
             }));
-
-  }
+          }
 
 }

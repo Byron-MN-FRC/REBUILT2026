@@ -230,4 +230,9 @@ public class Hopper extends SubsystemBase {
             }
         }
     }
+    public void stopAll() {
+        stopFuelGrabber();
+        stopHopperFloorTransferSecure();
+        
+    }
 }

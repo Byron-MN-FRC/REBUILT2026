@@ -225,5 +225,9 @@ public class Turret extends SubsystemBase {
 
     public void resetPosition() {
         rotateShooterMotor.setPosition(0);
+    }  
+      
+    public void stopAll() {
+        spinStop();
     }
 }

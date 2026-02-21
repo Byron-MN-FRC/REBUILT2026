@@ -275,4 +275,8 @@ public class ClimbSubsystem extends SubsystemBase {
     public void setLockdownDriveControl() {
         lockdownDriveControl = getLockdownDriveControl();
     }
+
+    public void stopAll() {
+        stopClimbing();
+    }
 }
