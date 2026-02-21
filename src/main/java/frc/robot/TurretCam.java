@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+
 public class TurretCam {
     /*
      * Returns the horizontal angle error from the Limelight.
@@ -26,12 +28,16 @@ public class TurretCam {
         return targetLocated() && Math.abs(getAngleError()) < Constants.VisionConstants.ANGLE_ERROR_THRESHOLD;
     }
 
-        public static double getDistance() {
+    public static double getDistance() {
         if (LimelightHelpers.getTV(Constants.VisionConstants.TURRET_CAM)) {
-            var Pos = LimelightHelpers.getBotPose2d(Constants.VisionConstants.TURRET_CAM).getTranslation();
-            var CurrPose = Robot.getInstance().drivetrain.getState().Pose.getTranslation();
-            // return Math.hypot(relPos[0], relPos[1]);
-            return Pos.getDistance(CurrPose);
+            var robotPos = LimelightHelpers.getBotPose2d(Constants.VisionConstants.TURRET_CAM).getTranslation();
+            var alliance = Constants.DriveConstants.MyAlliance();
+            
+            if (alliance == Alliance.Blue) {
+                return robotPos.getDistance(Constants.FieldConstants.BLUE_HUB_CENTER);
+            } else {
+                return robotPos.getDistance(Constants.FieldConstants.RED_HUB_CENTER);
+            }
         }
         return 0;
     }

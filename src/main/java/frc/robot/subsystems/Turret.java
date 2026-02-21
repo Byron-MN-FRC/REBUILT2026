@@ -60,9 +60,12 @@ public class Turret extends SubsystemBase {
         CurrentLimitsConfigs currentLimits = new CurrentLimitsConfigs();
         currentLimits.SupplyCurrentLimit = 5; // Limit motor supply current to 20
 
-        rotateShooterMotor = new TalonFX(23, "CANivore2");
+        rotateShooterMotor = new TalonFX(23);
         
         TalonFXConfiguration configs = new TalonFXConfiguration();
+
+        configs.CurrentLimits = currentLimits;
+
         configs.Slot0.kS = 0.25; // Add 0.25 V output to overcome static friction
         configs.Slot0.kV = 0.12; // A velocity target of 1 rps results in 0.12 V output
         configs.Slot0.kA = 0.01; // An acceleration of 1 rps/s requires 0.01 V output
@@ -112,7 +115,6 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putBoolean("Zero?", zeroSwitch.get());
 
         SmartDashboard.putBoolean("Target Locked", TurretCam.targetLocked());
-
     }
     
     @Override
@@ -186,6 +188,19 @@ public class Turret extends SubsystemBase {
                     rotateShooterMotor.setControl(m_motionMagicVoltage.withPosition(Constants.TurretShooterConstants.NEUTRAL_POSITION));
                 });
     }
+
+    public Command checkZeroRight() {
+        return run(() -> {
+            if (zeroSwitch.get()) {
+                rotateShooterMotor.setPosition(Constants.TurretShooterConstants.MAX_RIGHT_POSITION);
+            } else {
+                rotateShooterMotor.set(0.04);
+            }
+        }).until(() -> zeroSwitch.get())
+                .finallyDo(() -> {
+                    rotateShooterMotor.setControl(m_motionMagicVoltage.withPosition(Constants.TurretShooterConstants.NEUTRAL_POSITION));
+                });
+    }
             
     public boolean isActive() {
         return isActive;
@@ -206,5 +221,13 @@ public class Turret extends SubsystemBase {
     
     public boolean getZeroSwitch() {
         return zeroSwitch.get();
+    }
+
+    public void resetPosition() {
+        rotateShooterMotor.setPosition(0);
+    }  
+      
+    public void stopAll() {
+        spinStop();
     }
 }

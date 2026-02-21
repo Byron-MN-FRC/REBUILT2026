@@ -12,7 +12,6 @@
 
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.LedsSubsystem;
 
@@ -39,7 +38,9 @@ private final LedsSubsystem m_leds;
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {}
+    public void execute() {
+        m_hopper.setHopperFloorTransferSecureSpeed(0.5);
+    }
 
     // Called once the command ends or is interrupted.
     @Override

@@ -54,13 +54,16 @@ public class Robot extends TimedRobot {
             
             SmartDashboard.putNumber("Robot Gyro", m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees());
 
-            if (Constants.Debug.DEBUG_MODE) {
-                SmartDashboard.putNumber("Turret Distance to Hub", TurretCam.getDistance());
-            }
+            if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("Turret Distance to Hub", TurretCam.getDistance());
     }
         
-        @Override
-    public void disabledInit() {}
+    @Override
+    public void disabledInit() {
+        Robot.getInstance().m_climb.stopAll();
+        Robot.getInstance().m_hopper.stopAll();
+        Robot.getInstance().m_turret.stopAll();
+        Robot.getInstance().m_shooter.stopAll();
+    }
 
     @Override
     public void disabledPeriodic() {}

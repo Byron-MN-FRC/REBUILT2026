@@ -12,6 +12,8 @@ package frc.robot;
 
 import java.util.Optional;
 
+import com.ctre.phoenix6.CANBus;
+
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -61,10 +63,12 @@ public class Constants {
     }
 
     public static final class TurretShooterConstants {
+        public static final CANBus CAN_BUS = new CANBus("CANivore2");
+
         public static final int SENSOR_TO_MECH_RATIO = 10;
 
-        public static final double MAX_LEFT_POSITION = -0.25;
-        public static final double MAX_RIGHT_POSITION = 0.25;
+        public static final double MAX_LEFT_POSITION = -0.1584;
+        public static final double MAX_RIGHT_POSITION = 0.3025;
         public static final double NEUTRAL_POSITION = 0;
         public static final double MAX_LEFT_DEGREES = MAX_LEFT_POSITION * 360;
         public static final double MAX_RIGHT_DEGREES = MAX_RIGHT_POSITION * 360;
@@ -106,7 +110,7 @@ public class Constants {
     }
 
     public static final class ClimbConstants {
-        public static final double raiserUpperTarget = 100.0;
+        public static final double raiserUpperTarget = 80.0;
         public static final double raiserLowerTarget = 0.0;
 
         // public static final double climbUpperLimit = 205.0;

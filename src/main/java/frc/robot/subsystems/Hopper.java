@@ -71,8 +71,15 @@ public class Hopper extends SubsystemBase {
             SparkMaxConfig leftFuelGrabberConfigLeft = new SparkMaxConfig();
             SparkMaxConfig rightFuelGrabberConfigRight = new SparkMaxConfig();
 
-            leftFuelGrabberConfigLeft.smartCurrentLimit(10); // Limit gate motor current to 10 A
-            rightFuelGrabberConfigRight.smartCurrentLimit(10); // Limit gate motor current to 10 A
+        SparkMaxConfig leftFuelGrabberConfigLeft = new SparkMaxConfig();
+        SparkMaxConfig rightFuelGrabberConfigRight = new SparkMaxConfig();
+
+
+        leftFuelGrabberConfigLeft.smartCurrentLimit(10); // Limit gate motor current to 10 A
+        rightFuelGrabberConfigRight.smartCurrentLimit(10); // Limit gate motor current to 10 A
+
+        leftFuelGrabber.configure(leftFuelGrabberConfigLeft, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        rightFuelGrabber.configure(rightFuelGrabberConfigRight, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
             leftFuelGrabber.configure(leftFuelGrabberConfigLeft, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
             rightFuelGrabber.configure(rightFuelGrabberConfigRight, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -101,6 +108,7 @@ public class Hopper extends SubsystemBase {
         hopperFloorTransferSecure = new SparkMax(18, MotorType.kBrushless);
         SparkMaxConfig hopperFloorTransferSecureConfig = new SparkMaxConfig();
         hopperFloorTransferSecureConfig.smartCurrentLimit(10); // Limit gate motor current to 10 A
+        hopperFloorTransferSecureConfig.inverted(true); //Invert direction of floor transfer motor
         hopperFloorTransferSecure.configure(hopperFloorTransferSecureConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
         if (Constants.Debug.INTAKE_EXISTS) {
@@ -250,5 +258,10 @@ public class Hopper extends SubsystemBase {
                 }
             }
         }
+    }
+    public void stopAll() {
+        stopFuelGrabber();
+        stopHopperFloorTransferSecure();
+        
     }
 }
