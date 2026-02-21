@@ -222,4 +222,8 @@ public class Turret extends SubsystemBase {
     public boolean getZeroSwitch() {
         return zeroSwitch.get();
     }
+
+    public void resetPosition() {
+        rotateShooterMotor.setPosition(0);
+    }
 }
