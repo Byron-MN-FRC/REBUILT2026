@@ -43,7 +43,7 @@ public class FloorTransfer extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_subsystem.setHopperFloorTransferSecureSpeed(1);
+        m_subsystem.setHopperFloorTransferSecureSpeed(0.8);
     }
 
     // Called once the command ends or is interrupted.

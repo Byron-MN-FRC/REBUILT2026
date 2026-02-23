@@ -37,6 +37,7 @@ public class Constants {
 
     public static final class Debug {
         public static final boolean DEBUG_MODE = false;
+        public static final boolean INTAKE_EXISTS = false;
     }
 
     public static final class DriveConstants {
@@ -58,7 +59,7 @@ public class Constants {
         // Hopper extend/retract constants
         public static final double EXTEND_SPEED = 0.4;
         public static final double RETRACT_SPEED = -0.4;
-        public static final int CURRENT_LIMIT = 20;
+        public static final int CURRENT_LIMIT = 15;
     }
 
     public static final class TurretShooterConstants {
@@ -66,8 +67,8 @@ public class Constants {
 
         public static final int SENSOR_TO_MECH_RATIO = 10;
 
-        public static final double MAX_LEFT_POSITION = -0.1584;
-        public static final double MAX_RIGHT_POSITION = 0.3025;
+        public static final double MAX_LEFT_POSITION = -0.3303;
+        public static final double MAX_RIGHT_POSITION = 0.1062;
         public static final double NEUTRAL_POSITION = 0;
         public static final double MAX_LEFT_DEGREES = MAX_LEFT_POSITION * 360;
         public static final double MAX_RIGHT_DEGREES = MAX_RIGHT_POSITION * 360;
@@ -109,7 +110,7 @@ public class Constants {
     }
 
     public static final class ClimbConstants {
-        public static final double raiserUpperTarget = 80.0;
+        public static final double raiserUpperTarget = 85.0;
         public static final double raiserLowerTarget = 0.0;
 
         // public static final double climbUpperLimit = 205.0;

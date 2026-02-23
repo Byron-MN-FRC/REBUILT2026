@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "AutonStart"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "ClimbPath1"
@@ -17,7 +23,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 3.0
+                  "waitTime": 7.0
                 }
               },
               {
@@ -57,14 +63,14 @@
                 "data": {
                   "pathName": "ClimbPath3"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ClimbLowerAuto"
-                }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbLowerAuto"
           }
         }
       ]
