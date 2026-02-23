@@ -10,6 +10,10 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import java.util.Optional;
 
 import com.ctre.phoenix6.CANBus;
@@ -91,12 +95,42 @@ public class Constants {
     public static final class VisionConstants {
         public static final String TURRET_CAM = "limelight-turret";
         public static final double ANGLE_ERROR_THRESHOLD = 3.0;
+      
+        // This variable assumes the robot is a square
+        // TODO: adjust for actual robot dimensions
+        public static final double ROBOT_WIDTH_METERS = 0.5;
+
+        // TODO: adjust for actual camera position and orientation on the robot
+        public static final String LIMELIGHT_NAME = "limelight-rear";
+        public static final double[] CAMERA_POSE_ROBOT_SPACE = {
+                0.0, // X position of camera on robot in meters
+                0.0, // Y position of camera on robot in meters
+                0.0, // Z position of camera on robot in meters
+                0.0, // Roll of the camera on the robot in degrees
+                0.0, // Pitch of the camera on the robot in degrees
+                0.0  // Yaw of the camera on the robot in degrees
+        };
+
+
     }
 
     public static final class FieldConstants {
         public static final AprilTagFields APRIL_TAG_FIELD = AprilTagFields.k2026RebuiltAndymark;
         public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT = AprilTagFieldLayout
             .loadField(APRIL_TAG_FIELD);
+
+        public static final double FIELD_WIDTH_METERS = APRIL_TAG_FIELD_LAYOUT.getFieldWidth();
+        public static final double FIELD_LENGTH_METERS = APRIL_TAG_FIELD_LAYOUT.getFieldLength();
+
+        public static final int[] TAGS_FOR_AUTO_ALIGNMENT = {15, 16, 31, 32};
+
+        // Currently Excluded: 20, 21, 30
+        public static final int[] TAGS_FOR_POSE_ESTIMATION = {
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+            11, 12, 13, 14, 15, 16, 17, 18, 19,
+            22, 23, 24, 25, 26, 27, 28, 29,
+            31, 32
+        };
 
         public static final double BLUE_HUB_CENTER_x = APRIL_TAG_FIELD_LAYOUT.getTagPose(5).get().getX();
         public static final double BLUE_HUB_CENTER_Y = APRIL_TAG_FIELD_LAYOUT.getTagPose(10).get().getY();
