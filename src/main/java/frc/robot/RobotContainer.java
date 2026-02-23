@@ -26,13 +26,15 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.commands.AutonExtend;
+import frc.robot.commands.AutonIntake;
 import frc.robot.commands.AutonRetract;
 import frc.robot.commands.AutonShootCommand;
+import frc.robot.commands.AutonStart;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.ClimbLowerAuto;
 import frc.robot.commands.ClimbRaiseAuto;
@@ -88,9 +90,10 @@ public class RobotContainer {
 
     public RobotContainer() {
         // pointer.set(true);
+        NamedCommands.registerCommand("AutonStart", new AutonStart(m_turret, m_climb, m_leds));
         NamedCommands.registerCommand("AutonRetract", new AutonRetract(m_hopper));
         NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper, m_leds));
-        NamedCommands.registerCommand("AutonShoot", new AutonShootCommand(m_shooter, m_leds));
+        NamedCommands.registerCommand("AutonShootCommand", new AutonShootCommand(m_shooter, m_leds, m_hopper));
         NamedCommands.registerCommand("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
         NamedCommands.registerCommand("ClimbLowerAuto", new ClimbLowerAuto(m_climb, m_leds));
 
@@ -194,15 +197,15 @@ public class RobotContainer {
 
         accessory.b().onTrue(new ClimbZeroing(m_climb,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        accessory.a().onTrue(new FloorTransfer(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.a().toggleOnTrue(new FloorTransfer(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        accessory.start().onTrue(m_turret.checkZeroRight().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.start().onTrue(m_turret.checkZeroLeft().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
         accessory.back().onTrue(new InstantCommand(() -> m_turret.resetPosition()).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         //accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                         
-        accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.leftBumper().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.rightTrigger().whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
@@ -210,7 +213,7 @@ public class RobotContainer {
       
         gamepad.b().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     
-        gamepad.rightBumper().onTrue(new FuelJAMMED(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        gamepad.rightBumper().onTrue(new FuelJAMMED(m_hopper, m_shooter).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
     public CommandXboxController getaccessory() {
       return accessory;

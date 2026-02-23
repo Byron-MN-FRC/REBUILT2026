@@ -59,7 +59,7 @@ public class Constants {
         // Hopper extend/retract constants
         public static final double EXTEND_SPEED = 0.4;
         public static final double RETRACT_SPEED = -0.4;
-        public static final int CURRENT_LIMIT = 20;
+        public static final int CURRENT_LIMIT = 15;
     }
 
     public static final class TurretShooterConstants {
@@ -110,7 +110,7 @@ public class Constants {
     }
 
     public static final class ClimbConstants {
-        public static final double raiserUpperTarget = 80.0;
+        public static final double raiserUpperTarget = 85.0;
         public static final double raiserLowerTarget = 0.0;
 
         // public static final double climbUpperLimit = 205.0;
