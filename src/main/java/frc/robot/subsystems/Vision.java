@@ -39,13 +39,13 @@ public class Vision extends SubsystemBase {
 
         LimelightHelpers.SetFiducialIDFiltersOverride(
                 Constants.VisionConstants.LIMELIGHT_NAME, 
-                Constants.VisionConstants.TAGS_FOR_POSE_ESTIMATION);
+                Constants.FieldConstants.TAGS_FOR_POSE_ESTIMATION);
     }
 
     @Override
     public void periodic() {
-        updatePoseEstimator(Constants.VisionConstants.LIMELIGHT_NAME);
         scanForAlignmentTargets(Constants.VisionConstants.LIMELIGHT_NAME);
+        updatePoseEstimator(Constants.VisionConstants.LIMELIGHT_NAME);
 
         // TODO fix
         if (timestampToReEnable < Utils.getCurrentTimeSeconds() && tempDisable == true) {
@@ -81,7 +81,7 @@ public class Vision extends SubsystemBase {
      */
     public void scanForAlignmentTargets(String llName) {
         if (LimelightHelpers.getTV(llName)) {
-            for (int fidID : Constants.VisionConstants.TAGS_FOR_AUTO_ALIGNMENT) {
+            for (int fidID : Constants.FieldConstants.TAGS_FOR_AUTO_ALIGNMENT) {
                 if (LimelightHelpers.getFiducialID(llName) == fidID) {
                     lastAlignmentTarget = fidID;
                     return;

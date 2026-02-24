@@ -154,11 +154,11 @@ public class ClimbSubsystem extends SubsystemBase {
     }
 
     public boolean isRaised() {
-        return Math.abs(raiser.getPosition().getValueAsDouble() - raiserUpperTarget) < .3;
+        return Math.abs(raiser.getPosition().getValueAsDouble() - raiserUpperTarget) < .5;
     }
 
     public boolean isLowered() {
-        return Math.abs(raiser.getPosition().getValueAsDouble() - raiserLowerTarget) < .3;
+        return Math.abs(raiser.getPosition().getValueAsDouble() - raiserLowerTarget) < 1.5;
     }
 
     public boolean isClimbing() {

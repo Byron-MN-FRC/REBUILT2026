@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.TagApproach.gameTarget;
 
 public class TagApproaches {
-    public AprilTagFieldLayout FieldLayout = Constants.VisionConstants.APRIL_TAG_FIELD_LAYOUT;
+    public AprilTagFieldLayout FieldLayout = Constants.FieldConstants.APRIL_TAG_FIELD_LAYOUT;
     private TagApproach[] tagArray;
 
     private static TagApproaches _TagApproaches = new TagApproaches();

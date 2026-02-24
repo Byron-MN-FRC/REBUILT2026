@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -191,16 +192,23 @@ public class RobotContainer {
         // gamepad.start().and(gamepad.back()).onTrue(new InstantCommand(() -> SignalLogger.stop()).andThen(new InstantCommand(() ->System.out.println("Stopping Loger"))));
         
         // Reset the field-centric heading on left bumper press.
-        gamepad.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
-
-        gamepad.leftBumper().whileTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        // gamepad.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+        
+        gamepad.start().onTrue(new InstantCommand(() -> m_vision.tempDisable(0.5))
+            .andThen(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())));
 
         gamepad.y()
             .whileTrue(new DriveToPosition(drivetrain)
             .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        drivetrain.registerTelemetry(logger::telemeterize);
-
+        gamepad.leftBumper().whileTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+            
+        gamepad.rightTrigger().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        
+        gamepad.b().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+    
+        gamepad.rightBumper().onTrue(new FuelJAMMED(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));  
+    
         accessory.y().onTrue(new ClimbCommand(m_climb, m_leds, m_hopper, m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.b().onTrue(new ClimbZeroing(m_climb,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
@@ -212,16 +220,12 @@ public class RobotContainer {
         accessory.back().onTrue(new InstantCommand(() -> m_turret.resetPosition()).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         //accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-                        
+        
         accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
+        
         accessory.rightTrigger().whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
-        gamepad.rightTrigger().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-      
-        gamepad.b().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-    
-        gamepad.rightBumper().onTrue(new FuelJAMMED(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        drivetrain.registerTelemetry(logger::telemeterize);
     }
     public CommandXboxController getaccessory() {
       return accessory;

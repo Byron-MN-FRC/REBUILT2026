@@ -142,7 +142,7 @@ public class ClimbCommand extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return m_climb.isRaised();
+        return (!m_climb.isClimbing() && m_climb.isRaised()) || (m_climb.isClimbing() && m_climb.isLowered());
     }
 
     @Override
