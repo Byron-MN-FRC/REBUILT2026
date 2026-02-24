@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -30,8 +31,8 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.AutonExtend;
-import frc.robot.commands.AutonIntake;
 import frc.robot.commands.AutonRetract;
 import frc.robot.commands.AutonShootCommand;
 import frc.robot.commands.AutonStart;
@@ -180,11 +181,11 @@ public class RobotContainer {
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
-        // gamepad.back().and(gamepad.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        // gamepad.back().and(gamepad.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        // gamepad.start().and(gamepad.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        // gamepad.start().and(gamepad.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
-        // gamepad.start().and(gamepad.back()).onTrue(new InstantCommand(() -> SignalLogger.stop()).andThen(new InstantCommand(() ->System.out.println("Stopping Loger"))));
+        gamepad.back().and(gamepad.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
+        gamepad.back().and(gamepad.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+        gamepad.start().and(gamepad.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+        gamepad.start().and(gamepad.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        gamepad.start().and(gamepad.back()).onTrue(new InstantCommand(() -> SignalLogger.stop()).andThen(new InstantCommand(() ->System.out.println("Stopping Loger"))));
         
         // Reset the field-centric heading on left bumper press.
         gamepad.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
