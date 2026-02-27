@@ -127,7 +127,6 @@ public class ClimbSubsystem extends SubsystemBase {
         if (Constants.Debug.DEBUG_MODE) {SmartDashboard.putNumber("Climb Stage", climbStage);}
         SmartDashboard.putNumber("Height Positions", raiser.getPosition().getValueAsDouble());
         setLockdownMode();
-        setLockdownDriveControl();
     }
 
     @Override
@@ -259,23 +258,8 @@ public class ClimbSubsystem extends SubsystemBase {
         }
     }
 
-    public int getLockdownDriveControl() {
-        return 1;  //TODO Resolve this (probably shouldn't lock down the drive base)
-        // if (climbStage == 0) {
-        //     return lockdownDriveControl = 1;
-        // } else if (climbStage == 1 || climbStage == 3) {
-        //     return lockdownDriveControl = 1;
-        // } else {
-        //     return lockdownDriveControl = 0;
-        // }
-    }
-
     public void setLockdownMode() {
         currentLockdownMode = getLockdownMode();
-    }
-
-    public void setLockdownDriveControl() {
-        lockdownDriveControl = getLockdownDriveControl();
     }
 
     public void stopAll() {

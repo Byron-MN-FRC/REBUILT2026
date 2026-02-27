@@ -94,12 +94,12 @@ public class ClimbCommand extends Command {
         }
         System.out.println("Lights on");
 
-        // //LOCKDOWN TODO need to fix
-        // if (m_climb.getClimbStage() != 3) {
-        //     m_hopper.retractingHopperForLockdown();
-        //     m_turret.haltTurretForLockdown();
-        //     System.out.println("Lockdown Engaged");
-        // }
+        //LOCKDOWN TODO need to fix
+        if ((m_climb.getClimbStage() != 3)) {
+            m_hopper.retractingHopperForLockdown();
+            m_turret.haltTurretForLockdown();
+            System.out.println("Lockdown Engaged");
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
