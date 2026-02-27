@@ -102,7 +102,7 @@ public class Constants {
 
         public static final String LIMELIGHT_NAME = "limelight-rear";
 
-        // TODO: adjust for actual camera position and orientation on the robot
+        // adjust for actual camera position and orientation on the robot
         public static final double[] CAMERA_POSE_ROBOT_SPACE = {
                 -0.315, // X position of camera on robot in meters (positive forward, negative backward)
                 0.245, // Y position of camera on robot in meters (positive right, negative left)
@@ -125,6 +125,7 @@ public class Constants {
         public static final int[] TAGS_FOR_AUTO_ALIGNMENT = {15, 16, 31, 32};
 
         public static final int[] TAGS_FOR_POSE_ESTIMATION = {
+            // tag numbers --> update for each year with all tags on the field unless there is a reason to not use them
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
             11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
             21, 22, 23, 24, 25, 26, 27, 28, 29, 30,

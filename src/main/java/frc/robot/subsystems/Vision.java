@@ -25,9 +25,9 @@ public class Vision extends SubsystemBase {
     private Pose2d autoStartPose = new Pose2d();
     public int lastAlignmentTarget = 1;
 
-    // TODO: add field image to dashboard
-
     public Vision() {
+
+        //this is where the camera is relative to the center of the robot
         LimelightHelpers.setCameraPose_RobotSpace(
                 Constants.VisionConstants.LIMELIGHT_NAME,
                 Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[0],
@@ -35,7 +35,8 @@ public class Vision extends SubsystemBase {
                 Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[2],
                 Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[3],
                 Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[4],
-                Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[5]);
+                Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[5]
+        );
 
         LimelightHelpers.SetFiducialIDFiltersOverride(
                 Constants.VisionConstants.LIMELIGHT_NAME, 
