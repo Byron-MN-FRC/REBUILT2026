@@ -99,8 +99,8 @@ public class ClimbSubsystem extends SubsystemBase {
         climbConf.Voltage.withPeakForwardVoltage(Volts.of(10)).withPeakReverseVoltage(Volts.of(-10));
 
         MotionMagicConfigs motionMagicOn = climbConf.MotionMagic;
-        motionMagicOn.withMotionMagicCruiseVelocity(RotationsPerSecond.of(1000))
-                .withMotionMagicAcceleration(RotationsPerSecondPerSecond.of(200))
+        motionMagicOn.withMotionMagicCruiseVelocity(RotationsPerSecond.of(2000)) //climb speeds
+                .withMotionMagicAcceleration(RotationsPerSecondPerSecond.of(400))
                 .withMotionMagicJerk(RotationsPerSecondPerSecond.per(Second).of(0)); // 0 makes it fast
 
         /* Retry config apply up to 5 times, report if failure */
