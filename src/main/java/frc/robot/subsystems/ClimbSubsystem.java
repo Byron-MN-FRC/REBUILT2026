@@ -178,7 +178,7 @@ public class ClimbSubsystem extends SubsystemBase {
         if (getBottomSwitch()) {
             raiser.set(0);
         } else {
-            raiser.set(-.25);
+            raiser.set(Constants.ClimbConstants.climbZeroingSpeed);
         }
     }
 
