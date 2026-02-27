@@ -120,12 +120,14 @@ public class ClimbSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        if (Constants.Debug.DEBUG_MODE) {
         SmartDashboard.putBoolean("Arm is raised", climbing);
         // SmartDashboard.putBoolean("Arm Retracted", getBottomSwitch());
         SmartDashboard.putBoolean("Arm Stalled", getBottomSwitch());
         SmartDashboard.putString("Lockdown Stage", currentLockdownMode.name());
-        if (Constants.Debug.DEBUG_MODE) {SmartDashboard.putNumber("Climb Stage", climbStage);}
+        SmartDashboard.putNumber("Climb Stage", climbStage);
         SmartDashboard.putNumber("Height Positions", raiser.getPosition().getValueAsDouble());
+        }
         setLockdownMode();
         setLockdownDriveControl();
     }

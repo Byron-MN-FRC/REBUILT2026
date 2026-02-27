@@ -105,13 +105,13 @@ public class Turret extends SubsystemBase {
         led = new DigitalOutput(8);
         addChild("led", led);
         
-        SmartDashboard.putData("Subsystem: Turret", this);
+        if (Constants.Debug.DEBUG_MODE) SmartDashboard.putData("Subsystem: Turret", this);
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        SmartDashboard.putNumber("Rotation", rotateShooterMotor.getPosition().getValueAsDouble());
+        if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("Rotation", rotateShooterMotor.getPosition().getValueAsDouble());
         SmartDashboard.putBoolean("Zero?", zeroSwitch.get());
 
         SmartDashboard.putBoolean("Target Locked", TurretCam.targetLocked());
