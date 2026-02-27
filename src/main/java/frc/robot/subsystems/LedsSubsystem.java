@@ -39,7 +39,6 @@ public class LedsSubsystem extends SubsystemBase {
         rainbow,
         fasterfaster,
         climbProgressBar,
-        redFlashing,
         blueFlashing,
         greenFlashing
     };
@@ -90,11 +89,14 @@ public class LedsSubsystem extends SubsystemBase {
         if (ledColor == LedColor.fasterfaster) {
             lightStrip.fasterfaster();
         }
-        if (ledColor == LedColor.redFlashing) {
-            lightStrip.redFlashing();
+        if (ledColor == LedColor.blueFlashing) {
+            lightStrip.blueFlashing();
+        }
+        if (ledColor == LedColor.greenFlashing) {
+            lightStrip.greenFlashing();
         }
         if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.full) {
-            lightStrip.redFlashing();
+            lightStrip.red();
         }
         else if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.partial) {
             lightStrip.red();
@@ -237,9 +239,6 @@ public class LedsSubsystem extends SubsystemBase {
     public void setModeClimbProgressBar() { //this might not work? I've not tested it yet.
         ledColor = LedColor.climbProgressBar;
         lightStrip.climbProgressBar();
-    }
-    public void setModeRedFlashing() {
-        ledColor = LedColor.redFlashing;
     }
     public void setModeBlueFlashing() {
         ledColor = LedColor.blueFlashing;
