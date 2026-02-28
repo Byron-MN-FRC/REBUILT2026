@@ -64,13 +64,13 @@ public class Agitate extends Command {
     @Override
     public void execute() {
         m_timer.start();
-        if (m_timer.get() < 1) {
+        if (m_timer.get() < 0.5) {
             m_hopper.forwardForAgitate();
         }
-        else if ((m_timer.get() > 1) && (m_timer.get() < 2)) {
+        else if ((m_timer.get() > 0.5) && (m_timer.get() < 1)) {
             m_hopper.reverseForAgitate();
         }
-        else if (m_timer.get() > 2){
+        else if (m_timer.get() > 1){
             m_timer.reset();
         }
     }
