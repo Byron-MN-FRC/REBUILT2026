@@ -18,7 +18,7 @@ public class ZeroTurret extends Command {
 
      @Override
      public void execute() {
-         m_turret.checkZeroLeft(); // Example: Spin the turret at a low speed to find the zero position
+         m_turret.checkZeroLeftFix(); // Example: Spin the turret at a low speed to find the zero position
      }
 
      @Override
@@ -26,5 +26,4 @@ public class ZeroTurret extends Command {
          // Return true when the turret is successfully zeroed
          return true;
      }
-
 }

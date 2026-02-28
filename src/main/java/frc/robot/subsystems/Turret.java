@@ -195,6 +195,14 @@ public class Turret extends SubsystemBase {
                 });
     }
 
+    public void checkZeroLeftFix() {
+        if (zeroSwitch.get()) {
+            rotateShooterMotor.setPosition(Constants.TurretShooterConstants.MAX_LEFT_POSITION);
+        } else {
+            rotateShooterMotor.set(-0.04);
+        }
+    }
+
     public Command checkZeroRight() {
         return run(() -> {
             if (zeroSwitch.get()) {
