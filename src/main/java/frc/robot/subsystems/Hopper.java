@@ -105,7 +105,7 @@ public class Hopper extends SubsystemBase {
             }
         }
 
-        hopperFloorTransferSecure = new SparkMax(18, MotorType.kBrushless);
+        hopperFloorTransferSecure = new SparkMax(18, MotorType.kBrushless); //floor motor
         SparkMaxConfig hopperFloorTransferSecureConfig = new SparkMaxConfig();
         hopperFloorTransferSecureConfig.smartCurrentLimit(10); // Limit gate motor current to 10 A
         hopperFloorTransferSecureConfig.inverted(true); // Invert direction of floor transfer motor
@@ -260,6 +260,14 @@ public class Hopper extends SubsystemBase {
                 }
             }
         }
+    }
+
+    public void forwardForAgitate() {
+        hopperFloorTransferSecure.set(Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
+    }
+
+    public void reverseForAgitate() {
+        hopperFloorTransferSecure.set(-Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
     }
 
     public void stopAll() {

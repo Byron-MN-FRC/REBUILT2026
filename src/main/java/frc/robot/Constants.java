@@ -60,6 +60,7 @@ public class Constants {
         public static final double EXTEND_SPEED = 0.4;
         public static final double RETRACT_SPEED = -0.4;
         public static final int CURRENT_LIMIT = 15;
+        public static final double AGITATE_COMMAND_SPEED = 0.4;
     }
 
     public static final class TurretShooterConstants {
