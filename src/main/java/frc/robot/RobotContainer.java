@@ -46,6 +46,7 @@ import frc.robot.commands.FuelGRAB;
 import frc.robot.commands.FuelJAMMED;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Lock45Degrees;
+import frc.robot.commands.ShootCommand;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.ledtestcommands.fasterfaster;
 import frc.robot.commands.ledtestcommands.flash;
@@ -232,7 +233,7 @@ public class RobotContainer {
                 .toggleOnTrue(new TrackHub(m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.rightTrigger()
-                .whileTrue(m_shooter.spinCommandShooter().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+                .whileTrue(new ShootCommand(m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         gamepad.rightTrigger()
                 .whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
