@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import frc.robot.commands.Agitate;
 import frc.robot.commands.AutonExtend;
 import frc.robot.commands.AutonIntake;
 import frc.robot.commands.AutonRetract;
@@ -43,6 +44,7 @@ import frc.robot.commands.FloorTransfer;
 import frc.robot.commands.FuelGRAB;
 import frc.robot.commands.FuelJAMMED;
 import frc.robot.commands.Intake;
+import frc.robot.commands.Agitate;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.ledtestcommands.fasterfaster;
@@ -214,6 +216,8 @@ public class RobotContainer {
         gamepad.b().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     
         gamepad.rightBumper().onTrue(new FuelJAMMED(m_hopper, m_shooter).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        gamepad.leftTrigger().whileTrue(new Agitate(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
     public CommandXboxController getaccessory() {
       return accessory;

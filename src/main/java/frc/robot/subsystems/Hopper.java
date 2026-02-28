@@ -262,6 +262,14 @@ public class Hopper extends SubsystemBase {
         }
     }
 
+    public void forwardForAgitate() {
+        hopperExtendMotor.set(Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
+    }
+
+    public void reverseForAgitate() {
+        hopperExtendMotor.set(-Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
+    }
+
     public void stopAll() {
         stopFuelGrabber();
         stopHopperFloorTransferSecure();
