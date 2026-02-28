@@ -104,8 +104,8 @@ public class Shooter extends SubsystemBase {
 
     if (Constants.Debug.DEBUG_MODE) {
       SmartDashboard.putData("Subsystem: Shooter", this); 
+      SmartDashboard.putNumber("Shooter Set RPM", 0);
     }
-    SmartDashboard.putNumber("Shooter Set RPM", 0);
   }
 
   @Override

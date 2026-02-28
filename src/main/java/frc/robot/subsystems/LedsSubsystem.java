@@ -81,8 +81,8 @@ public class LedsSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        SmartDashboard.putString("Subsystem Using LEDs", usingSubsystem.name());
-        SmartDashboard.putString("LED Hex Value", lightStrip.getCurrentColor().toHexString());  
+        if (Constants.Debug.DEBUG_MODE) SmartDashboard.putString("Subsystem Using LEDs", usingSubsystem.name());
+        if (Constants.Debug.DEBUG_MODE) SmartDashboard.putString("LED Hex Value", lightStrip.getCurrentColor().toHexString());  
         if (ledColor == LedColor.rainbow || ledColor == LedColor.none) {
             lightStrip.rainbow();
         }
