@@ -35,7 +35,7 @@ public class Shooter extends SubsystemBase {
 
   final VelocityVoltage m_velocity = new VelocityVoltage(0);
 
-  public double targetRPM = 2100;
+  public double targetRPM = 2175;
 
   private double openGatesSpeed = 1;
   private final double rpmTol = 125; // Tolerance in RPM
@@ -69,12 +69,12 @@ public class Shooter extends SubsystemBase {
      * Voltage-based velocity requires a velocity feed forward to account for the
      * back-emf of the motor
      */
-    configs.Slot0.kS = 0.376; // 0.1; // To account for friction, add 0.1 V of static feedforward
-    configs.Slot0.kV = 0.115; // Kraken X60 is a 500 kV motor, 500 rpm per V = 8.333 rps per V, 1/8.33 = 0.12
+    configs.Slot0.kS = 0.006; // 0.1; // To account for friction, add 0.1 V of static feedforward
+    configs.Slot0.kV = 0.127; // Kraken X60 is a 500 kV motor, 500 rpm per V = 8.333 rps per V, 1/8.33 = 0.12
                               // volts / rotation per second
-    configs.Slot0.kP = 0.012; // 0.11; // An error of 1 rotation per second results in 0.11 V output
-    configs.Slot0.kI = 0.0001; // No output for integrated error
-    configs.Slot0.kD = 0; // No output for error derivative
+    configs.Slot0.kP = 0.015; // 0.11; // An error of 1 rotation per second results in 0.11 V output
+    configs.Slot0.kI = 0.0; // No output for integrated error
+    configs.Slot0.kD = 0.0011;// No output for error derivative
     // Peak output of 8 volts
     configs.Voltage.withPeakForwardVoltage(Volts.of(8))
         .withPeakReverseVoltage(Volts.of(-8));
