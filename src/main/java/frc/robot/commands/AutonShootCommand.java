@@ -64,7 +64,7 @@ public class AutonShootCommand extends Command {
     @Override
     public void execute() {
         var targVelo = DistanceVelocityMap.getVelocity(0);
-        m_Shooter.spinKrakens(targVelo);
+        m_Shooter.spinShooter(targVelo);
         if (m_Shooter.isAtTargetRPM()) {
             m_Shooter.openGates(1); 
             m_hopper.setHopperFloorTransferSecureSpeed(.8);

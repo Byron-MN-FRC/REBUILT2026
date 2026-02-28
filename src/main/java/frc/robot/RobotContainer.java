@@ -46,6 +46,7 @@ import frc.robot.commands.FuelGRAB;
 import frc.robot.commands.FuelJAMMED;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Lock45Degrees;
+import frc.robot.commands.ShootCommand;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.ledtestcommands.fasterfaster;
 import frc.robot.commands.ledtestcommands.flash;
@@ -97,7 +98,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutonStart", new AutonStart(m_turret, m_climb, m_leds));
         NamedCommands.registerCommand("AutonRetract", new AutonRetract(m_hopper));
         NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper, m_leds));
-        NamedCommands.registerCommand("AutonShootCommand", new AutonShootCommand(m_shooter, m_leds, m_hopper));
+        NamedCommands.registerCommand("AutonShootCommand", new ShootCommand(m_shooter, m_hopper, m_leds));
         NamedCommands.registerCommand("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
         NamedCommands.registerCommand("ClimbLowerAuto", new ClimbLowerAuto(m_climb, m_leds));
 
@@ -232,7 +233,7 @@ public class RobotContainer {
                 .toggleOnTrue(new TrackHub(m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.rightTrigger()
-                .whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+                .whileTrue(new ShootCommand(m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         gamepad.rightTrigger()
                 .whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
