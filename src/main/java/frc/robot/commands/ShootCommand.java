@@ -49,7 +49,7 @@ public class ShootCommand extends Command {
     public void execute() {
         m_shooter.spinCommandShooter();//starts shooter, opens magazine, and opens gates 
         if (m_shooter.isAtTargetRPM()) {
-            m_hopper.hopperExtendMotorControl();
+            m_hopper.setHopperFloorTransferSecureSpeed(0.8);
             m_hopper.setFuelGrabberSpeed();
         }
         
