@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.ColorLED;
 import frc.robot.Constants;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.LedsSubsystem;
 
 
@@ -28,10 +29,12 @@ import frc.robot.subsystems.LedsSubsystem;
 public class Intake extends Command {
     ColorLED lightStrip;
     private final Hopper m_hopper;
+    private final Turret m_turret;
     private final LedsSubsystem m_leds;
     
-    public Intake(Hopper hopperSubsystem, LedsSubsystem ledSubsystem)  {
+    public Intake(Hopper hopperSubsystem, Turret turretSubsystem, LedsSubsystem ledSubsystem)  {
         m_hopper = hopperSubsystem;
+        m_turret = turretSubsystem;
         m_leds = ledSubsystem;
         addRequirements(m_hopper);
     }
@@ -45,6 +48,7 @@ public class Intake extends Command {
                 m_leds.setModeGreenFlashing();
             }
             m_hopper.setHopperExtend();
+            m_turret.aimDegrees(Constants.TurretShooterConstants.NEUTRAL_POSITION);
         }
         else {
             if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.hopper) {

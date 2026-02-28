@@ -167,17 +167,26 @@ public class Turret extends SubsystemBase {
     }
 
     public void aimRelativeDegrees(double degrees) {
-        degrees = Math.max(Constants.TurretShooterConstants.MAX_LEFT_DEGREES, degrees);
-        degrees = Math.min(Constants.TurretShooterConstants.MAX_RIGHT_DEGREES, degrees);
-        rotateShooterMotor
+        if (Robot.getInstance().m_hopper.isExtending == false) {
+            degrees = Math.max(Constants.TurretShooterConstants.MAX_LEFT_DEGREES, degrees);
+            degrees = Math.min(Constants.TurretShooterConstants.MAX_RIGHT_DEGREES, degrees);
+            rotateShooterMotor
                 .setControl(m_motionMagicVoltage
-                        .withPosition(Constants.TurretShooterConstants.degreesToRotations(degrees)));
+                    .withPosition(Constants.TurretShooterConstants.degreesToRotations(degrees)));
+        }
+        else {
+            degrees = Math.max(Constants.TurretShooterConstants.RESTRICTED_MAX_LEFT_DEGREES, degrees);
+            degrees = Math.min(Constants.TurretShooterConstants.RESTRICTED_MAX_RIGHT_DEGREES, degrees);
+            rotateShooterMotor
+                .setControl(m_motionMagicVoltage
+                    .withPosition(Constants.TurretShooterConstants.degreesToRotations(degrees)));
+        }
     }
 
     public void aimDegrees(double degrees) {
         rotateShooterMotor
-                .setControl(m_motionMagicVoltage
-                        .withPosition(Constants.TurretShooterConstants.degreesToRotations(degrees)));
+            .setControl(m_motionMagicVoltage
+                .withPosition(Constants.TurretShooterConstants.degreesToRotations(degrees)));
     }
 
     public Command checkZeroLeft() {

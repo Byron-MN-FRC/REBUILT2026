@@ -73,6 +73,8 @@ public class Constants {
         public static final double NEUTRAL_POSITION = 0;
         public static final double MAX_LEFT_DEGREES = MAX_LEFT_POSITION * 360;
         public static final double MAX_RIGHT_DEGREES = MAX_RIGHT_POSITION * 360;
+        public static final double RESTRICTED_MAX_LEFT_DEGREES = MAX_LEFT_POSITION * 360;
+        public static final double RESTRICTED_MAX_RIGHT_DEGREES = MAX_RIGHT_POSITION * 360;
 
         public static final double TURRET_CAM_TIMEOUT = 0.5;
 
