@@ -232,7 +232,7 @@ public class RobotContainer {
                 .toggleOnTrue(new TrackHub(m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.rightTrigger()
-                .whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+                .whileTrue(m_shooter.spinCommandShooter().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         gamepad.rightTrigger()
                 .whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
