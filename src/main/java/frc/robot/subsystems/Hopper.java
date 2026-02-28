@@ -67,7 +67,7 @@ public class Hopper extends SubsystemBase {
         if (Constants.Debug.INTAKE_EXISTS) {
             leftFuelGrabber = new SparkMax(16, MotorType.kBrushless);
             rightFuelGrabber = new SparkMax(15, MotorType.kBrushless);
-
+ 
             SparkMaxConfig leftFuelGrabberConfigLeft = new SparkMaxConfig();
             SparkMaxConfig rightFuelGrabberConfigRight = new SparkMaxConfig();
 
@@ -157,8 +157,8 @@ public class Hopper extends SubsystemBase {
 
     public void setFuelGrabberSpeed() {
         if (Constants.Debug.INTAKE_EXISTS) {
-            leftFuelGrabber.set(0.1);
-            rightFuelGrabber.set(0.1);
+            leftFuelGrabber.set(0.5);
+            rightFuelGrabber.set(-0.5);
         }
     }
 

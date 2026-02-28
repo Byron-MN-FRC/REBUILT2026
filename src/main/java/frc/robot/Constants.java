@@ -37,7 +37,7 @@ public class Constants {
 
     public static final class Debug {
         public static final boolean DEBUG_MODE = false;
-        public static final boolean INTAKE_EXISTS = false;
+        public static final boolean INTAKE_EXISTS = true;
     }
 
     public static final class DriveConstants {
