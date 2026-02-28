@@ -51,7 +51,7 @@ public class Shooter extends SubsystemBase {
     SparkMaxConfig gateConfigRight = new SparkMaxConfig();
 
     gateConfigLeft.smartCurrentLimit(15); // Limit gate motor current to 10 A
-    gateConfigRight.smartCurrentLimit(25); // Limit gate motor current to 10 A
+    gateConfigRight.smartCurrentLimit(30); // Limit gate motor current to 10 A
 
     gateConfigLeft.inverted(false); // Invert left gate motor direction
     gateConfigRight.inverted(false); // Invert right gate motor direction
@@ -69,11 +69,11 @@ public class Shooter extends SubsystemBase {
     * Voltage-based velocity requires a velocity feed forward to account for the
      * back-emf of the motor
      */
-    configs.Slot0.kS = 0.38; // 0.1; // To account for friction, add 0.1 V of static feedforward
-    configs.Slot0.kV = 0.12; // Kraken X60 is a 500 kV motor, 500 rpm per V = 8.333 rps per V, 1/8.33 = 0.12
+    configs.Slot0.kS = 0.376; // 0.1; // To account for friction, add 0.1 V of static feedforward
+    configs.Slot0.kV = 0.115; // Kraken X60 is a 500 kV motor, 500 rpm per V = 8.333 rps per V, 1/8.33 = 0.12
                              // volts / rotation per second
-    configs.Slot0.kP = 0.01; // 0.11; // An error of 1 rotation per second results in 0.11 V output
-    configs.Slot0.kI = 0; // No output for integrated error
+    configs.Slot0.kP = 0.012; // 0.11; // An error of 1 rotation per second results in 0.11 V output
+    configs.Slot0.kI = 0.0001; // No output for integrated error
     configs.Slot0.kD = 0; // No output for error derivative
     // Peak output of 8 volts
     configs.Voltage.withPeakForwardVoltage(Volts.of(8))
