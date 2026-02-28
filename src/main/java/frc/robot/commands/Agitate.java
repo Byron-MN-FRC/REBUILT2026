@@ -67,7 +67,7 @@ public class Agitate extends Command {
         if (m_timer.get() < 1) {
             m_hopper.forwardForAgitate();
         }
-        else if (m_timer.get() > 1) {
+        else if ((m_timer.get() > 1) && (m_timer.get() < 2)) {
             m_hopper.reverseForAgitate();
         }
         else if (m_timer.get() > 2){
@@ -78,7 +78,7 @@ public class Agitate extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        
+        m_hopper.stopHopperFloorTransferSecure();
     }
 
     // Returns true when the command should end.
