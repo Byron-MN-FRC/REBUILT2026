@@ -99,8 +99,8 @@ public class ClimbSubsystem extends SubsystemBase {
         climbConf.Voltage.withPeakForwardVoltage(Volts.of(10)).withPeakReverseVoltage(Volts.of(-10));
 
         MotionMagicConfigs motionMagicOn = climbConf.MotionMagic;
-        motionMagicOn.withMotionMagicCruiseVelocity(RotationsPerSecond.of(1000))
-                .withMotionMagicAcceleration(RotationsPerSecondPerSecond.of(200))
+        motionMagicOn.withMotionMagicCruiseVelocity(RotationsPerSecond.of(2000)) //climb speeds
+                .withMotionMagicAcceleration(RotationsPerSecondPerSecond.of(400))
                 .withMotionMagicJerk(RotationsPerSecondPerSecond.per(Second).of(0)); // 0 makes it fast
 
         /* Retry config apply up to 5 times, report if failure */
@@ -127,7 +127,6 @@ public class ClimbSubsystem extends SubsystemBase {
         if (Constants.Debug.DEBUG_MODE) {SmartDashboard.putNumber("Climb Stage", climbStage);}
         SmartDashboard.putNumber("Height Positions", raiser.getPosition().getValueAsDouble());
         setLockdownMode();
-        setLockdownDriveControl();
     }
 
     @Override
@@ -178,7 +177,7 @@ public class ClimbSubsystem extends SubsystemBase {
         if (getBottomSwitch()) {
             raiser.set(0);
         } else {
-            raiser.set(-.25);
+            raiser.set(Constants.ClimbConstants.climbZeroingSpeed);
         }
     }
 
@@ -259,23 +258,8 @@ public class ClimbSubsystem extends SubsystemBase {
         }
     }
 
-    public int getLockdownDriveControl() {
-        return 1;  //TODO Resolve this (probably shouldn't lock down the drive base)
-        // if (climbStage == 0) {
-        //     return lockdownDriveControl = 1;
-        // } else if (climbStage == 1 || climbStage == 3) {
-        //     return lockdownDriveControl = 1;
-        // } else {
-        //     return lockdownDriveControl = 0;
-        // }
-    }
-
     public void setLockdownMode() {
         currentLockdownMode = getLockdownMode();
-    }
-
-    public void setLockdownDriveControl() {
-        lockdownDriveControl = getLockdownDriveControl();
     }
 
     public void stopAll() {
