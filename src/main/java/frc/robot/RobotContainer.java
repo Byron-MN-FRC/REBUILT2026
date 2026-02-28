@@ -98,7 +98,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutonStart", new AutonStart(m_turret, m_climb, m_leds));
         NamedCommands.registerCommand("AutonRetract", new AutonRetract(m_hopper));
         NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper, m_leds));
-        NamedCommands.registerCommand("AutonShootCommand", new AutonShootCommand(m_shooter, m_leds, m_hopper));
+        NamedCommands.registerCommand("AutonShootCommand", new ShootCommand(m_shooter, m_hopper, m_leds));
         NamedCommands.registerCommand("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
         NamedCommands.registerCommand("ClimbLowerAuto", new ClimbLowerAuto(m_climb, m_leds));
 
