@@ -173,7 +173,7 @@ public class Turret extends SubsystemBase {
                 .setControl(m_motionMagicVoltage
                         .withPosition(Constants.TurretShooterConstants.degreesToRotations(degrees)));
     }
-
+    // TODO limit range of motion
     public void aimDegrees(double degrees) {
         rotateShooterMotor
                 .setControl(m_motionMagicVoltage
