@@ -37,7 +37,7 @@ public class Constants {
 
     public static final class Debug {
         public static final boolean DEBUG_MODE = false;
-        public static final boolean INTAKE_EXISTS = false;
+        public static final boolean INTAKE_EXISTS = true;
     }
 
     public static final class DriveConstants {
@@ -112,6 +112,8 @@ public class Constants {
     public static final class ClimbConstants {
         public static final double raiserUpperTarget = 85.0;
         public static final double raiserLowerTarget = 0.0;
+
+        public static final double climbZeroingSpeed = -0.25;
 
         // public static final double climbUpperLimit = 205.0;
         // public static final double climbLowerLimit = 0.06;
