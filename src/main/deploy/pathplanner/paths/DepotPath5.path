@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 1.75,
-        "y": 4.0
+        "y": 6.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1479853616008007,
-        "y": 4.270180072941912
+        "x": 1.941902308573029,
+        "y": 6.168992409541152
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.8,
-        "y": 3.737
+        "x": 1.75,
+        "y": 4.0
       },
       "prevControl": {
-        "x": 1.5660547137163665,
-        "y": 3.6488546483036752
+        "x": 1.6071901948412397,
+        "y": 4.205195905296662
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "ClimbAuton",
+  "folder": "DepotAuton",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0
