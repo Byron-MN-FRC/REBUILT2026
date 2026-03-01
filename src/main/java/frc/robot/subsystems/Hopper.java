@@ -248,12 +248,14 @@ public class Hopper extends SubsystemBase {
         if (Constants.Debug.INTAKE_EXISTS) {
             if (isExtending) {
                 if (!isHopperExtended()) {
+                    if (Constants.Debug.DEBUG_MODE) SmartDashboard.putString("check", "extend");
                     hopperExtendMotor.set(Constants.IntakeHopperConstants.EXTEND_SPEED); // Extend at half speed
                 } else {
                     hopperExtendMotor.set(0); // Stop when fully extended
                 }
             } else {
                 if (!isHopperRetracted()) {
+                    if (Constants.Debug.DEBUG_MODE) SmartDashboard.putString("check", "retract");
                     hopperExtendMotor.set(Constants.IntakeHopperConstants.RETRACT_SPEED); // Retract at half speed
                 } else {
                     hopperExtendMotor.set(0); // Stop when fully retracted
