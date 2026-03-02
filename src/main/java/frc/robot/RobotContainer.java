@@ -50,6 +50,7 @@ import frc.robot.commands.Agitate;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.TrackHub;
+import frc.robot.commands.ZeroTurret;
 import frc.robot.commands.ledtestcommands.fasterfaster;
 import frc.robot.commands.ledtestcommands.flash;
 // import frc.robot.commands.Retract;
@@ -224,7 +225,7 @@ public class RobotContainer {
 
         accessory.a().toggleOnTrue(new FloorTransfer(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        accessory.start().onTrue(m_turret.checkZeroLeft().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.start().onTrue(new ZeroTurret(m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.back().onTrue(new InstantCommand(() -> m_turret.resetPosition())
                 .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
