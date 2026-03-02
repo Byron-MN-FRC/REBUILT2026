@@ -103,7 +103,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutonShootCommand", new ShootCommand(m_shooter, m_hopper, m_leds));
         NamedCommands.registerCommand("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
         NamedCommands.registerCommand("ClimbLowerAuto", new ClimbLowerAuto(m_climb, m_leds));
-
+        NamedCommands.registerCommand("TrackHub", new TrackHub(m_turret, m_leds));
+        
         if (Constants.Debug.DEBUG_MODE) {
             SmartDashboard.putData("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
             SmartDashboard.putData("ClimbLowerAuto", new ClimbLowerAuto(m_climb, m_leds));

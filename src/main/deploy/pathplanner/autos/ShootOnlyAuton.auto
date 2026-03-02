@@ -17,9 +17,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "AutonShootCommand"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonShootCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "TrackHub"
+                }
+              }
+            ]
           }
         }
       ]
