@@ -24,7 +24,7 @@
             "title": "Arm Retracted",
             "x": 0.0,
             "y": 0.0,
-            "width": 256.0,
+            "width": 128.0,
             "height": 128.0,
             "type": "Boolean Box",
             "properties": {
@@ -39,9 +39,9 @@
           },
           {
             "title": "Zero?",
-            "x": 256.0,
+            "x": 128.0,
             "y": 0.0,
-            "width": 256.0,
+            "width": 128.0,
             "height": 128.0,
             "type": "Boolean Box",
             "properties": {
@@ -52,6 +52,20 @@
               "false_color": 4294198070,
               "true_icon": "None",
               "false_icon": "None"
+            }
+          },
+          {
+            "title": "Lockdown Stage",
+            "x": 256.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/Lockdown Stage",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
             }
           },
           {

@@ -5,21 +5,40 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "AutonStart"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "DepotPath1"
           }
         },
         {
-          "type": "named",
+          "type": "deadline",
           "data": {
-            "name": "AutonShootCommand"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 5.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonShootCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "TrackHub"
+                }
+              }
+            ]
           }
         },
         {
@@ -67,9 +86,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "AutonShootCommand"
+            "pathName": "DepotPath5"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonShootCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "TrackHub"
+                }
+              }
+            ]
           }
         }
       ]

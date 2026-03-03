@@ -14,7 +14,7 @@ public class TurretCam {
      */
     public static double getAngleError() {
         if (targetLocated()) {
-            return -LimelightHelpers.getTX(Constants.VisionConstants.TURRET_CAM);
+            return LimelightHelpers.getTX(Constants.VisionConstants.TURRET_CAM);
         } else {
             return 0;
         }

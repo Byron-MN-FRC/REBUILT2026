@@ -73,7 +73,7 @@ public class TrackHub extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_turret.spinStop();
+    m_turret.aimDegrees(0);
     m_leds.noSubsystemUsingLeds();
   }
 

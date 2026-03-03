@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.563219696969697,
-        "y": 4.0
+        "x": 1.75,
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.947433922006455,
-        "y": 3.9962775541410425
+        "x": 1.7489439962068891,
+        "y": 6.474067561480136
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.25,
+        "x": 1.75,
         "y": 4.0
       },
       "prevControl": {
-        "x": 2.000000637268543,
-        "y": 4.000564476629452
+        "x": 1.7414113533828472,
+        "y": 4.277095931346583
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "ClimbAuton",
+  "folder": "DepotAuton",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0
