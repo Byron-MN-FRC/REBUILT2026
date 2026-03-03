@@ -5,7 +5,8 @@
   "pathFolders": [
     "ClimbAuton",
     "DepotAuton",
-    "OutPostAuton",
+    "DepotFarAuton",
+    "OutpostAuton",
     "ShootOnlyAuton"
   ],
   "autoFolders": [],
