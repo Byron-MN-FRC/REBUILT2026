@@ -24,6 +24,6 @@ public class DistanceVelocityMap {
         //     return distanceVelocityMap.firstEntry().getValue();
         // }
         // return distanceVelocityMap.get(closestDistance);
-        return 2100; // Placeholder value, replace with actual implementation
+        return 2150; // Placeholder value, replace with actual implementation
     }
 }
