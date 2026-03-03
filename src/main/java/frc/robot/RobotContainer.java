@@ -50,6 +50,7 @@ import frc.robot.commands.Agitate;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.TrackHub;
+import frc.robot.commands.ZeroTurret;
 import frc.robot.commands.ledtestcommands.fasterfaster;
 import frc.robot.commands.ledtestcommands.flash;
 // import frc.robot.commands.Retract;
@@ -121,7 +122,7 @@ public class RobotContainer {
             // SmartDashboard.putData("Extend", new Extend(m_hopper));
             // SmartDashboard.putData("Retract", new Retract(m_hopper));
 
-            SmartDashboard.putData("Intake", new Intake(m_hopper, m_leds));
+            SmartDashboard.putData("Intake", new Intake(m_hopper,m_turret, m_leds));
             
             SmartDashboard.putData("FasterFasterLights", new fasterfaster(m_leds));
             SmartDashboard.putData("Flashing lights", new flash(m_leds));
@@ -224,7 +225,7 @@ public class RobotContainer {
 
         accessory.a().toggleOnTrue(new FloorTransfer(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        accessory.start().onTrue(m_turret.checkZeroLeft().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.start().onTrue(new ZeroTurret(m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.back().onTrue(new InstantCommand(() -> m_turret.resetPosition())
                 .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
@@ -241,7 +242,7 @@ public class RobotContainer {
         gamepad.rightTrigger()
                 .whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        gamepad.b().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        gamepad.b().onTrue(new Intake(m_hopper, m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     
         gamepad.rightBumper().onTrue(new FuelJAMMED(m_hopper, m_shooter).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
