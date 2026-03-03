@@ -91,7 +91,7 @@ public class Hopper extends SubsystemBase {
                     .withStatorCurrentLimit(Constants.IntakeHopperConstants.CURRENT_LIMIT);
 
             // Set neutral mode to brake
-            hopperExtendMotor.setNeutralMode(NeutralModeValue.Brake);
+            hopperExtendMotor.setNeutralMode(NeutralModeValue.Coast);
 
             /* Retry config apply up to 5 times, report if failure */
             StatusCode status = StatusCode.StatusCodeNotInitialized;
