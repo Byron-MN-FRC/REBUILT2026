@@ -30,9 +30,14 @@ public class TurretCam {
 
     public static double getDistance() {
         if (LimelightHelpers.getTV(Constants.VisionConstants.TURRET_CAM)) {
-            var robotPos = LimelightHelpers.getBotPose2d(Constants.VisionConstants.TURRET_CAM).getTranslation();
             var alliance = Constants.DriveConstants.MyAlliance();
-            
+
+            // Use the alliance-specific WPILib coordinate frame so the pose
+            // is in the same reference frame as our field constants.
+            var robotPos = (alliance == Alliance.Red)
+                ? LimelightHelpers.getBotPose2d_wpiRed(Constants.VisionConstants.TURRET_CAM).getTranslation()
+                : LimelightHelpers.getBotPose2d_wpiBlue(Constants.VisionConstants.TURRET_CAM).getTranslation();
+
             if (alliance == Alliance.Blue) {
                 return robotPos.getDistance(Constants.FieldConstants.BLUE_HUB_CENTER);
             } else {

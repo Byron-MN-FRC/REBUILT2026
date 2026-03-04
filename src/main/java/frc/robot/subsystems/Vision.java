@@ -6,6 +6,7 @@ import com.ctre.phoenix6.Utils;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.util.FlippingUtil;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
@@ -152,26 +153,43 @@ public class Vision extends SubsystemBase {
 
     public void updatePoseEstimator(String llName) {
 
-        /*
-         * This example of adding Limelight is very simple and may not be sufficient for
-         * on-field use.
-         * Users typically need to provide a standard deviation that scales with the
-         * distance to target
-         * and changes with number of tags available.
-         *
-         * This example is sufficient to show that vision integration is possible,
-         * though exact implementation
-         * of how to use vision should be tuned per-robot and to the team's
-         * specification.
-         */
         var driveState = Robot.getInstance().drivetrain.getState();
         double headingDeg = driveState.Pose.getRotation().getDegrees();
         double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
 
         LimelightHelpers.SetRobotOrientation(llName, headingDeg, 0, 0, 0, 0, 0);
         var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(llName);
-        if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 1.5 /* Originally 2.0 */ && !tempDisable) {
-            Robot.getInstance().drivetrain.addVisionMeasurement(llMeasurement.pose,llMeasurement.timestampSeconds);
+
+        if (llMeasurement == null || llMeasurement.tagCount == 0) {
+            return; // No valid measurement
         }
+        if (Math.abs(omegaRps) > 1.5) {
+            return; // Spinning too fast — vision is unreliable
+        }
+        if (tempDisable) {
+            return; // Temporarily disabled (e.g. after field-centric reset)
+        }
+
+        // Scale standard deviations by average tag distance and tag count.
+        // More tags and closer distance → trust vision more (lower std dev).
+        // Fewer tags and farther distance → trust vision less (higher std dev).
+        double avgDist = llMeasurement.avgTagDist;
+        int tagCount = llMeasurement.tagCount;
+
+        // Base standard deviations (meters for x/y, radians for theta)
+        // These are multiplied by a factor that grows with distance and shrinks with tag count.
+        double xyStdDev = 0.3 * avgDist / tagCount;
+        double thetaStdDev = 0.5 * avgDist / tagCount;
+
+        // Reject measurements where the single-tag distance is too large to be useful
+        if (tagCount == 1 && avgDist > 4.0) {
+            return;
+        }
+
+        Robot.getInstance().drivetrain.addVisionMeasurement(
+            llMeasurement.pose,
+            llMeasurement.timestampSeconds,
+            VecBuilder.fill(xyStdDev, xyStdDev, thetaStdDev)
+        );
     }
 }
