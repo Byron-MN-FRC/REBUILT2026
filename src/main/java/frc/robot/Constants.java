@@ -38,7 +38,7 @@ public class Constants {
     public static final class Debug {
         public static final boolean DEBUG_MODE = false;
         public static final boolean INTAKE_ROLLER_EXISTS = true;
-        public static final boolean INTAKE_EXTEND_EXISTS = true;
+        public static final boolean INTAKE_EXTEND_EXISTS = false;
     }
 
     public static final class DriveConstants {
@@ -87,7 +87,7 @@ public class Constants {
             return rotations * 360.0;
         }
 
-        public static final double magezineForwardSpeed = -1.0;
+        public static final double magezineForwardSpeed = 1.0;
         public static final double gateForwardSpeed = 0.3;
         public static final double gateReverseSpeed = -0.2;
 
