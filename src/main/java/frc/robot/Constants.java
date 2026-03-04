@@ -85,6 +85,11 @@ public class Constants {
         public static final double rotationsToDegrees(double rotations) {
             return rotations * 360.0;
         }
+
+        public static final double magezineForwardSpeed = -1.0;
+        public static final double gateForwardSpeed = 0.3;
+        public static final double gateReverseSpeed = -0.2;
+
     }
 
     public static final class LEDConstants {
