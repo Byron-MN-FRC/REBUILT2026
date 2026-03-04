@@ -246,16 +246,16 @@ public class RobotContainer {
                 .whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
                 final POVButton pOVButtonLeft = new POVButton(accessory.getHID(), 270, 0);
-        pOVButtonLeft.onTrue(new RPMShootCommand(Constants.ShooterConstants.middleSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        pOVButtonLeft.whileTrue(new RPMShootCommand(Constants.ShooterConstants.middleSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     
         final POVButton pOVButtonRight = new POVButton(accessory.getHID(), 90, 0);
-        pOVButtonRight.onTrue(new RPMShootCommand(Constants.ShooterConstants.middleSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        pOVButtonRight.whileTrue(new RPMShootCommand(Constants.ShooterConstants.middleSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     
         final POVButton pOVButtonDown = new POVButton(accessory.getHID(), 180, 0);
-        pOVButtonDown.onTrue(new RPMShootCommand(Constants.ShooterConstants.lowSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        pOVButtonDown.whileTrue(new RPMShootCommand(Constants.ShooterConstants.lowSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
         final POVButton pOVButtonUp = new POVButton(accessory.getHID(), 0, 0);
-        pOVButtonUp.onTrue(new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        pOVButtonUp.whileTrue(new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
         gamepad.b().onTrue(new Intake(m_hopper, m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     
