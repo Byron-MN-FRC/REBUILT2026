@@ -130,5 +130,10 @@ public class Constants {
 
         public static final double climbCurrentLimit = 25;
     }
+    public static final class ShooterConstants {
+        public static final double lowSpeedTarget = 2075.0;
+        public static final double middleSpeedTarget = 2175.0;
+        public static final double highSpeedTarget = 2375.0;
+    }
 
 }

@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.commands.Agitate;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
@@ -48,6 +49,7 @@ import frc.robot.commands.FuelJAMMED;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Agitate;
 import frc.robot.commands.Lock45Degrees;
+import frc.robot.commands.RPMShootCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.ZeroTurret;
@@ -242,7 +244,19 @@ public class RobotContainer {
 
         gamepad.rightTrigger()
                 .whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
+      
+                final POVButton pOVButtonLeft = new POVButton(accessory.getHID(), 270, 0);
+        pOVButtonLeft.onTrue(new RPMShootCommand(Constants.ShooterConstants.middleSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+    
+        final POVButton pOVButtonRight = new POVButton(accessory.getHID(), 90, 0);
+        pOVButtonRight.onTrue(new RPMShootCommand(Constants.ShooterConstants.middleSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+    
+        final POVButton pOVButtonDown = new POVButton(accessory.getHID(), 180, 0);
+        pOVButtonDown.onTrue(new RPMShootCommand(Constants.ShooterConstants.lowSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        
+        final POVButton pOVButtonUp = new POVButton(accessory.getHID(), 0, 0);
+        pOVButtonUp.onTrue(new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        
         gamepad.b().onTrue(new Intake(m_hopper, m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     
         gamepad.rightBumper().onTrue(new FuelJAMMED(m_hopper, m_shooter).withInterruptBehavior(InterruptionBehavior.kCancelSelf));

@@ -113,7 +113,7 @@ public class Shooter extends SubsystemBase {
 
     // spinKrakens(targetRPM);
 
-    targetRPM = DistanceVelocityMap.getVelocity(0);
+    // targetRPM = DistanceVelocityMap.getVelocity(0);
 
   }
 
@@ -125,6 +125,10 @@ public class Shooter extends SubsystemBase {
   public boolean isAtTargetRPM() {
     double currentRPM = leftShoot.getVelocity().getValueAsDouble() * 60.0;
     return (targetRPM > 0) && (Math.abs(currentRPM - targetRPM) <= rpmTol);
+  }
+
+  public void setTargetRPM(double rpm) {
+    targetRPM = rpm;
   }
 
   public void runGate(double speed) {
