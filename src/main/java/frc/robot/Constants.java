@@ -104,16 +104,16 @@ public class Constants {
         // TODO: adjust for actual robot dimensions
         public static final double ROBOT_WIDTH_METERS = 0.5;
 
-        public static final String LIMELIGHT_NAME = "limelight-rear";
+        public static final String LIMELIGHT_NAME = "limelight";
 
         // adjust for actual camera position and orientation on the robot
         public static final double[] CAMERA_POSE_ROBOT_SPACE = {
-                -0.315, // X position of camera on robot in meters (positive forward, negative backward)
-                0.245, // Y position of camera on robot in meters (positive right, negative left)
-                0.505, // Z position of camera on robot in meters (positive up, negative down)
+                -0.2855,// X position of camera on robot in meters (positive forward, negative backward)
+                0.2698, // Y position of camera on robot in meters (positive right, negative left)
+                0.517, // Z position of camera on robot in meters (positive up, negative down)
                 0.0, // Roll of the camera on the robot in degrees
-                180.0, // Pitch of the camera on the robot in degrees
-                0.0  // Yaw of the camera on the robot in degrees
+                0.0, // Pitch of the camera on the robot in degrees
+                180.0  // Yaw of the camera on the robot in degrees
         };
 
     }
@@ -136,12 +136,12 @@ public class Constants {
             31, 32
         };
 
-        public static final double BLUE_HUB_CENTER_x = APRIL_TAG_FIELD_LAYOUT.getTagPose(5).get().getX();
-        public static final double BLUE_HUB_CENTER_Y = APRIL_TAG_FIELD_LAYOUT.getTagPose(10).get().getY();
+        public static final double BLUE_HUB_CENTER_x = APRIL_TAG_FIELD_LAYOUT.getTagPose(21).get().getX();
+        public static final double BLUE_HUB_CENTER_Y = APRIL_TAG_FIELD_LAYOUT.getTagPose(20).get().getY();
         public static final Translation2d BLUE_HUB_CENTER = new Translation2d(BLUE_HUB_CENTER_x, BLUE_HUB_CENTER_Y);
 
-        public static final double RED_HUB_CENTER_x = APRIL_TAG_FIELD_LAYOUT.getTagPose(21).get().getX();
-        public static final double RED_HUB_CENTER_Y = APRIL_TAG_FIELD_LAYOUT.getTagPose(20).get().getY();
+        public static final double RED_HUB_CENTER_x = APRIL_TAG_FIELD_LAYOUT.getTagPose(5).get().getX();
+        public static final double RED_HUB_CENTER_Y = APRIL_TAG_FIELD_LAYOUT.getTagPose(10).get().getY();
         public static final Translation2d RED_HUB_CENTER = new Translation2d(RED_HUB_CENTER_x, RED_HUB_CENTER_Y);
         
     }
