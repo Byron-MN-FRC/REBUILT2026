@@ -35,7 +35,7 @@ public class ShootCommand extends Command {
     private final Timer m_timer = new Timer();
 
     public final double agitateForwardTime = 0.75;
-    public final double agitateReverseTime = 0.25;
+    public final double agitateReverseTime = 0;
 
     public ShootCommand(Shooter shooterSubsystem, Hopper hopperSubsystem, LedsSubsystem ledSubsystem) {
         m_shooter = shooterSubsystem;
@@ -73,7 +73,7 @@ public class ShootCommand extends Command {
                 m_timer.restart();
             }
 
-            m_shooter.runGate(-Constants.TurretShooterConstants.gateForwardSpeed);
+            m_shooter.runGate(Constants.TurretShooterConstants.gateForwardSpeed);
             m_hopper.setHopperFloorTransferSecureSpeed(Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
 
             if (m_timer.hasElapsed(agitateForwardTime)) {

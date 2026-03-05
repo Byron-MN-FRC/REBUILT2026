@@ -129,13 +129,13 @@ public class Hopper extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         if (Constants.Debug.DEBUG_MODE) {
-            if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
-                SmartDashboard.putBoolean("Hopper Extended", isHopperExtended());
-                SmartDashboard.putBoolean("Hopper Retracted", isHopperRetracted());
-            }
             SmartDashboard.putNumber("Hopper Floor Transfer Speed", hopperFloorTransferSecure.get());
         }
-
+        if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
+            SmartDashboard.putBoolean("Hopper Extended", isHopperExtended());
+            SmartDashboard.putBoolean("Hopper Retracted", isHopperRetracted());
+        }
+        
         // Check lockdown mode
         if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.full ||
                 Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.partial) {
