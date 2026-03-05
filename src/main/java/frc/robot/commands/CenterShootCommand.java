@@ -72,7 +72,7 @@ public class CenterShootCommand extends Command {
     @Override
     public void execute() {
         m_turret.aimDegrees(Constants.TurretShooterConstants.MAX_LEFT_DEGREES);
-        // m_turret.aimRelativeDegrees(targetAngle);
+        m_turret.aimFieldRelativeAngle(targetAngle);
 
         m_shooter.spinShooter(m_shooter.targetRPM);
         m_hopper.setFuelGrabberSpeed();
