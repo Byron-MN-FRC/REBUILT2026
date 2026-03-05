@@ -53,8 +53,9 @@ public class ClimbWiggleMeth1 extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        switchTime = SmartDashboard.getNumber("ClimbWiggleSwitchTime", switchTime); // Update switchTime from SmartDashboard
-
+        if (Constants.Debug.DEBUG_MODE) {
+            switchTime = SmartDashboard.getNumber("ClimbWiggleSwitchTime", switchTime); // Update switchTime from SmartDashboard
+        }
         if (timer.hasElapsed(switchTime)) { // Check if switchTime seconds have passed
             vel *= -1; // Reverse direction
             timer.reset(); // Reset the timer after executing the wiggle command
