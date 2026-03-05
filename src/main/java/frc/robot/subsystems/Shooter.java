@@ -135,7 +135,7 @@ public class Shooter extends SubsystemBase {
     shooterGate.set(speed);
   }
 
-  public void runMagezine(double speed) {
+  public void runMagazine(double speed) {
     shooterMagazine.set(-speed);
   }
 

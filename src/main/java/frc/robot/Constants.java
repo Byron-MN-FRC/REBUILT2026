@@ -87,7 +87,7 @@ public class Constants {
             return rotations * 360.0;
         }
 
-        public static final double magezineForwardSpeed = 1.0;
+        public static final double magazineForwardSpeed = 1.0;
         public static final double gateForwardSpeed = 0.3;
         public static final double gateReverseSpeed = -0.2;
 

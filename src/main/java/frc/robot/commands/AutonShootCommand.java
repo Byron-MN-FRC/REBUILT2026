@@ -68,7 +68,7 @@ public class AutonShootCommand extends Command {
         m_Shooter.spinShooter(targVelo);
         if (m_Shooter.isAtTargetRPM()) {
             m_Shooter.runGate(Constants.TurretShooterConstants.gateForwardSpeed);
-            m_Shooter.runMagezine(Constants.TurretShooterConstants.magezineForwardSpeed);
+            m_Shooter.runMagazine(Constants.TurretShooterConstants.magazineForwardSpeed);
             m_hopper.setHopperFloorTransferSecureSpeed(.8);
         } else {
             // m_Shooter.stopGates();

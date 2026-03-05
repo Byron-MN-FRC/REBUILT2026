@@ -69,7 +69,7 @@ public class RPMShootCommand extends Command {
                 m_timer.stop();
             }
             m_shooter.runGate(Constants.TurretShooterConstants.gateForwardSpeed);
-            m_shooter.runMagezine(Constants.TurretShooterConstants.magezineForwardSpeed);
+            m_shooter.runMagazine(Constants.TurretShooterConstants.magazineForwardSpeed);
             m_hopper.setHopperFloorTransferSecureSpeed(Constants.IntakeHopperConstants.HopperFloorTransferSecureSpeed);
         } else {
             if (!m_timer.isRunning() || m_timer.hasElapsed(agitateForwardTime + agitateReverseTime)) {

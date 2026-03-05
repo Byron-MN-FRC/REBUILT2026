@@ -47,7 +47,7 @@ public class FuelJAMMED extends Command {
     @Override
     public void execute() {
         m_hopper.ifIntakeJammed();
-        m_shooter.runMagezine(-0.75);
+        m_shooter.runMagazine(-0.75);
         m_shooter.runGate(-0.75);
     }
 
