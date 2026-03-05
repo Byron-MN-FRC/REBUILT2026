@@ -55,7 +55,7 @@ public class Constants {
 
     public static final class IntakeHopperConstants {
         // Floor transfer constants
-        public static final double HopperFloorTransferSecureSpeed = 0.15;
+        public static final double HopperFloorTransferSecureSpeed = 0.2;
         
         // Hopper extend/retract constants
         public static final double EXTEND_SPEED = -0.1;
@@ -134,7 +134,7 @@ public class Constants {
         public static final double lowSpeedTarget = 2050.0;
         public static final double middleSpeedTarget = 2200.0;
         public static final double highSpeedTarget = 2400;
-        // public static final double highSpeedTarget = 2600.0;
+        public static final double snowblowSpeedTarget = 2600.0;
     }
 
 }

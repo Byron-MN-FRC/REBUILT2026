@@ -182,6 +182,11 @@ public class Turret extends SubsystemBase {
                     .withPosition(Constants.TurretShooterConstants.degreesToRotations(degrees)));
         }
     }
+    
+        public void aimFieldRelativeAngle(double degrees) {
+            
+        }
+
     // TODO limit range of motion
     public void aimDegrees(double degrees) {
         rotateShooterMotor
