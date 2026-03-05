@@ -23,13 +23,19 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 50.0
+                  "waitTime": 5.0
                 }
               },
               {
                 "type": "named",
                 "data": {
                   "name": "AutonShootCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "TrackHub"
                 }
               }
             ]
@@ -67,6 +73,12 @@
                 "type": "named",
                 "data": {
                   "name": "AutonShootCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "TrackHub"
                 }
               }
             ]
