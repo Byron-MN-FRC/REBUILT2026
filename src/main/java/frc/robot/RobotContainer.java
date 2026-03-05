@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -23,7 +22,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,20 +33,18 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.commands.Agitate;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.AutonExtend;
 import frc.robot.commands.AutonRetract;
-import frc.robot.commands.AutonShootCommand;
 import frc.robot.commands.AutonStart;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.ClimbLowerAuto;
 import frc.robot.commands.ClimbRaiseAuto;
+import frc.robot.commands.ClimbWiggleMeth1;
 import frc.robot.commands.ClimbZeroing;
 import frc.robot.commands.FloorTransfer;
 import frc.robot.commands.FuelGRAB;
 import frc.robot.commands.FuelJAMMED;
 import frc.robot.commands.Intake;
-import frc.robot.commands.Agitate;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.RPMShootCommand;
 import frc.robot.commands.ShootCommand;
@@ -73,7 +70,7 @@ public class RobotContainer {
     public final Hopper m_hopper = new Hopper();
     public final LedsSubsystem m_leds = new LedsSubsystem();
 
-    private final DigitalOutput pointer = new DigitalOutput(3);
+    // private final DigitalOutput pointer = new DigitalOutput(3);
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top
@@ -85,8 +82,8 @@ public class RobotContainer {
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
-    private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-    private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+    // private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+    // private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
@@ -262,6 +259,9 @@ public class RobotContainer {
         gamepad.rightBumper().onTrue(new FuelJAMMED(m_hopper, m_shooter).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         gamepad.leftTrigger().whileTrue(new Agitate(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        // Bind A button to run the climb wiggle while held (use same style as other bindings)
+        gamepad.a().whileTrue(new ClimbWiggleMeth1(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
 
     public CommandXboxController getaccessory() {
