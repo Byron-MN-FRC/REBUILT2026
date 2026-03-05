@@ -70,8 +70,8 @@ public class Lock45Degrees extends Command {
   public void execute() {
     drivetrain.setControl(
                 drive45.withTargetDirection(targetAngle) // Lock the robot at 45 degrees
-                    .withVelocityX(-Robot.getInstance().gamepad.getLeftY() * MaxSpeed * 0.75) // Drive forward with negative Y (forward)
-                    .withVelocityY(-Robot.getInstance().gamepad.getLeftX() * MaxSpeed * 0.75) // Drive left with negative X (left)
+                    .withVelocityX(-Robot.getInstance().gamepad.getLeftY() * MaxSpeed * 0.55) // Drive forward with negative Y (forward)
+                    .withVelocityY(-Robot.getInstance().gamepad.getLeftX() * MaxSpeed * 0.55) // Drive left with negative X (left)
             );
 
   }

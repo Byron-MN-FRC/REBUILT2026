@@ -27,17 +27,19 @@ import frc.robot.subsystems.Shooter;
 /**
  *
  */
-public class ShootCommand extends Command {
+public class RPMShootCommand extends Command {
     ColorLED lightStrip;
     private final Shooter m_shooter;
     private final Hopper m_hopper;
     private final LedsSubsystem m_leds;
+    private final double m_rpm;
     private final Timer m_timer = new Timer();
 
     public final double agitateForwardTime = 0.75;
     public final double agitateReverseTime = 0;
 
-    public ShootCommand(Shooter shooterSubsystem, Hopper hopperSubsystem, LedsSubsystem ledSubsystem) {
+    public RPMShootCommand(double rpm,Shooter shooterSubsystem, Hopper hopperSubsystem, LedsSubsystem ledSubsystem) {
+        m_rpm = rpm;
         m_shooter = shooterSubsystem;
         m_hopper = hopperSubsystem;
         m_leds = ledSubsystem;
@@ -53,6 +55,7 @@ public class ShootCommand extends Command {
         if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.shooter) {
             m_leds.setColorRed();
         }
+        m_shooter.setTargetRPM(m_rpm);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

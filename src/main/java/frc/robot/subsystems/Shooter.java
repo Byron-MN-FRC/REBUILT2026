@@ -31,7 +31,6 @@ public class Shooter extends SubsystemBase {
 
   public double targetRPM = 2175;
 
-  private double openGatesSpeed = 1;
   private final double rpmTol = 125; // Tolerance in RPM
 
   public Shooter() {
@@ -114,7 +113,7 @@ public class Shooter extends SubsystemBase {
 
     // spinKrakens(targetRPM);
 
-    targetRPM = DistanceVelocityMap.getVelocity(0);
+    // targetRPM = DistanceVelocityMap.getVelocity(0);
 
   }
 
@@ -128,9 +127,24 @@ public class Shooter extends SubsystemBase {
     return (targetRPM > 0) && (Math.abs(currentRPM - targetRPM) <= rpmTol);
   }
 
-  public void openGates(double speed) {
+  public void setTargetRPM(double rpm) {
+    targetRPM = rpm;
+  }
+
+  public void runGate(double speed) {
     shooterGate.set(speed);
+  }
+
+  public void runMagazine(double speed) {
     shooterMagazine.set(-speed);
+  }
+
+  public void stopGate() {
+    shooterGate.set(0);
+  }
+
+  public void stopMagazine() {
+    shooterMagazine.set(0);
   }
 
   public void stopGates() {
@@ -139,27 +153,14 @@ public class Shooter extends SubsystemBase {
   }
 
   public void stopAll() {
-    // TODO this currently only stops the shooter for a single cycle, because
-    // targetRPM is still set above zero and being called in periodic()
-
     spinShooter(0);
     stopGates();
   }
 
   public void spinShooter(double rpm) {
-    // TODO currently the RPM parameter is unused, in favor of SmartDashboard value
     // double targetRPS = SmartDashboard.getNumber("Shooter Set RPM", 0) / 60.0;
     double targetRPS = rpm / 60.0;
     leftShoot.setControl(m_velocity.withVelocity(targetRPS));
   }
 
-  public void spinCommandShooter() {
-
-    spinShooter(targetRPM);
-    if (isAtTargetRPM()) {
-      openGates(openGatesSpeed);
-    } else {
-      stopGates();
-    }
-  }
 }

@@ -37,7 +37,8 @@ public class Constants {
 
     public static final class Debug {
         public static final boolean DEBUG_MODE = false;
-        public static final boolean INTAKE_EXISTS = true;
+        public static final boolean INTAKE_ROLLER_EXISTS = true;
+        public static final boolean INTAKE_EXTEND_EXISTS = false;
     }
 
     public static final class DriveConstants {
@@ -85,6 +86,11 @@ public class Constants {
         public static final double rotationsToDegrees(double rotations) {
             return rotations * 360.0;
         }
+
+        public static final double magazineForwardSpeed = 1.0;
+        public static final double gateForwardSpeed = 0.3;
+        public static final double gateReverseSpeed = -0.2;
+
     }
 
     public static final class LEDConstants {
@@ -123,6 +129,11 @@ public class Constants {
         // public static final double climbSensorLimit = 0;
 
         public static final double climbCurrentLimit = 25;
+    }
+    public static final class ShooterConstants {
+        public static final double lowSpeedTarget = 2075.0;
+        public static final double middleSpeedTarget = 2175.0;
+        public static final double highSpeedTarget = 2375.0;
     }
 
 }

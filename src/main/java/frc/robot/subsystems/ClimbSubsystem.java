@@ -48,7 +48,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
     // private DigitalInput armBottomSwitch;
     public double raiserUpperTarget;
-    public double raiserLowerTarget; 
+    public double raiserLowerTarget;
     public boolean climbing;
     public boolean isOnTower;
     public int climbStage = 0;
@@ -64,8 +64,9 @@ public class ClimbSubsystem extends SubsystemBase {
 
     private final MotionMagicVoltage m_motionMagicReq = new MotionMagicVoltage(0).withSlot(0);
     TalonFXConfiguration climbConf = new TalonFXConfiguration();
-    
+
     private final CombinedStallHandler stallDetector;
+
     /**
     *
     */
@@ -79,7 +80,7 @@ public class ClimbSubsystem extends SubsystemBase {
         raiserLowerTarget = Constants.ClimbConstants.raiserLowerTarget;
         climbing = false;
         isOnTower = false;
-        
+
         // Configs
         climbConf.CurrentLimits.SupplyCurrentLimit = 40; // Limit motor supply current to 20
         climbConf.CurrentLimits.StatorCurrentLimit = 25; // Limit motor stator current to 20
@@ -99,7 +100,7 @@ public class ClimbSubsystem extends SubsystemBase {
         climbConf.Voltage.withPeakForwardVoltage(Volts.of(10)).withPeakReverseVoltage(Volts.of(-10));
 
         MotionMagicConfigs motionMagicOn = climbConf.MotionMagic;
-        motionMagicOn.withMotionMagicCruiseVelocity(RotationsPerSecond.of(2000)) //climb speeds
+        motionMagicOn.withMotionMagicCruiseVelocity(RotationsPerSecond.of(2000)) // climb speeds
                 .withMotionMagicAcceleration(RotationsPerSecondPerSecond.of(400))
                 .withMotionMagicJerk(RotationsPerSecondPerSecond.per(Second).of(0)); // 0 makes it fast
 
@@ -114,20 +115,21 @@ public class ClimbSubsystem extends SubsystemBase {
             System.out.println("Could not apply configs, error code: " + status.toString());
         }
 
-        if (Constants.Debug.DEBUG_MODE) SmartDashboard.putData("Subsystem: Climb", this);
+        if (Constants.Debug.DEBUG_MODE)
+            SmartDashboard.putData("Subsystem: Climb", this);
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
         if (Constants.Debug.DEBUG_MODE) {
-        SmartDashboard.putBoolean("Arm is raised", climbing);
-        // SmartDashboard.putBoolean("Arm Retracted", getBottomSwitch());
-        SmartDashboard.putBoolean("Arm Stalled", getBottomSwitch());
-        SmartDashboard.putString("Lockdown Stage", currentLockdownMode.name());
-        SmartDashboard.putNumber("Climb Stage", climbStage);
-        SmartDashboard.putNumber("Height Positions", raiser.getPosition().getValueAsDouble());
+            SmartDashboard.putBoolean("Arm is raised", climbing);
+            // SmartDashboard.putBoolean("Arm Retracted", getBottomSwitch());
+            SmartDashboard.putNumber("Climb Stage", climbStage);
+            SmartDashboard.putNumber("Height Positions", raiser.getPosition().getValueAsDouble());
         }
+        SmartDashboard.putString("Lockdown Stage", currentLockdownMode.name());
+        SmartDashboard.putBoolean("Arm Stalled", getBottomSwitch());
         setLockdownMode();
     }
 
@@ -159,7 +161,7 @@ public class ClimbSubsystem extends SubsystemBase {
     }
 
     public boolean isLowered() {
-        return Math.abs(raiser.getPosition().getValueAsDouble() - raiserLowerTarget) < .3;
+        return Math.abs(raiser.getPosition().getValueAsDouble() - raiserLowerTarget) < .4;
     }
 
     public boolean isClimbing() {
@@ -186,7 +188,7 @@ public class ClimbSubsystem extends SubsystemBase {
     public void setRaiserPosition(double position) {
         raiser.setPosition(position);
     }
-    
+
     public boolean setBottom() {
         // TODO: name change
         return climbing = false;
@@ -235,9 +237,6 @@ public class ClimbSubsystem extends SubsystemBase {
     public int getRaiserPositionAsInt() {
         return (int) raiser.getPosition().getValueAsDouble();
     }
-
-
-
 
     // LOCKDOWN MODE METHODS
     // climb stage increments from 0 to 3, then resets to 0 if above 3
