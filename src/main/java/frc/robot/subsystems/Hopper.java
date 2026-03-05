@@ -159,8 +159,8 @@ public class Hopper extends SubsystemBase {
 
     public void setFuelGrabberSpeed() {
         if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
-            leftFuelGrabber.set(0.3);
-            rightFuelGrabber.set(-0.3);
+            leftFuelGrabber.set(0.4);
+            rightFuelGrabber.set(-0.4);
         }
     }
 

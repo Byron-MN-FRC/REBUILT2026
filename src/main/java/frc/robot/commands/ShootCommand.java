@@ -72,16 +72,18 @@ public class ShootCommand extends Command {
             if (!m_timer.isRunning() || m_timer.hasElapsed(agitateForwardTime + agitateReverseTime)) {
                 m_timer.restart();
             }
+            m_shooter.stopMagazine();
+            if (!m_timer.hasElapsed(agitateForwardTime)) {
 
-            m_shooter.runGate(Constants.TurretShooterConstants.gateForwardSpeed);
-            m_hopper.setHopperFloorTransferSecureSpeed(Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
+                m_shooter.runGate(Constants.TurretShooterConstants.gateForwardSpeed);
+                m_hopper.setHopperFloorTransferSecureSpeed(Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
 
-            if (m_timer.hasElapsed(agitateForwardTime)) {
+            } else {
                 m_shooter.runGate(Constants.TurretShooterConstants.gateReverseSpeed);
                 m_hopper.setHopperFloorTransferSecureSpeed(-Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
             }
         }
-        
+
     }
 
     // Called once the command ends or is interrupted.

@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.25,
+        "x": 1.5646785714285723,
         "y": 4.0
       },
       "prevControl": {
-        "x": 2.000000637268543,
+        "x": 1.314679208697115,
         "y": 4.000564476629452
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "EndClimbPath1"
     }
   ],
   "rotationTargets": [],

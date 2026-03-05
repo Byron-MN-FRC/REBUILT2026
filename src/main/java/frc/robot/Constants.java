@@ -38,7 +38,7 @@ public class Constants {
     public static final class Debug {
         public static final boolean DEBUG_MODE = false;
         public static final boolean INTAKE_ROLLER_EXISTS = true;
-        public static final boolean INTAKE_EXTEND_EXISTS = false;
+        public static final boolean INTAKE_EXTEND_EXISTS = true;
     }
 
     public static final class DriveConstants {
@@ -55,7 +55,7 @@ public class Constants {
 
     public static final class IntakeHopperConstants {
         // Floor transfer constants
-        public static final double HopperFloorTransferSecureSpeed = 0.1;
+        public static final double HopperFloorTransferSecureSpeed = 0.15;
         
         // Hopper extend/retract constants
         public static final double EXTEND_SPEED = -0.1;
@@ -74,7 +74,7 @@ public class Constants {
         public static final double NEUTRAL_POSITION = 0;
         public static final double MAX_LEFT_DEGREES = MAX_LEFT_POSITION * 360;
         public static final double MAX_RIGHT_DEGREES = MAX_RIGHT_POSITION * 360;
-        public static final double RESTRICTED_MAX_LEFT_DEGREES = MAX_LEFT_POSITION * 360;
+        public static final double RESTRICTED_MAX_LEFT_DEGREES = 0.089844 * 360;
         public static final double RESTRICTED_MAX_RIGHT_DEGREES = MAX_RIGHT_POSITION * 360;
 
         public static final double TURRET_CAM_TIMEOUT = 0.5;
@@ -131,9 +131,10 @@ public class Constants {
         public static final double climbCurrentLimit = 25;
     }
     public static final class ShooterConstants {
-        public static final double lowSpeedTarget = 2075.0;
-        public static final double middleSpeedTarget = 2175.0;
-        public static final double highSpeedTarget = 2375.0;
+        public static final double lowSpeedTarget = 2050.0;
+        public static final double middleSpeedTarget = 2200.0;
+        public static final double highSpeedTarget = 2400;
+        // public static final double highSpeedTarget = 2600.0;
     }
 
 }

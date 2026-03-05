@@ -3,32 +3,69 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.25,
+        "x": 1.5646785714285723,
         "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4784086391702207,
-        "y": 3.68015242005709
+        "x": 1.8429637695906653,
+        "y": 4.061398976041783
+      },
+      "isLocked": false,
+      "linkedName": "EndClimbPath1"
+    },
+    {
+      "anchor": {
+        "x": 2.2125357142858637,
+        "y": 3.7650595238043953
+      },
+      "prevControl": {
+        "x": 1.600357343533507,
+        "y": 4.056859688926531
+      },
+      "nextControl": {
+        "x": 2.5430211076072378,
+        "y": 3.6075307757319783
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.534744958481614,
-        "y": 4.104934756820878
+        "x": 1.25,
+        "y": 3.85
       },
       "prevControl": {
-        "x": 1.1615445009431307,
-        "y": 4.260091976273071
+        "x": 1.4961876231223863,
+        "y": 3.893493151430425
+      },
+      "nextControl": {
+        "x": 0.9711680925086055,
+        "y": 3.800739691043978
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.1,
+        "y": 3.3979404761853482
+      },
+      "prevControl": {
+        "x": 1.0355227823174233,
+        "y": 3.7731415225187814
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.9375196232339024,
+      "rotationDegrees": 0.20665673533554813
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],

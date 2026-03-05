@@ -36,7 +36,7 @@ public class Intake extends Command {
         m_hopper = hopperSubsystem;
         m_turret = turretSubsystem;
         m_leds = ledSubsystem;
-        addRequirements(m_hopper);
+        // addRequirements(m_hopper);
     }
 
     // Called when the command is initially scheduled.
