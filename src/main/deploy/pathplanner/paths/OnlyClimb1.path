@@ -3,69 +3,48 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5646785714285723,
-        "y": 4.0
+        "x": 3.51904761904762,
+        "y": 4.0242023809523815
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8429637695906653,
-        "y": 4.061398976041783
-      },
-      "isLocked": false,
-      "linkedName": "EndClimbPath1"
-    },
-    {
-      "anchor": {
-        "x": 2.2125357142858637,
-        "y": 3.7650595238043953
-      },
-      "prevControl": {
-        "x": 1.600357343533507,
-        "y": 4.056859688926531
-      },
-      "nextControl": {
-        "x": 2.5430211076072378,
-        "y": 3.6075307757319783
+        "x": 3.17352380952381,
+        "y": 3.9378214285714286
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.25,
-        "y": 3.85
+        "x": 1.3487261904761911,
+        "y": 3.4
       },
       "prevControl": {
-        "x": 1.4961876231223863,
-        "y": 3.893493151430425
+        "x": 2.2850553680452297,
+        "y": 3.751123441588392
       },
       "nextControl": {
-        "x": 0.9711680925086055,
-        "y": 3.800739691043978
+        "x": 1.1146438960839302,
+        "y": 3.3122191396029015
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.1,
-        "y": 3.3979404761853482
+        "x": 1.3487261904761911,
+        "y": 3.25
       },
       "prevControl": {
-        "x": 1.0355227823174233,
-        "y": 3.7731415225187814
+        "x": 1.3618658987568824,
+        "y": 3.4996544573331274
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.9375196232339024,
-      "rotationDegrees": 0.20665673533554813
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -82,10 +61,10 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "ClimbAuton",
+  "folder": "OnlyClimbAuton",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }
