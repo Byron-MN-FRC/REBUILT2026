@@ -60,7 +60,7 @@ public class Constants {
         // Hopper extend/retract constants
         public static final double EXTEND_SPEED = -0.25;
         public static final double RETRACT_SPEED = 0.25;
-        public static final int CURRENT_LIMIT = 15;
+        public static final int CURRENT_LIMIT = 10;
         public static final double AGITATE_COMMAND_SPEED = 0.4;
     }
 
@@ -76,7 +76,7 @@ public class Constants {
         public static final double MAX_RIGHT_DEGREES = MAX_RIGHT_POSITION * 360;
         // I think this is wrong
         public static final double RESTRICTED_MAX_LEFT_DEGREES = MAX_LEFT_DEGREES;
-        public static final double RESTRICTED_MAX_RIGHT_DEGREES = 0.089844 * 360;
+        public static final double RESTRICTED_MAX_RIGHT_DEGREES = 0.061844 * 360;
 
         public static final double TURRET_CAM_TIMEOUT = 0.5;
 

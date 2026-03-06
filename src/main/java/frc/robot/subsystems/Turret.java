@@ -171,7 +171,8 @@ public class Turret extends SubsystemBase {
     
     // Todo combine aimRelativeDegrees & aimDegrees / determine whether there is a reason to have seperate commands w/o resctrictions
     public void aimRelativeDegrees(double degrees) {
-        if (Robot.getInstance().m_hopper.isExtending == false) {
+        // if (Robot.getInstance().m_hopper.isExtending == false) {
+        if (Robot.getInstance().m_hopper.isHopperRetracted()) {
             degrees = Math.max(Constants.TurretShooterConstants.MAX_LEFT_DEGREES, degrees);
             degrees = Math.min(Constants.TurretShooterConstants.MAX_RIGHT_DEGREES, degrees);
             rotateShooterMotor
@@ -190,7 +191,11 @@ public class Turret extends SubsystemBase {
     // Decide whether to switch from double to Rotation2d
     public void aimFieldRelativeAngle(double degrees) {
         var robotAngle = Robot.getInstance().drivetrain.getState().Pose.getRotation().getDegrees();
-        robotAngle += 180;
+        var backRobotAngle = robotAngle + 180;
+        // var 
+
+
+        aimRelativeDegrees(degrees);
     }
 
     // TODO limit range of motion
