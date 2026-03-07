@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonStart"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftShootOnlyPath1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonShootCommand"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

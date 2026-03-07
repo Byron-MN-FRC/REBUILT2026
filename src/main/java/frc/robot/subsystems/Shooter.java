@@ -29,7 +29,7 @@ public class Shooter extends SubsystemBase {
 
   final VelocityVoltage m_velocity = new VelocityVoltage(0);
 
-  public double targetRPM = 2050;
+  public double targetRPM = 2375;
 
   private final double rpmTol = 100; // Tolerance in RPM
 
