@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.ColorLED;
 import frc.robot.Constants;
+import frc.robot.DistanceVelocityMap;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
@@ -33,15 +34,18 @@ public class ShootCommand extends Command {
     private final Hopper m_hopper;
     private final LedsSubsystem m_leds;
     private final Timer m_timer = new Timer();
+    private final double m_rpm;
 
     public final double agitateForwardTime = 0.75;
     public final double agitateReverseTime = 0;
 
+    // TODO create basic shoot command that can be extended for the other shoot commands
     public ShootCommand(Shooter shooterSubsystem, Hopper hopperSubsystem, LedsSubsystem ledSubsystem) {
         m_shooter = shooterSubsystem;
         m_hopper = hopperSubsystem;
         m_leds = ledSubsystem;
         addRequirements(m_shooter);
+        m_rpm = DistanceVelocityMap.getVelocity(0);
     }
 
     // Called when the command is initially scheduled.
@@ -72,16 +76,18 @@ public class ShootCommand extends Command {
             if (!m_timer.isRunning() || m_timer.hasElapsed(agitateForwardTime + agitateReverseTime)) {
                 m_timer.restart();
             }
+            m_shooter.stopMagazine();
+            if (!m_timer.hasElapsed(agitateForwardTime)) {
 
-            m_shooter.runGate(Constants.TurretShooterConstants.gateForwardSpeed);
-            m_hopper.setHopperFloorTransferSecureSpeed(Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
+                m_shooter.runGate(Constants.TurretShooterConstants.gateForwardSpeed);
+                m_hopper.setHopperFloorTransferSecureSpeed(Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
 
-            if (m_timer.hasElapsed(agitateForwardTime)) {
+            } else {
                 m_shooter.runGate(Constants.TurretShooterConstants.gateReverseSpeed);
                 m_hopper.setHopperFloorTransferSecureSpeed(-Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
             }
         }
-        
+
     }
 
     // Called once the command ends or is interrupted.

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.563219696969697,
-        "y": 4.0
+        "x": 3.5251957295373675,
+        "y": 3.97582443653618
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.947433922006455,
-        "y": 3.9962775541410425
+        "x": 1.5127663380594174,
+        "y": 3.9758244365361803
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.565,
-        "y": 3.8
+        "x": 1.4,
+        "y": 3.97582443653618
       },
       "prevControl": {
-        "x": 1.3150006372685425,
-        "y": 3.800564476629452
+        "x": 2.4,
+        "y": 3.97582443653618
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "EndClimbPath1"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "ClimbAuton",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }
