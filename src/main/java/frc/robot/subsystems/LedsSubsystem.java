@@ -42,12 +42,12 @@ public class LedsSubsystem extends SubsystemBase {
         greenFlashing
     };
     public enum SubsystemUsingLEDS {
+        none,
         drive,
+        hopper,
         turret,
         shooter,
-        climb,
-        hopper,
-        none
+        climb
     };
     public String hexValue;
     public LedColor ledColor = LedColor.none;
@@ -90,11 +90,10 @@ public class LedsSubsystem extends SubsystemBase {
     public void simulationPeriodic() {
         // This method will be called once per scheduler run when in simulation
     }
-    
     //===============================================================================================================================================================================
     //priority from least to greatest: none, drive, hopper, turret, shooter, climb
     //rank 5 (de jure default)
-    public void noSubsystemUsingLeds() { //all commands, when finished, set the LEDs to this but the LEDs go back to using driveTrain LEDs right after the fact because of their high priority, hence why the lights are always rainbow by default.
+    public void noSubsystemUsingLeds() { //all commands, when finished, set the LEDs to this but the LEDs go back to using driveTrain LEDs right after the fact because of their higher priority, hence why the lights are always rainbow by default.
         if (usingSubsystem != SubsystemUsingLEDS.none && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret && usingSubsystem != SubsystemUsingLEDS.hopper && usingSubsystem != SubsystemUsingLEDS.drive  && usingSubsystem != SubsystemUsingLEDS.climb) {
             usingSubsystem = SubsystemUsingLEDS.none;
         }

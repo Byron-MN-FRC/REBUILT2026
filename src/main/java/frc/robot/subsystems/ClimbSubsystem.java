@@ -249,7 +249,7 @@ public class ClimbSubsystem extends SubsystemBase {
     public LockdownMode getLockdownMode() {
         if (climbStage == 0) {
             return LockdownMode.disengaged;
-        } else {
+        } else { //stages 1-3
             return LockdownMode.engaged;
         }
         //(climbStage == 1 || climbStage == 2 ||climbStage == 3)
