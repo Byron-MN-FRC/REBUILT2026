@@ -17,15 +17,10 @@ public class ColorLED {
     private AddressableLEDBuffer m_ledBuffer;
     private final Timer m_timer = new Timer();
     public AddressableLED m_led;
-    // public final leds m_leds = new leds();
     // Note: buffer views are necessary because the RIO only works with 1 LED strip, this will be unecessary when SystemCore is rolled out late 2026 2027
     private List<AddressableLEDBufferView> ledBuffers;
 
     private int m_rainbowFirstPixelHue;
-    // private Color[] redWhiteArray = {Color.kBlueViolet, Color.kBlue};
-    // private Color[] blueWhiteArray = {Color.kBlue, Color.kWhite};
-    // private AddressableLEDPattern m_redChasePattern = new ChasePattern(redWhiteArray, 4);
-
     /**
      * Creates LED strips from lengths array.
      * @param port PWM port
@@ -52,42 +47,9 @@ public class ColorLED {
         }
     }
 
-    // public static final int INTAKE = 0; // First 8 LEDs (0-7)
-    // public static final int SHOOTER = 1; // Second 8 LEDs (8-15)
-    // public static final int CLIMB = 2; // Third 8 LEDs (16-23)
-    
-    // private static final int LEDS_PER_STRIP = 8;
-
-    // public void setLED(int stripIndex, int red, int green, int blue) {
-    //     // Clamp values to valid range
-    //     int r = Math.max(0, Math.min(255, red));
-    //     int g = Math.max(0, Math.min(255, green));
-    //     int b = Math.max(0, Math.min(255, blue));
-
-    //     int startIndex = stripIndex * LEDS_PER_STRIP;
-
-    //     for (int i = 0; i < LEDS_PER_STRIP; i++) {
-    //         int bufferIndex = startIndex + i;
-            
-
-    //         if (bufferIndex < m_ledBuffer.getLength()) {
-    //             m_ledBuffer.setRGB(bufferIndex, r, g, b);
-    //         }
-    //     }
-    //     m_led.setData(m_ledBuffer);
-    // }
-
-
-    // ==========================================================================================================================================================================================
-    //     available: red, blue, green, orange, yellow, purple, white, gold, rainbow, tomfoolery(bouncing[nofunctionality])
-        
-
-        // m_redChasePattern.setLEDs(m_ledBuffer);
-
-        // // Set the LEDs
-
-        // m_led.setData(m_ledBuffer);
-    // ==========================================================================================================================================================================================
+    // ====================================================================================================================================================================================================
+    //     Available: none, rainbow, fasterfaster, climbprogressbar(not tested), blueflashing, greenflashing, red, maroon, orange, yellow, green, lime, blue, lightblue, purple, pink, magenta, white, gold
+    // ====================================================================================================================================================================================================
 
      public Color getCurrentColor() {
         Color firstLEDColor = m_ledBuffer.getLED(0);
@@ -95,10 +57,7 @@ public class ColorLED {
      }
 
      public void none() {
-
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 0, 0, 0);
         }
         m_led.setData(m_ledBuffer);
@@ -116,7 +75,6 @@ public class ColorLED {
         }
         // Increase by to make the rainbow "move"
         m_rainbowFirstPixelHue += 3; //higher number = faster
-            
         // Check bounds
         m_rainbowFirstPixelHue %= 180;
         m_led.setData(m_ledBuffer);
@@ -133,7 +91,6 @@ public class ColorLED {
     }
 
     public void climbProgressBar() {
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             var progress = (Robot.getInstance().m_climb.getRaiserPositionAsInt() / Robot.getInstance().m_climb.getRaiserMaxHeightAsInt() * 180) % 180;
             m_ledBuffer.setHSV(i, progress, 255, 128);
@@ -185,10 +142,7 @@ public class ColorLED {
     }
      
     public void red() {
-        
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 255, 0, 0);
         }
         
@@ -196,10 +150,7 @@ public class ColorLED {
     }
 
     public void maroon() {
-        
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 128, 0, 0);
         }
         
@@ -207,110 +158,77 @@ public class ColorLED {
     }
 
     public void orange() {
-
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 255, 165, 0);
          }
          m_led.setData(m_ledBuffer);
     }
 
     public void yellow() {
-
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 255, 255, 0);
          }
          m_led.setData(m_ledBuffer);
     }
     
     public void green() {
-
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 17, 125, 0);
         }
         m_led.setData(m_ledBuffer);
     }
     
     public void lime() {
-
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 0, 255, 0);
         }
         m_led.setData(m_ledBuffer);
     }
       
     public void blue() {
-
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 0, 0, 255);
         }
         m_led.setData(m_ledBuffer);
     }
 
     public void lightblue() {
-
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 0, 255, 255);
         }
         m_led.setData(m_ledBuffer);
     }
 
     public void purple() {
-
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 128, 0, 128);
          }
          m_led.setData(m_ledBuffer);
     }
 
     public void pink() {
-
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 255, 145, 255);
          }
          m_led.setData(m_ledBuffer);
     }
 
     public void magenta() {
-
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 255, 0, 255);
          }
          m_led.setData(m_ledBuffer);
     }
     
     public void white() {
-        
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 255, 255, 255);
         }
         m_led.setData(m_ledBuffer);
     }
     
     public void gold() {
-
-        // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
             m_ledBuffer.setRGB(i, 255, 215, 0);
          }
          m_led.setData(m_ledBuffer);

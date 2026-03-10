@@ -52,15 +52,12 @@ public class ClimbSubsystem extends SubsystemBase {
     public boolean climbing;
     public boolean isOnTower;
     public int climbStage = 0;
-    public int lockdownDriveControl = 1;
-
     public enum LockdownMode {
-        none,
-        partial,
-        full
+        disengaged,
+        engaged
     };
 
-    public LockdownMode currentLockdownMode = LockdownMode.none;
+    public LockdownMode currentLockdownMode = LockdownMode.disengaged;
 
     private final MotionMagicVoltage m_motionMagicReq = new MotionMagicVoltage(0).withSlot(0);
     TalonFXConfiguration climbConf = new TalonFXConfiguration();
@@ -251,12 +248,11 @@ public class ClimbSubsystem extends SubsystemBase {
 
     public LockdownMode getLockdownMode() {
         if (climbStage == 0) {
-            return LockdownMode.none;
-        } else if (climbStage == 1 || climbStage == 3) {
-            return LockdownMode.partial;
+            return LockdownMode.disengaged;
         } else {
-            return LockdownMode.full;
+            return LockdownMode.engaged;
         }
+        //(climbStage == 1 || climbStage == 2 ||climbStage == 3)
     }
 
     public void setLockdownMode() {

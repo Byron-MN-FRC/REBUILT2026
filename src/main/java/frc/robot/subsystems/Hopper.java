@@ -137,8 +137,7 @@ public class Hopper extends SubsystemBase {
         }
         
         // Check lockdown mode
-        if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.full ||
-                Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.partial) {
+        if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.engaged) {
             // In lockdown mode, ensure hopper is retracted
             // setHopperRetract();
             if (!isExtending()) {
@@ -202,8 +201,7 @@ public class Hopper extends SubsystemBase {
     }
 
     public void setHopperExtend() {
-        if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.full ||
-                Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.partial) {
+        if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.engaged) {
             // In lockdown mode, don't extend
             return;
         } else {
