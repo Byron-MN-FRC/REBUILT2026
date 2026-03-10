@@ -93,13 +93,13 @@ public class LedsSubsystem extends SubsystemBase {
     
     //===============================================================================================================================================================================
     //priority from least to greatest: none, drive, hopper, turret, shooter, climb
-    //rank 5
-    public void noSubsystemUsingLeds() {
-        if (usingSubsystem != SubsystemUsingLEDS.none && usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret && usingSubsystem != SubsystemUsingLEDS.hopper && usingSubsystem != SubsystemUsingLEDS.drive) {
+    //rank 5 (de jure default)
+    public void noSubsystemUsingLeds() { //all commands, when finished, set the LEDs to this but the LEDs go back to using driveTrain LEDs right after the fact because of their high priority, hence why the lights are always rainbow by default.
+        if (usingSubsystem != SubsystemUsingLEDS.none && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret && usingSubsystem != SubsystemUsingLEDS.hopper && usingSubsystem != SubsystemUsingLEDS.drive  && usingSubsystem != SubsystemUsingLEDS.climb) {
             usingSubsystem = SubsystemUsingLEDS.none;
         }
     }
-    //rank 4
+    //rank 4 (de facto default)
     public void driveTrainRequestingLeds() { // the ORs may need to be ANDs?
         if (usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret && usingSubsystem != SubsystemUsingLEDS.hopper) {
             usingSubsystem = SubsystemUsingLEDS.drive;
@@ -124,8 +124,8 @@ public class LedsSubsystem extends SubsystemBase {
         }
     }
     //rank 0
-    public void climbRequestingLeds() { //nothing can override climb, this only sets the enumerator to climb
-        if (usingSubsystem != SubsystemUsingLEDS.climb) {
+    public void climbRequestingLeds() { //nothing can override climb, this only sets the enumerator to climb. 
+        if (usingSubsystem != SubsystemUsingLEDS.climb) { //Also lockdown leds are considered to be climb using them because lockdown is a minion of the all powerful climb subsystem I believe. 
             usingSubsystem = SubsystemUsingLEDS.climb; 
         }
     }
