@@ -231,8 +231,6 @@ public class RobotContainer {
         gamepad.y()
             .whileTrue(new DriveToPosition(drivetrain)
             .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
-        gamepad.leftBumper().whileTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
             
         gamepad.rightTrigger().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                 
@@ -255,14 +253,8 @@ public class RobotContainer {
         // accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds
         // ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        accessory.leftBumper()
-                .toggleOnTrue(new TrackHub(m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
         accessory.rightTrigger()
                 .whileTrue(new ShootCommand(m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
-        gamepad.rightTrigger()
-                .whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
                 final POVButton pOVButtonLeft = new POVButton(accessory.getHID(), 270, 0);
         pOVButtonLeft.whileTrue(new RPMShootCommand(Constants.ShooterConstants.middleSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
