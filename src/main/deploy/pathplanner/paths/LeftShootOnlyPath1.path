@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.55,
-        "y": 0.46
+        "x": 3.5514404761904768,
+        "y": 7.619809523809524
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.302512626584708,
-        "y": 0.4953553390593257
+        "x": 3.573035714285715,
+        "y": 7.187904761904762
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.5,
-        "y": 1.6
+        "x": 0.7548571428571436,
+        "y": 7.306678571428572
       },
       "prevControl": {
-        "x": 1.8893686868686868,
-        "y": 1.4625757575757576
+        "x": 1.0032023809523816,
+        "y": 7.0907261904761905
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,12 +42,12 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -145.0
+    "rotation": 138.9
   },
   "reversed": false,
-  "folder": "OutpostAuton",
+  "folder": null,
   "idealStartingState": {
-    "velocity": 0.0,
+    "velocity": 0,
     "rotation": 180.0
   },
   "useDefaultConstraints": true

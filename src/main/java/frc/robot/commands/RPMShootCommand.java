@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.ColorLED;
 import frc.robot.Constants;
-import frc.robot.DistanceVelocityMap;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
@@ -28,24 +27,23 @@ import frc.robot.subsystems.Shooter;
 /**
  *
  */
-public class ShootCommand extends Command {
+public class RPMShootCommand extends Command {
     ColorLED lightStrip;
     private final Shooter m_shooter;
     private final Hopper m_hopper;
     private final LedsSubsystem m_leds;
-    private final Timer m_timer = new Timer();
     private final double m_rpm;
+    private final Timer m_timer = new Timer();
 
     public final double agitateForwardTime = 0.75;
     public final double agitateReverseTime = 0;
 
-    // TODO create basic shoot command that can be extended for the other shoot commands
-    public ShootCommand(Shooter shooterSubsystem, Hopper hopperSubsystem, LedsSubsystem ledSubsystem) {
+    public RPMShootCommand(double rpm,Shooter shooterSubsystem, Hopper hopperSubsystem, LedsSubsystem ledSubsystem) {
+        m_rpm = rpm;
         m_shooter = shooterSubsystem;
         m_hopper = hopperSubsystem;
         m_leds = ledSubsystem;
         addRequirements(m_shooter);
-        m_rpm = DistanceVelocityMap.getVelocity(0);
     }
 
     // Called when the command is initially scheduled.
@@ -57,6 +55,7 @@ public class ShootCommand extends Command {
         if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.shooter) {
             m_leds.setColorRed();
         }
+        m_shooter.setTargetRPM(m_rpm);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -76,6 +75,7 @@ public class ShootCommand extends Command {
             if (!m_timer.isRunning() || m_timer.hasElapsed(agitateForwardTime + agitateReverseTime)) {
                 m_timer.restart();
             }
+
             m_shooter.stopMagazine();
             if (!m_timer.hasElapsed(agitateForwardTime)) {
 
@@ -87,7 +87,7 @@ public class ShootCommand extends Command {
                 m_hopper.setHopperFloorTransferSecureSpeed(-Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
             }
         }
-
+        
     }
 
     // Called once the command ends or is interrupted.

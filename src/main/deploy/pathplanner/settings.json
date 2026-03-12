@@ -6,6 +6,7 @@
     "ClimbAuton",
     "DepotAuton",
     "DepotFarAuton",
+    "OnlyClimbAuton",
     "OutpostAuton",
     "ShootOnlyAuton"
   ],

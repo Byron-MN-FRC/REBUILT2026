@@ -47,7 +47,8 @@ public class FuelJAMMED extends Command {
     @Override
     public void execute() {
         m_hopper.ifIntakeJammed();
-        m_shooter.openGates(-0.75);
+        m_shooter.runMagazine(-0.75);
+        m_shooter.runGate(-0.75);
     }
 
     // Called once the command ends or is interrupted.
