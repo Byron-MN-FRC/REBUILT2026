@@ -23,7 +23,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 7.0
+                  "waitTime": 6.0
                 }
               },
               {
@@ -61,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ClimbPath2"
+                  "pathName": "ClimbPath2Left"
                 }
               }
             ]

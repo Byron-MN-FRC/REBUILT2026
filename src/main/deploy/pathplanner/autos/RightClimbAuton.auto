@@ -13,7 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "OutpostPath1"
+            "pathName": "ClimbPath1"
           }
         },
         {
@@ -42,46 +42,35 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "OutpostPath2"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 4.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "OutpostPath3"
-          }
-        },
-        {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 5.0
-                }
-              },
-              {
                 "type": "named",
                 "data": {
-                  "name": "AutonShootCommand"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "TrackHub"
+                  "name": "ClimbRaiseAuto"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ClimbPath2Right"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbLowerAuto"
           }
         }
       ]
