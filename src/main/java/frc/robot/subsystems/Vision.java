@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
@@ -22,6 +23,7 @@ public class Vision extends SubsystemBase {
     public boolean tempDisable = false;
     public double timestampToReEnable;
 
+    public boolean enabled = true;
     private Pose2d autoStartPose = new Pose2d();
     public int lastAlignmentTarget = 1;
 
@@ -57,6 +59,7 @@ public class Vision extends SubsystemBase {
             checkAutoStartPose();
         }
 
+        if (Constants.Debug.DEBUG_MODE) SmartDashboard.putBoolean("Updating Pose Estimator", enabled);
     }
 
     public Alliance MyAlliance() {
@@ -170,8 +173,16 @@ public class Vision extends SubsystemBase {
 
         LimelightHelpers.SetRobotOrientation(llName, headingDeg, 0, 0, 0, 0, 0);
         var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(llName);
-        if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 1.5 /* Originally 2.0 */ && !tempDisable) {
+        if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 1.5 /* Originally 2.0 */ && !tempDisable && enabled) {
             Robot.getInstance().drivetrain.addVisionMeasurement(llMeasurement.pose,llMeasurement.timestampSeconds);
         }
+    }
+
+    public void disable() {
+        enabled = false;
+    }
+
+    public void enable() {
+        enabled = true;
     }
 }

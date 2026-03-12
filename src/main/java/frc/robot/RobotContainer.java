@@ -236,11 +236,7 @@ public class RobotContainer {
         gamepad.leftBumper().whileTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
             
         gamepad.rightTrigger().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        
-        gamepad.b().onTrue(new Intake(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-    
-        gamepad.rightBumper().onTrue(new FuelJAMMED(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));  
-    
+                
         accessory.y().onTrue(new ClimbCommand(m_climb, m_leds, m_hopper, m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.b().onTrue(new ClimbZeroing(m_climb, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
@@ -252,9 +248,7 @@ public class RobotContainer {
         //accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
         accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        
-        accessory.rightTrigger().whileTrue(m_shooter.spinKraken().withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        
+                
         drivetrain.registerTelemetry(logger::telemeterize);
         accessory.back().onTrue(new InstantCommand(() -> m_turret.resetPosition())
                 .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
