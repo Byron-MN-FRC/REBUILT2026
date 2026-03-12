@@ -27,11 +27,15 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.DriveToPosition;
 import frc.robot.commands.Agitate;
 import frc.robot.commands.AutonExtend;
 import frc.robot.commands.AutonRetract;
@@ -57,6 +61,7 @@ import frc.robot.commands.ledtestcommands.flash;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
@@ -79,7 +84,7 @@ public class RobotContainer {
                                                                                       // max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
-    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+    public final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     // private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
@@ -91,7 +96,11 @@ public class RobotContainer {
     private final CommandXboxController accessory = new CommandXboxController(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-    // public final ColorLED lightStrip = new ColorLED(LED_PORT, LED_LENGTHS);
+    public final Vision m_vision = new Vision();
+
+    // TODO fix
+    public TagApproaches tagApproaches = new TagApproaches();
+    //public final ColorLED lightStrip = new ColorLED(LED_PORT, LED_LENGTHS);
     public final Field2d m_field = new Field2d();
     public final Field2d m_autoField = new Field2d();
 
@@ -211,15 +220,21 @@ public class RobotContainer {
         // ->System.out.println("Stopping Loger"))));
 
         // Reset the field-centric heading on left bumper press.
-        gamepad.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+        // gamepad.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+        
+        gamepad.start().onTrue(new InstantCommand(() -> m_vision.tempDisable(0.5))
+            .andThen(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())));
 
         gamepad.leftBumper()
                 .whileTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        drivetrain.registerTelemetry(logger::telemeterize);
-
-        accessory.y().onTrue(new ClimbCommand(m_climb, m_leds, m_hopper, m_turret)
-                .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        gamepad.y()
+            .whileTrue(new DriveToPosition(drivetrain)
+            .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+            
+        gamepad.rightTrigger().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+                
+        accessory.y().onTrue(new ClimbCommand(m_climb, m_leds, m_hopper, m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.b().onTrue(new ClimbZeroing(m_climb, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
@@ -227,20 +242,19 @@ public class RobotContainer {
 
         accessory.start().onTrue(new ZeroTurret(m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
+        //accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        
+        accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+                
+        drivetrain.registerTelemetry(logger::telemeterize);
         accessory.back().onTrue(new InstantCommand(() -> m_turret.resetPosition())
                 .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         // accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds
         // ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        accessory.leftBumper()
-                .toggleOnTrue(new TrackHub(m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
         accessory.rightTrigger()
                 .whileTrue(new ShootCommand(m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
-        gamepad.rightTrigger()
-                .whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
                 final POVButton pOVButtonLeft = new POVButton(accessory.getHID(), 270, 0);
         pOVButtonLeft.whileTrue(new RPMShootCommand(Constants.ShooterConstants.middleSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));

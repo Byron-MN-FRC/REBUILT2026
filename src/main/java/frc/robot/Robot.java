@@ -55,6 +55,7 @@ public class Robot extends TimedRobot {
             SmartDashboard.putNumber("Robot Gyro", m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees());
 
             if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("Turret Distance to Hub", TurretCam.getDistance());
+            if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("Rotational Speed", m_robotContainer.drivetrain.getState().Speeds.omegaRadiansPerSecond);
     }
         
     @Override
@@ -74,6 +75,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+        m_robotContainer.m_vision.disable();
 
         if (m_autonomousCommand != null) {
             CommandScheduler.getInstance().schedule(m_autonomousCommand);
@@ -84,7 +86,9 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic() {}
 
     @Override
-    public void autonomousExit() {}
+    public void autonomousExit() {
+        Robot.getInstance().m_vision.enable();
+    }
 
     @Override
     public void teleopInit() {
