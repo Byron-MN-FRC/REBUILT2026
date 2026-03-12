@@ -53,6 +53,7 @@ import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.RPMShootCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.TrackHub;
+import frc.robot.commands.TrackHubNew;
 import frc.robot.commands.ZeroTurret;
 import frc.robot.commands.ledtestcommands.fasterfaster;
 import frc.robot.commands.ledtestcommands.flash;
@@ -244,7 +245,7 @@ public class RobotContainer {
 
         //accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
-        accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.leftBumper().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                 
         drivetrain.registerTelemetry(logger::telemeterize);
         accessory.back().onTrue(new InstantCommand(() -> m_turret.resetPosition())
@@ -276,6 +277,8 @@ public class RobotContainer {
 
         // Bind A button to run the climb wiggle while held (use same style as other bindings)
         gamepad.a().whileTrue(new ClimbWiggleMeth1(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        accessory.rightBumper().toggleOnTrue(new TrackHubNew(m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
 
     public CommandXboxController getaccessory() {
