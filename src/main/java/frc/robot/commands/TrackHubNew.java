@@ -4,22 +4,27 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.TurretCam;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Turret;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class TrackHub extends Command {
+public class TrackHubNew extends Command {
 
   private Turret m_turret;
   private final LedsSubsystem m_leds;
   private Timer m_timer = new Timer();
 
   /** Creates a new trackHub. */
-  public TrackHub(Turret subsystem, LedsSubsystem leds) {
+  public TrackHubNew(Turret subsystem, LedsSubsystem leds) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     m_leds = leds;
@@ -38,20 +43,37 @@ public class TrackHub extends Command {
   @Override
   public void execute() {
 
-    if (TurretCam.targetLocated() == true) {
-      m_turret
-          .aimDegrees((m_turret.getAngleDegrees()) + TurretCam.getAngleError());
-      m_timer.stop();
-      m_timer.reset();
+    // if (TurretCam.targetLocated() == true) {
+    // m_turret
+    // .aimDegrees((m_turret.getAngleDegrees()) + TurretCam.getAngleError());
+    // m_timer.stop();
+    // m_timer.reset();
 
-    } else if (!TurretCam.targetLocated() && !m_timer.isRunning()) {
-      m_timer.start();
+    // } else if (!TurretCam.targetLocated() && !m_timer.isRunning()) {
+    // m_timer.start();
+    // }
+
+    // if (m_timer.hasElapsed(Constants.TurretShooterConstants.TURRET_CAM_TIMEOUT))
+    // {
+    // m_turret.aimDegrees(Constants.TurretShooterConstants.NEUTRAL_POSITION);
+    // }
+    Translation2d target;
+    if (Constants.DriveConstants.MyAlliance() == Alliance.Blue) {
+      target = Constants.FieldConstants.BLUE_HUB_CENTER;
+    } else {
+      target = Constants.FieldConstants.RED_HUB_CENTER;
     }
 
-    if (m_timer.hasElapsed(Constants.TurretShooterConstants.TURRET_CAM_TIMEOUT)) {
-      m_turret.aimDegrees(Constants.TurretShooterConstants.NEUTRAL_POSITION);
-    }
+    // Calculate distances and angles
+    Pose2d currentPose = Robot.getInstance().drivetrain.getState().Pose;
+    double yDistance = target.getY() - currentPose.getTranslation().getY();
+    double xDistance = target.getX() - currentPose.getTranslation().getX();
+    double angleToTarget = Math.atan2(yDistance, xDistance) * (180 / Math.PI);
+    
 
+    SmartDashboard.putNumber("angleToTarget", -angleToTarget);
+
+    m_turret.aimFieldRelativeAngle(angleToTarget);
 
     // Generate LED colors based on how close the turret angle is to the target.
     // Green is on target, yellow is close, and red is far.
