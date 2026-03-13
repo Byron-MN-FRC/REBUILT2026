@@ -123,9 +123,6 @@ public class Constants {
         public static final double raiserUpperTarget = 85.0;
         public static final double raiserLowerTarget = 0.0;
         public static final double climbZeroingSpeed = -0.25;
-        // public static final double climbUpperLimit = 205.0;
-        // public static final double climbLowerLimit = 0.06;
-        // public static final double climbSensorLimit = 0;
         public static final double climbCurrentLimit = 25;
     }
     public static final class ShooterConstants {

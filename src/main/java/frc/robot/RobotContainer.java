@@ -39,7 +39,6 @@ import frc.robot.commands.AutonStart;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.ClimbLowerAuto;
 import frc.robot.commands.ClimbRaiseAuto;
-import frc.robot.commands.ClimbWiggleMeth1;
 import frc.robot.commands.ClimbZeroing;
 import frc.robot.commands.FloorTransfer;
 import frc.robot.commands.FuelGRAB;
@@ -248,9 +247,6 @@ public class RobotContainer {
         gamepad.rightBumper().onTrue(new FuelJAMMED(m_hopper, m_shooter).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         gamepad.leftTrigger().whileTrue(new Agitate(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
-        // Bind A button to run the climb wiggle while held (use same style as other bindings)
-        gamepad.a().whileTrue(new ClimbWiggleMeth1(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
 
     public CommandXboxController getaccessory() {
