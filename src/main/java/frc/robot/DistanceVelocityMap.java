@@ -8,7 +8,7 @@ public class DistanceVelocityMap {
         // 1. distance from target in feet
         // 2. velocity in rotations per minute (RPM)
         {
-            put(0.0,2175);
+            put(0.0, 2175);
             put(2.5, 2475);
             // put(5.0, 2000);
             put(7.5, 2100);
@@ -18,11 +18,13 @@ public class DistanceVelocityMap {
     };
 
     public static int getVelocity(double distance) {
-        // // Find the closest distance in the map that is less than or equal to the input distance
+        // // Find the closest distance in the map that is less than or equal to the
+        // input distance
         // Double closestDistance = distanceVelocityMap.floorKey(distance);
         // if (closestDistance == null) {
-        //     // If there is no such distance, return the velocity for the smallest distance
-        //     return distanceVelocityMap.firstEntry().getValue();
+        // // If there is no such distance, return the velocity for the smallest
+        // distance
+        // return distanceVelocityMap.firstEntry().getValue();
         // }
         // return distanceVelocityMap.get(closestDistance);
         return 2100; // Placeholder value, replace with actual implementation

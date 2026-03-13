@@ -18,7 +18,6 @@ import frc.robot.ColorLED;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.ClimbSubsystem.LockdownMode;
-// import frc.robot.subsystems.Climb.LockdownMode;
 
 public class LedsSubsystem extends SubsystemBase {
     public enum LedColor {
@@ -43,29 +42,14 @@ public class LedsSubsystem extends SubsystemBase {
         greenFlashing
     };
     public enum SubsystemUsingLEDS {
+        none,
         drive,
+        hopper,
         turret,
         shooter,
-        climb,
-        hopper,
-        none
+        climb
     };
     public String hexValue;
-
-    public String[
-    ] rainbowStrings = {
-            "#000000", //none
-            "#FF0000", //red
-            "#0000FF", //blue
-            "#00FF00", //green
-            "#FFA500", //orange
-            "#FFD700", //gold
-            "#FFFFFF", //white
-            "#FF00FF", //purple
-            "#FF91FF", //pink
-            "#FFFF00"  //yellow
-    };
-
     public LedColor ledColor = LedColor.none;
     public SubsystemUsingLEDS usingSubsystem = SubsystemUsingLEDS.none;
     public final ColorLED lightStrip;
@@ -83,6 +67,7 @@ public class LedsSubsystem extends SubsystemBase {
         // This method will be called once per scheduler run
         if (Constants.Debug.DEBUG_MODE) SmartDashboard.putString("Subsystem Using LEDs", usingSubsystem.name());
         if (Constants.Debug.DEBUG_MODE) SmartDashboard.putString("LED Hex Value", lightStrip.getCurrentColor().toHexString());  
+        //these are being run because they require being always set to function properly. Their methods just set the color enumerator which and then the rest is done by this.
         if (ledColor == LedColor.rainbow || ledColor == LedColor.none) {
             lightStrip.rainbow();
         }
@@ -95,10 +80,8 @@ public class LedsSubsystem extends SubsystemBase {
         if (ledColor == LedColor.greenFlashing) {
             lightStrip.greenFlashing();
         }
-        if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.full) {
-            lightStrip.blueFlashing();
-        }
-        else if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.partial) {
+        //checking lockdown state to see if LEDs should be changed to match them
+        if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.engaged) {
             lightStrip.blueFlashing();
         }
     }
@@ -107,59 +90,46 @@ public class LedsSubsystem extends SubsystemBase {
     public void simulationPeriodic() {
         // This method will be called once per scheduler run when in simulation
     }
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-    
     //===============================================================================================================================================================================
-
     //priority from least to greatest: none, drive, hopper, turret, shooter, climb
-
-    //rank 5
-    public void noSubsystemUsingLeds() {
-        if (usingSubsystem != SubsystemUsingLEDS.none && usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret && usingSubsystem != SubsystemUsingLEDS.hopper && usingSubsystem != SubsystemUsingLEDS.drive) {
+    //rank 5 (de jure default)
+    public void noSubsystemUsingLeds() { //all commands, when finished, set the LEDs to this but the LEDs go back to using driveTrain LEDs right after the fact because of their higher priority, hence why the lights are always rainbow by default.
+        if (usingSubsystem != SubsystemUsingLEDS.none && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret && usingSubsystem != SubsystemUsingLEDS.hopper && usingSubsystem != SubsystemUsingLEDS.drive  && usingSubsystem != SubsystemUsingLEDS.climb) {
             usingSubsystem = SubsystemUsingLEDS.none;
         }
     }
-
-    //rank 4
+    //rank 4 (de facto default)
     public void driveTrainRequestingLeds() { // the ORs may need to be ANDs?
         if (usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret && usingSubsystem != SubsystemUsingLEDS.hopper) {
             usingSubsystem = SubsystemUsingLEDS.drive;
         }
     }
-
     //rank 3
     public void hopperRequestingLeds() {
         if (usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret) {
             usingSubsystem = SubsystemUsingLEDS.hopper;
         }
     }
-
     //rank 2
     public void turretRequestingLeds() {
         if (usingSubsystem != SubsystemUsingLEDS.climb && usingSubsystem != SubsystemUsingLEDS.shooter) {
             usingSubsystem = SubsystemUsingLEDS.turret;
         }
     }
-
     //rank 1
     public void shooterRequestingLeds() {
         if (usingSubsystem != SubsystemUsingLEDS.climb) {
             usingSubsystem = SubsystemUsingLEDS.shooter; 
         }
     }
-
     //rank 0
-    public void climbRequestingLeds() { //nothing can override climb, this only sets the enum to climb
-        if (usingSubsystem != SubsystemUsingLEDS.climb) {
+    public void climbRequestingLeds() { //nothing can override climb, this only sets the enumerator to climb. 
+        if (usingSubsystem != SubsystemUsingLEDS.climb) { //Also lockdown leds are considered to be climb using them because lockdown is a minion of the all powerful climb subsystem I believe. 
             usingSubsystem = SubsystemUsingLEDS.climb; 
         }
     }
-
     //===============================================================================================================================================================================
-
-    //red, orange, yellow, green, blue, purple, pink
-    //white, gold, lightblue, magenta, lime, rainbow, none
+    //Available: none, rainbow, fasterfaster, climbprogressbar(not tested), blueflashing, greenflashing, red, maroon, orange, yellow, green, lime, blue, lightblue, purple, pink, magenta, white, gold
     public void setColorNone() {
         ledColor = LedColor.none;
         lightStrip.none();
