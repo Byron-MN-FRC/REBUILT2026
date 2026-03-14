@@ -50,6 +50,8 @@ import frc.robot.commands.Intake;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.RPMShootCommand;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.SnowBlowerCommandGroup;
+import frc.robot.commands.Snowblower;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.TrackHubNew;
 import frc.robot.commands.ZeroTurret;
@@ -255,7 +257,7 @@ public class RobotContainer {
         //         .whileTrue(new ShootCommand(m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
         final POVButton pOVButtonLeft = new POVButton(accessory.getHID(), 270, 0);
-        pOVButtonLeft.whileTrue(new RPMShootCommand(Constants.ShooterConstants.middleSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        pOVButtonLeft.whileTrue(new SnowBlowerCommandGroup(Constants.ShooterConstants.snowblowSpeedTarget, m_shooter, m_hopper, m_leds, m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     
         final POVButton pOVButtonRight = new POVButton(accessory.getHID(), 90, 0);
         pOVButtonRight.whileTrue(new RPMShootCommand(Constants.ShooterConstants.middleSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));

@@ -76,6 +76,7 @@ public class Constants {
         public static final double NEUTRAL_POSITION = 0;
         public static final double MAX_LEFT_DEGREES = MAX_LEFT_POSITION * 360;
         public static final double MAX_RIGHT_DEGREES = MAX_RIGHT_POSITION * 360;
+        public static final double SNOW_BLOWER_POSITION = 45.0;
         // I think this is wrong
         public static final double RESTRICTED_MAX_LEFT_DEGREES = MAX_LEFT_DEGREES;
         public static final double RESTRICTED_MAX_RIGHT_DEGREES = 0.061844 * 360;
@@ -160,8 +161,8 @@ public class Constants {
     public static final class ShooterConstants {
         public static final double lowSpeedTarget = 2050.0;
         public static final double middleSpeedTarget = 2200.0;
-        public static final double highSpeedTarget = 2400;
-        public static final double snowblowSpeedTarget = 2600.0;
+        public static final double highSpeedTarget = 2400.0;
+        public static final double snowblowSpeedTarget = 3000.0;
     }
 
 }

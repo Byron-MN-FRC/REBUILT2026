@@ -110,46 +110,35 @@ public class Turret extends SubsystemBase {
     }
 
     // Put methods for controlling this subsystem
-    // here. Call these from Commands.    
+    // here. Call these from Commands.
 
     public void spinStop() {
         rotateShooterMotor.set(0);
         isActive = false;
     }
-    
-    // Todo combine aimRelativeDegrees & aimDegrees / determine whether there is a reason to have seperate commands w/o resctrictions
+
     public void aimDegrees(double degrees) {
         // if (Robot.getInstance().m_hopper.isExtending == false) {
         if (Robot.getInstance().m_hopper.isHopperRetracted()) {
             degrees = Math.max(Constants.TurretShooterConstants.MAX_LEFT_DEGREES, degrees);
             degrees = Math.min(Constants.TurretShooterConstants.MAX_RIGHT_DEGREES, degrees);
-        }
-        else {
+        } else {
             degrees = Math.max(Constants.TurretShooterConstants.RESTRICTED_MAX_LEFT_DEGREES, degrees);
             degrees = Math.min(Constants.TurretShooterConstants.RESTRICTED_MAX_RIGHT_DEGREES, degrees);
         }
         rotateShooterMotor
-            .setControl(m_motionMagicVoltage
-                .withPosition(Constants.TurretShooterConstants.degreesToRotations(degrees)));
+                .setControl(m_motionMagicVoltage
+                        .withPosition(Constants.TurretShooterConstants.degreesToRotations(degrees)));
     }
-
-    // TODO limit range of motion
-    // public void aimDegrees(double degrees) {
-    //     rotateShooterMotor
-    //         .setControl(m_motionMagicVoltage
-    //             .withPosition(Constants.TurretShooterConstants.degreesToRotations(degrees)));
-    // }
 
     // Decide whether to switch from double to Rotation2d
     public void aimFieldRelativeAngle(double degrees) {
-        
+
         var robotAngle = Robot.getInstance().drivetrain.getState().Pose.getRotation().getDegrees();
         var backRobotAngle = robotAngle + 180;
         var newDegrees = degrees - backRobotAngle;
-        SmartDashboard.putNumber("preprelimdegrees", backRobotAngle);
-        SmartDashboard.putNumber("prelimdegrees", newDegrees);
         newDegrees = Units.radiansToDegrees(MathUtil.angleModulus(Units.degreesToRadians(newDegrees)));
-        SmartDashboard.putNumber("modded degrees", newDegrees);
+        
 
         aimDegrees(-newDegrees);
     }
@@ -176,7 +165,7 @@ public class Turret extends SubsystemBase {
     }
 
     public boolean atTarget(double pos) {
-        return Math.abs(rotateShooterMotor.getPosition().getValueAsDouble() - pos)<.1;
+        return Math.abs(rotateShooterMotor.getPosition().getValueAsDouble() - pos) < .1;
     }
 
     public void resetPosition() {
