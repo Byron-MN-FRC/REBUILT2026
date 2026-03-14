@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.commands.Agitate;
 import frc.robot.commands.AutonExtend;
 import frc.robot.commands.AutonIntake;
+import frc.robot.commands.AutonIntakestop;
 import frc.robot.commands.AutonRetract;
 import frc.robot.commands.AutonStart;
 import frc.robot.commands.ClimbCommand;
@@ -105,6 +106,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutonRetract", new AutonRetract(m_hopper));
         NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper, m_leds));
         NamedCommands.registerCommand("AutonIntake", new AutonIntake(m_hopper));
+        NamedCommands.registerCommand("AutonIntakestop", new AutonIntakestop(m_hopper));
         NamedCommands.registerCommand("AutonShootCommand", new ShootCommand(m_shooter, m_hopper, m_leds));
         NamedCommands.registerCommand("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
         NamedCommands.registerCommand("ClimbLowerAuto", new ClimbLowerAuto(m_climb, m_leds));
