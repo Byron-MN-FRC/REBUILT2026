@@ -11,21 +11,34 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "OutpostPath1"
+            "name": "AutonExtend"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "TurretAim"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "OutpostPath1"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
             "name": "AutonShootCommand"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Set Turrent Aim"
           }
         }
       ]
