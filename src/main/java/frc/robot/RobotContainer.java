@@ -39,6 +39,7 @@ import frc.robot.commands.DriveToPosition;
 import frc.robot.commands.Agitate;
 import frc.robot.commands.AutonExtend;
 import frc.robot.commands.AutonRetract;
+import frc.robot.commands.AutonSetAiming;
 import frc.robot.commands.AutonStart;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.ClimbLowerAuto;
@@ -52,6 +53,7 @@ import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.RPMShootCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.TrackHub;
+import frc.robot.commands.TrackHubNew;
 import frc.robot.commands.ZeroTurret;
 import frc.robot.commands.ledtestcommands.fasterfaster;
 import frc.robot.commands.ledtestcommands.flash;
@@ -107,6 +109,14 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutonRetract", new AutonRetract(m_hopper));
         NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper, m_leds));
         NamedCommands.registerCommand("AutonShootCommand", new ShootCommand(m_shooter, m_hopper, m_leds));
+        
+        NamedCommands.registerCommand("Outpost Shoot RPM", new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget, m_shooter, m_hopper, m_leds));
+        NamedCommands.registerCommand("Depot Shoot RPM", new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget, m_shooter, m_hopper, m_leds));
+        NamedCommands.registerCommand("Shoot RPM", new RPMShootCommand(Constants.ShooterConstants.lowSpeedTarget, m_shooter, m_hopper, m_leds));
+
+        NamedCommands.registerCommand("Set Turret Aim", new AutonSetAiming(-45));
+
+
         NamedCommands.registerCommand("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
         NamedCommands.registerCommand("ClimbLowerAuto", new ClimbLowerAuto(m_climb, m_leds));
         NamedCommands.registerCommand("TrackHub", new TrackHub(m_turret, m_leds));
@@ -261,6 +271,8 @@ public class RobotContainer {
         gamepad.rightBumper().onTrue(new FuelJAMMED(m_hopper, m_shooter).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         gamepad.leftTrigger().whileTrue(new Agitate(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+      
+        accessory.rightBumper().toggleOnTrue(new TrackHubNew(m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
 
     public CommandXboxController getaccessory() {
