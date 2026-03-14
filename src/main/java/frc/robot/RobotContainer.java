@@ -233,7 +233,7 @@ public class RobotContainer {
 
         //accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
-        accessory.leftTrigger().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.leftBumper().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                 
         drivetrain.registerTelemetry(logger::telemeterize);
         accessory.back().onTrue(new InstantCommand(() -> m_turret.resetPosition())
