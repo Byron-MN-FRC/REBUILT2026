@@ -22,28 +22,25 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.DriveToPosition;
 import frc.robot.commands.Agitate;
 import frc.robot.commands.AutonExtend;
+import frc.robot.commands.AutonIntake;
 import frc.robot.commands.AutonRetract;
 import frc.robot.commands.AutonStart;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.ClimbLowerAuto;
 import frc.robot.commands.ClimbRaiseAuto;
 import frc.robot.commands.ClimbZeroing;
+import frc.robot.commands.DriveToPosition;
 import frc.robot.commands.FloorTransfer;
 import frc.robot.commands.FuelGRAB;
 import frc.robot.commands.FuelJAMMED;
@@ -59,11 +56,11 @@ import frc.robot.commands.ledtestcommands.flash;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Vision;
 
 public class RobotContainer {
 
@@ -107,6 +104,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutonStart", new AutonStart(m_turret, m_climb, m_leds));
         NamedCommands.registerCommand("AutonRetract", new AutonRetract(m_hopper));
         NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper, m_leds));
+        NamedCommands.registerCommand("AutonIntake", new AutonIntake(m_hopper));
         NamedCommands.registerCommand("AutonShootCommand", new ShootCommand(m_shooter, m_hopper, m_leds));
         NamedCommands.registerCommand("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
         NamedCommands.registerCommand("ClimbLowerAuto", new ClimbLowerAuto(m_climb, m_leds));
