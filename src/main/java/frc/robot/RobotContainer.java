@@ -112,6 +112,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("TrackHub", new TrackHub(m_turret, m_leds));
         SmartDashboard.putData("Robot Position", m_field);
         SmartDashboard.putData("Auto Field", m_autoField);
+        SmartDashboard.putNumber("Shooter Velocity", 0);
 
         if (Constants.Debug.DEBUG_MODE) {
             SmartDashboard.putData("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
