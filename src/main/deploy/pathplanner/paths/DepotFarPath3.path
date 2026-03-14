@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.47,
-        "y": 4.8
+        "x": 0.46,
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.4793806806460305,
-        "y": 6.103235877083468
+        "x": 0.439558673996752,
+        "y": 7.354712264437488
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.47,
-        "y": 7.0
+        "x": 0.46,
+        "y": 4.95
       },
       "prevControl": {
-        "x": 0.44912753611036194,
-        "y": 5.838482715632861
+        "x": 0.46735553301956745,
+        "y": 4.700108231159972
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -90.0
   },
   "reversed": false,
-  "folder": "DepotFarAuton",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }
