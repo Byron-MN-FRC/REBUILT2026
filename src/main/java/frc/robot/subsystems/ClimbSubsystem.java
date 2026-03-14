@@ -32,12 +32,17 @@ import frc.robot.Constants.ClimbConstants;
 
 public class ClimbSubsystem extends SubsystemBase {
     private TalonFX raiser;
+
     // private DigitalInput armBottomSwitch;
+
     public double raiserUpperTarget;
     public double raiserLowerTarget;
+
     public boolean climbing;
     public boolean isOnTower;
+
     public int climbStage = 0;
+
     public enum LockdownMode {
         disengaged,
         engaged
@@ -50,9 +55,6 @@ public class ClimbSubsystem extends SubsystemBase {
 
     private final CombinedStallHandler stallDetector;
 
-    /**
-    *
-    */
     public ClimbSubsystem() {
         raiser = new TalonFX(26);
         stallDetector = new CombinedStallHandler(raiser);
@@ -102,7 +104,6 @@ public class ClimbSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
         if (Constants.Debug.DEBUG_MODE) {
             SmartDashboard.putBoolean("Arm is raised", climbing);
             // SmartDashboard.putBoolean("Arm Retracted", getBottomSwitch());
@@ -116,8 +117,6 @@ public class ClimbSubsystem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        // This method will be called once per scheduler run when in simulation
-
     }
 
     // Put methods for controlling this subsystem

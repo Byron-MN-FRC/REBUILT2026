@@ -14,13 +14,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
-import com.ctre.phoenix6.controls.NeutralOut;
-import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
-import com.ctre.phoenix6.controls.PositionVoltage;
-import com.revrobotics.PersistMode;
-import com.revrobotics.ResetMode;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -44,7 +41,7 @@ public class Hopper extends SubsystemBase {
     private DigitalInput hopperExtendSwitch;
     private DigitalInput hopperRetractSwitch;
     // Motor control modes
-    private final NeutralOut m_brake = new NeutralOut();
+    // private final NeutralOut m_brake = new NeutralOut();
 
     public boolean isExtending = false;
 

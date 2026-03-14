@@ -10,10 +10,6 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
-
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import java.util.Optional;
 
 import com.ctre.phoenix6.CANBus;
