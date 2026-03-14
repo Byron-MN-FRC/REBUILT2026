@@ -43,6 +43,7 @@ public class Constants {
         public static final boolean DEBUG_MODE = true;
         public static final boolean INTAKE_ROLLER_EXISTS = true;
         public static final boolean INTAKE_EXTEND_EXISTS = true;
+        public static final boolean SHOOTER_SPEED_OVERRIDE = true;
     }
 
     public static final class DriveConstants {
@@ -64,6 +65,7 @@ public class Constants {
         // Hopper extend/retract constants
         public static final double EXTEND_SPEED = -0.25;
         public static final double RETRACT_SPEED = 0.25;
+        public static final double HOLD_SPEED = -0.05;
         public static final int CURRENT_LIMIT = 10;
         public static final double AGITATE_COMMAND_SPEED = 0.4;
     }
