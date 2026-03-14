@@ -26,10 +26,12 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.TurretCam;
 import frc.robot.subsystems.ClimbSubsystem.LockdownMode;
 
 public class Hopper extends SubsystemBase {
@@ -45,6 +47,8 @@ public class Hopper extends SubsystemBase {
     private final NeutralOut m_brake = new NeutralOut();
 
     public boolean isExtending = false;
+
+    public Timer m_timer = new Timer();
 
     /**
     *
@@ -85,7 +89,7 @@ public class Hopper extends SubsystemBase {
             }
         }
 
-        hopperFloorTransferSecure = new SparkMax(18, MotorType.kBrushless); //floor motor
+        hopperFloorTransferSecure = new SparkMax(18, MotorType.kBrushless); // floor motor
         SparkMaxConfig hopperFloorTransferSecureConfig = new SparkMaxConfig();
         hopperFloorTransferSecureConfig.smartCurrentLimit(10); // Limit gate motor current to 10 A
         hopperFloorTransferSecureConfig.inverted(true); // Invert direction of floor transfer motor
@@ -112,7 +116,7 @@ public class Hopper extends SubsystemBase {
             SmartDashboard.putBoolean("Hopper Extended", isHopperExtended());
             SmartDashboard.putBoolean("Hopper Retracted", isHopperRetracted());
         }
-        
+
         // Check lockdown mode
         if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.engaged) {
             // In lockdown mode, ensure hopper is retracted
@@ -220,19 +224,34 @@ public class Hopper extends SubsystemBase {
     public void hopperExtendMotorControl() {
         if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
             if (isExtending) {
-                if (!isHopperExtended()) {
-                    if (Constants.Debug.DEBUG_MODE) SmartDashboard.putString("check", "extend");
-                    hopperExtendMotor.set(Constants.IntakeHopperConstants.EXTEND_SPEED); // Extend at half speed
+                // if (!isHopperExtended()) {
+                // hopperExtendMotor.set(Constants.IntakeHopperConstants.EXTEND_SPEED); //
+                // Extend at half speed
+                // } else {
+                // hopperExtendMotor.set(0); // Stop when fully extended
+                // }
+
+                if (!m_timer.hasElapsed(0.75)) {
+                    hopperExtendMotor.set(Constants.IntakeHopperConstants.EXTEND_SPEED);
                 } else {
-                    hopperExtendMotor.set(0); // Stop when fully extended
+                    hopperExtendMotor.set(Constants.IntakeHopperConstants.HOLD_SPEED);
                 }
+
+                if (!m_timer.isRunning()) {
+                    m_timer.restart();
+                }
+
             } else {
                 if (!isHopperRetracted()) {
-                    if (Constants.Debug.DEBUG_MODE) SmartDashboard.putString("check", "retract");
                     hopperExtendMotor.set(Constants.IntakeHopperConstants.RETRACT_SPEED); // Retract at half speed
                 } else {
                     hopperExtendMotor.set(0); // Stop when fully retracted
                 }
+
+                if (m_timer.isRunning()) {
+                    m_timer.stop();
+                }
+                
             }
         }
     }

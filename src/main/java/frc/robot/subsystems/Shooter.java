@@ -100,6 +100,7 @@ public class Shooter extends SubsystemBase {
     if (Constants.Debug.DEBUG_MODE) {
       SmartDashboard.putData("Subsystem: Shooter", this);
       SmartDashboard.putNumber("Shooter Set RPM", 0);
+      SmartDashboard.putNumber("Shooter Speed Override", 0);
     }
   }
 
@@ -109,6 +110,9 @@ public class Shooter extends SubsystemBase {
     if (Constants.Debug.DEBUG_MODE) {
       SmartDashboard.putNumber("Shooter RPM", leftShoot.getVelocity().getValueAsDouble() * 60.0);
       SmartDashboard.putBoolean("Shooter Ready", isAtTargetRPM());
+      if (Constants.Debug.SHOOTER_SPEED_OVERRIDE) {
+        targetRPM = SmartDashboard.getNumber("Shooter Speed Override", 0);
+      }
     }
 
     // spinKrakens(targetRPM);

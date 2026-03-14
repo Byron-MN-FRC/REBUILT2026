@@ -6,6 +6,8 @@ import com.ctre.phoenix6.Utils;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.util.FlippingUtil;
 
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
@@ -29,7 +31,7 @@ public class Vision extends SubsystemBase {
 
     public Vision() {
 
-        //this is where the camera is relative to the center of the robot
+        // this is where the camera is relative to the center of the robot
         LimelightHelpers.setCameraPose_RobotSpace(
                 Constants.VisionConstants.LIMELIGHT_NAME,
                 Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[0],
@@ -37,11 +39,10 @@ public class Vision extends SubsystemBase {
                 Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[2],
                 Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[3],
                 Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[4],
-                Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[5]
-        );
+                Constants.VisionConstants.CAMERA_POSE_ROBOT_SPACE[5]);
 
         LimelightHelpers.SetFiducialIDFiltersOverride(
-                Constants.VisionConstants.LIMELIGHT_NAME, 
+                Constants.VisionConstants.LIMELIGHT_NAME,
                 Constants.FieldConstants.TAGS_FOR_POSE_ESTIMATION);
     }
 
@@ -59,7 +60,8 @@ public class Vision extends SubsystemBase {
             checkAutoStartPose();
         }
 
-        if (Constants.Debug.DEBUG_MODE) SmartDashboard.putBoolean("Updating Pose Estimator", enabled);
+        if (Constants.Debug.DEBUG_MODE)
+            SmartDashboard.putBoolean("Updating Pose Estimator", enabled);
     }
 
     public Alliance MyAlliance() {
@@ -73,12 +75,14 @@ public class Vision extends SubsystemBase {
 
     /**
      * If the Limelight reports a valid target and its tag ID matches any
-     * in {@code Constants.VisionConstants.TAGS_FOR_AUTO_ALIGNMENT}, update {@link #lastAlignmentTarget}.
+     * in {@code Constants.VisionConstants.TAGS_FOR_AUTO_ALIGNMENT}, update
+     * {@link #lastAlignmentTarget}.
      * Otherwise do nothing.
      * <p>
      * This is intented to be called periodically and used when only a certain
      * subset of April Tags are intended to be valid alignment spots.
-     * Using only this small subset of targets defined in {@code TAGS_FOR_AUTO_ALIGNMENT}
+     * Using only this small subset of targets defined in
+     * {@code TAGS_FOR_AUTO_ALIGNMENT}
      * increases the likelihood that the robot will align to the correct target.
      *
      * @param llName Limelight camera name
@@ -155,27 +159,30 @@ public class Vision extends SubsystemBase {
 
     public void updatePoseEstimator(String llName) {
 
-        /*
-         * This example of adding Limelight is very simple and may not be sufficient for
-         * on-field use.
-         * Users typically need to provide a standard deviation that scales with the
-         * distance to target
-         * and changes with number of tags available.
-         *
-         * This example is sufficient to show that vision integration is possible,
-         * though exact implementation
-         * of how to use vision should be tuned per-robot and to the team's
-         * specification.
-         */
         var driveState = Robot.getInstance().drivetrain.getState();
         double headingDeg = driveState.Pose.getRotation().getDegrees();
         double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
 
         LimelightHelpers.SetRobotOrientation(llName, headingDeg, 0, 0, 0, 0, 0);
         var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(llName);
-        if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 1.5 /* Originally 2.0 */ && !tempDisable && enabled) {
-            Robot.getInstance().drivetrain.addVisionMeasurement(llMeasurement.pose,llMeasurement.timestampSeconds);
+        // optionally switch return with doRejectUpdate boolean
+        if (llMeasurement == null) {
+            return;
+        } else {
+            if (llMeasurement.tagCount < 1)
+                return;
+            if (Math.abs(omegaRps) >= 1.5)
+                return; // Originally 2.0
+            if (tempDisable)
+                return;
+            if (!enabled)
+                return;
         }
+
+        Robot.getInstance().drivetrain.addVisionMeasurement(
+            llMeasurement.pose,
+            llMeasurement.timestampSeconds,
+            VecBuilder.fill(0.7, 0.7, 9999999));
     }
 
     public void disable() {
