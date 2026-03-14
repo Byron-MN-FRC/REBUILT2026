@@ -173,10 +173,6 @@ public class Hopper extends SubsystemBase {
         hopperFloorTransferSecure.set(-0.1);
     }
 
-    public void clearHopperFloorTransferSecureBlockage() {
-        hopperFloorTransferSecure.set(0);
-    }
-
     public void setHopperExtend() {
         if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.engaged) {
             // In lockdown mode, don't extend
