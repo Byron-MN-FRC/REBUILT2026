@@ -38,8 +38,8 @@ public class Shooter extends SubsystemBase {
     SparkMaxConfig gateConfig = new SparkMaxConfig();
     SparkMaxConfig magazineConfig = new SparkMaxConfig();
 
-    gateConfig.smartCurrentLimit(15); // Limit gate motor current to 10 A
-    magazineConfig.smartCurrentLimit(30); // Limit gate motor current to 10 A
+    gateConfig.smartCurrentLimit(15); // Limit gate motor current
+    magazineConfig.smartCurrentLimit(30); // Limit gate motor current
 
     gateConfig.inverted(false); // Invert left gate motor direction
     magazineConfig.inverted(false); // Invert right gate motor direction
@@ -48,7 +48,7 @@ public class Shooter extends SubsystemBase {
     shooterMagazine.configure(magazineConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     TalonFXConfiguration configs = new TalonFXConfiguration();
-    configs.CurrentLimits.SupplyCurrentLimit = 70; // Limit motor supply current to 40
+    configs.CurrentLimits.SupplyCurrentLimit = 70; // Limit motor supply current to 70
     configs.CurrentLimits.StatorCurrentLimit = 96;
 
     configs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
@@ -57,11 +57,11 @@ public class Shooter extends SubsystemBase {
      * Voltage-based velocity requires a velocity feed forward to account for the
      * back-emf of the motor
      */
-    configs.Slot0.kS = 0.0056; // 0.1; // To account for friction, add 0.1 V of static feedforward
-    configs.Slot0.kV = 0.1316; // Kraken X60 is a 500 kV motor, 500 rpm per V = 8.333 rps per V, 1/8.33 = 0.12
+    configs.Slot0.kS = 0.00806; // 0.1; // To account for friction, add 0.1 V of static feedforward
+    configs.Slot0.kV = 0.12396; // Kraken X60 is a 500 kV motor, 500 rpm per V = 8.333 rps per V, 1/8.33 = 0.12
                               // volts / rotation per second
     // configs.Slot0.kP = 0.015; // 0.11; // An error of 1 rotation per second results in 0.11 V output
-    configs.Slot0.kP = 0.01579;
+    configs.Slot0.kP = 0.015355;
     configs.Slot0.kI = 0.0; // No output for integrated error
     configs.Slot0.kD = 0.00115;// No output for error derivative
     // Peak output of 8 volts

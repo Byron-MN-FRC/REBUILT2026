@@ -77,8 +77,8 @@ public class RPMShootCommand extends Command {
                 // m_hopper.setHopperFloorTransferSecureSpeed(Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
 
             // } else {
-                m_shooter.runGate(Constants.TurretShooterConstants.gateReverseSpeed);
-                m_hopper.setHopperFloorTransferSecureSpeed(-Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
+                // m_shooter.runGate(Constants.TurretShooterConstants.gateReverseSpeed);
+                // m_hopper.setHopperFloorTransferSecureSpeed(-Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
             // }
         }
         
