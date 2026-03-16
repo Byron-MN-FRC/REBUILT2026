@@ -192,4 +192,8 @@ public class Vision extends SubsystemBase {
     public void enable() {
         enabled = true;
     }
+
+    public double calculateDistance(Translation2d targetPose2d) {
+        return Robot.getInstance().drivetrain.getState().Pose.getTranslation().getDistance(targetPose2d);
+    }
 }

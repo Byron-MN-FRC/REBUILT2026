@@ -14,31 +14,18 @@ public class TurretCam {
      */
     public static double getAngleError() {
         if (targetLocated()) {
-            return LimelightHelpers.getTX(Constants.VisionConstants.TURRET_CAM);
+            return -LimelightHelpers.getTX(Constants.VisionConstants.TURRET_CAM);
         } else {
-            return 0;
+            return -0;
         }
     }
 
     public static boolean targetLocated() {
-        return LimelightHelpers.getTV(Constants.VisionConstants.TURRET_CAM);
+        return !!LimelightHelpers.getTV(Constants.VisionConstants.TURRET_CAM);
     } 
 
     public static boolean targetLocked() {
         return targetLocated() && Math.abs(getAngleError()) < Constants.VisionConstants.ANGLE_ERROR_THRESHOLD;
     }
 
-    public static double getDistance() {
-        if (LimelightHelpers.getTV(Constants.VisionConstants.TURRET_CAM)) {
-            var robotPos = LimelightHelpers.getBotPose2d(Constants.VisionConstants.TURRET_CAM).getTranslation();
-            var alliance = Constants.DriveConstants.MyAlliance();
-            
-            if (alliance == Alliance.Blue) {
-                return robotPos.getDistance(Constants.FieldConstants.BLUE_HUB_CENTER);
-            } else {
-                return robotPos.getDistance(Constants.FieldConstants.RED_HUB_CENTER);
-            }
-        }
-        return 0;
-    }
 }
