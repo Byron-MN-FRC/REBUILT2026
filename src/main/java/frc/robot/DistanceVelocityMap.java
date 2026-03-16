@@ -20,7 +20,7 @@ public class DistanceVelocityMap {
     public static int getVelocity(double distance) {
         // // Find the closest distance in the map that is less than or equal to the
         // input distance
-        double closestDistance = distanceVelocityMap.floorKey(distance);
+        Double closestDistance = distanceVelocityMap.floorKey(distance);
         if (closestDistance == null) {
         // // If there is no such distance, return the velocity for the smallest
         // distance

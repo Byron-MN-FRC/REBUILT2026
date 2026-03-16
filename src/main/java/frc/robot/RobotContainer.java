@@ -240,8 +240,6 @@ public class RobotContainer {
         accessory.a().toggleOnTrue(new FloorTransfer(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.start().onTrue(new ZeroTurret(m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
-        //accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
         accessory.leftBumper().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                 
@@ -250,11 +248,8 @@ public class RobotContainer {
         // accessory.back().onTrue(new InstantCommand(() -> m_turret.resetPosition())
         //         .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        // accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds
-        // ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
-        // accessory.rightTrigger()
-        //         .whileTrue(new ShootCommand(m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.leftTrigger()
+                .whileTrue(new RPMShootCommand(m_shooter, m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
         final POVButton pOVButtonLeft = new POVButton(accessory.getHID(), 270, 0);
         pOVButtonLeft.whileTrue(new SnowBlowerCommandGroup(Constants.ShooterConstants.snowblowSpeedTarget, m_shooter, m_hopper, m_leds, m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
