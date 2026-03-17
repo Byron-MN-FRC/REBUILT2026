@@ -36,10 +36,10 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 public class Constants {
 
     public static final class Debug {
-        public static final boolean DEBUG_MODE = true;
+        public static final boolean DEBUG_MODE = false;
         public static final boolean INTAKE_ROLLER_EXISTS = true;
         public static final boolean INTAKE_EXTEND_EXISTS = true;
-        public static final boolean SHOOTER_SPEED_OVERRIDE = true;
+        public static final boolean SHOOTER_SPEED_OVERRIDE = false;
     }
 
     public static final class DriveConstants {
