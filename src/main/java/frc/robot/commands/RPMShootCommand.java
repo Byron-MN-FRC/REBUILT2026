@@ -13,10 +13,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.ColorLED;
 import frc.robot.Constants;
+import frc.robot.Constants.FieldConstants;
+import frc.robot.DistanceVelocityMap;
+import frc.robot.Robot;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
@@ -26,18 +28,33 @@ public class RPMShootCommand extends Command {
     private final Shooter m_shooter;
     private final Hopper m_hopper;
     private final LedsSubsystem m_leds;
-    private final double m_rpm;
+    private double m_rpm;
     private final Timer m_timer = new Timer();
 
     public final double agitateForwardTime = 0.75;
     public final double agitateReverseTime = 0;
 
-    public RPMShootCommand(double rpm,Shooter shooterSubsystem, Hopper hopperSubsystem, LedsSubsystem ledSubsystem) {
+    private final boolean dynamicVelocity;
+
+    public RPMShootCommand(double rpm, Shooter shooterSubsystem, Hopper hopperSubsystem, LedsSubsystem ledSubsystem) {
         m_rpm = rpm;
         m_shooter = shooterSubsystem;
         m_hopper = hopperSubsystem;
         m_leds = ledSubsystem;
         addRequirements(m_shooter);
+
+        dynamicVelocity = false;
+    }
+
+    public RPMShootCommand(Shooter shooterSubsystem, Hopper hopperSubsystem, LedsSubsystem ledSubsystem) {
+        m_rpm = DistanceVelocityMap
+                .getVelocity(Robot.getInstance().m_vision.calculateDistance(FieldConstants.ALLIANCE_HUB_CENTER));
+        m_shooter = shooterSubsystem;
+        m_hopper = hopperSubsystem;
+        m_leds = ledSubsystem;
+        addRequirements(m_shooter);
+
+        dynamicVelocity = true;
     }
 
     // Called when the command is initially scheduled.
@@ -55,7 +72,13 @@ public class RPMShootCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_shooter.spinShooter(m_shooter.targetRPM); 
+
+        if (dynamicVelocity) {
+            m_rpm = DistanceVelocityMap.getVelocity(
+                    Robot.getInstance().m_vision.calculateDistance(FieldConstants.ALLIANCE_HUB_CENTER));
+            m_shooter.setTargetRPM(m_rpm);
+        }
+        m_shooter.spinShooter(m_shooter.targetRPM);
         m_hopper.setFuelGrabberSpeed();
 
         if (m_shooter.isAtTargetRPM()) {
@@ -71,17 +94,13 @@ public class RPMShootCommand extends Command {
             }
 
             m_shooter.stopMagazine();
-            // if (!m_timer.hasElapsed(agitateForwardTime)) {
-
-                // m_shooter.runGate(Constants.TurretShooterConstants.gateForwardSpeed);
-                // m_hopper.setHopperFloorTransferSecureSpeed(Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
 
             // } else {
                 // m_shooter.runGate(Constants.TurretShooterConstants.gateReverseSpeed);
                 // m_hopper.setHopperFloorTransferSecureSpeed(-Constants.IntakeHopperConstants.AGITATE_COMMAND_SPEED);
             // }
         }
-        
+
     }
 
     // Called once the command ends or is interrupted.

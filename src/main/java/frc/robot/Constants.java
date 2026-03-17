@@ -150,6 +150,7 @@ public class Constants {
         public static final double RED_HUB_CENTER_Y = APRIL_TAG_FIELD_LAYOUT.getTagPose(10).get().getY();
         public static final Translation2d RED_HUB_CENTER = new Translation2d(RED_HUB_CENTER_x, RED_HUB_CENTER_Y);
         
+        public static final Translation2d ALLIANCE_HUB_CENTER = DriveConstants.MyAlliance() == Alliance.Red ? RED_HUB_CENTER : BLUE_HUB_CENTER;
     }
 
     public static final class ClimbConstants {

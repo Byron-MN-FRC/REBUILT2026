@@ -68,20 +68,6 @@ public class Shooter extends SubsystemBase {
     configs.Voltage.withPeakForwardVoltage(Volts.of(8))
         .withPeakReverseVoltage(Volts.of(-8));
 
-    // /*
-    // * Torque-based velocity does not require a velocity feed forward, as torque
-    // * will accelerate the rotor up to the desired velocity by itself
-    // */
-    // configs.Slot1.kS = 2.5; // To account for friction, add 2.5 A of static
-    // feedforward
-    // configs.Slot1.kP = 5; // An error of 1 rotation per second results in 5 A
-    // output
-    // configs.Slot1.kI = 0; // No output for integrated error
-    // configs.Slot1.kD = 0; // No output for error derivative
-    // // Peak output of 40 A
-    // configs.TorqueCurrent.withPeakForwardTorqueCurrent(Amps.of(40))
-    // .withPeakReverseTorqueCurrent(Amps.of(-40));
-
     /* Retry config apply up to 5 times, report if failure */
     StatusCode status = StatusCode.StatusCodeNotInitialized;
     for (int i = 0; i < 5; ++i) {
@@ -95,7 +81,6 @@ public class Shooter extends SubsystemBase {
 
     if (Constants.Debug.DEBUG_MODE) {
       SmartDashboard.putData("Subsystem: Shooter", this);
-      SmartDashboard.putNumber("Shooter Set RPM", 0);
       SmartDashboard.putNumber("Shooter Speed Override", 0);
     }
   }
@@ -158,7 +143,6 @@ public class Shooter extends SubsystemBase {
   }
 
   public void spinShooter(double rpm) {
-    // double targetRPS = SmartDashboard.getNumber("Shooter Set RPM", 0) / 60.0;
     double targetRPS = rpm / 60.0;
     leftShoot.setControl(m_velocity.withVelocity(targetRPS));
   }
