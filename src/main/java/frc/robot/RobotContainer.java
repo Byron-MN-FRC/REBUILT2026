@@ -49,7 +49,6 @@ import frc.robot.commands.FuelJAMMED;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.RPMShootCommand;
-import frc.robot.commands.ShootCommand;
 import frc.robot.commands.SnowBlowerCommandGroup;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.TrackHubNew;
@@ -109,7 +108,6 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper, m_leds));
         NamedCommands.registerCommand("AutonIntake", new AutonIntake(m_hopper));
         NamedCommands.registerCommand("AutonIntakestop", new AutonIntakestop(m_hopper));
-        NamedCommands.registerCommand("AutonShootCommand", new ShootCommand(m_shooter, m_hopper, m_leds));
         
         NamedCommands.registerCommand("OutpostShootRPM", new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget, m_shooter, m_hopper, m_leds));
         NamedCommands.registerCommand("DepotShootRPM", new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget, m_shooter, m_hopper, m_leds));
