@@ -12,14 +12,12 @@
 
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.ColorLED;
 import frc.robot.Constants;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.LedsSubsystem;
 
-public class Intake extends Command {
-    ColorLED lightStrip;
+public class Intake extends Command {  
     private final Hopper m_hopper;
     private final Turret m_turret;
     private final LedsSubsystem m_leds;
@@ -28,7 +26,7 @@ public class Intake extends Command {
         m_hopper = hopperSubsystem;
         m_turret = turretSubsystem;
         m_leds = ledSubsystem;
-        // addRequirements(m_hopper);
+        addRequirements(m_turret);
     }
 
     // Called when the command is initially scheduled.

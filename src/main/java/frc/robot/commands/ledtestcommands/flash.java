@@ -12,10 +12,9 @@
 
 package frc.robot.commands.ledtestcommands;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.ColorLED;
 import frc.robot.subsystems.LedsSubsystem;
 public class flash extends Command {
-    ColorLED lightStrip;
+    
     private final LedsSubsystem m_leds;
     
     public flash( LedsSubsystem ledSubsystem)  {

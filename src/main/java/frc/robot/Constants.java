@@ -142,13 +142,13 @@ public class Constants {
             31, 32
         };
 
-        public static final double BLUE_HUB_CENTER_x = APRIL_TAG_FIELD_LAYOUT.getTagPose(21).get().getX();
+        public static final double BLUE_HUB_CENTER_X = APRIL_TAG_FIELD_LAYOUT.getTagPose(21).get().getX();
         public static final double BLUE_HUB_CENTER_Y = APRIL_TAG_FIELD_LAYOUT.getTagPose(20).get().getY();
-        public static final Translation2d BLUE_HUB_CENTER = new Translation2d(BLUE_HUB_CENTER_x, BLUE_HUB_CENTER_Y);
+        public static final Translation2d BLUE_HUB_CENTER = new Translation2d(BLUE_HUB_CENTER_X, BLUE_HUB_CENTER_Y);
 
-        public static final double RED_HUB_CENTER_x = APRIL_TAG_FIELD_LAYOUT.getTagPose(5).get().getX();
+        public static final double RED_HUB_CENTER_X = APRIL_TAG_FIELD_LAYOUT.getTagPose(5).get().getX();
         public static final double RED_HUB_CENTER_Y = APRIL_TAG_FIELD_LAYOUT.getTagPose(10).get().getY();
-        public static final Translation2d RED_HUB_CENTER = new Translation2d(RED_HUB_CENTER_x, RED_HUB_CENTER_Y);
+        public static final Translation2d RED_HUB_CENTER = new Translation2d(RED_HUB_CENTER_X, RED_HUB_CENTER_Y);
         
         public static final Translation2d ALLIANCE_HUB_CENTER = DriveConstants.MyAlliance() == Alliance.Red ? RED_HUB_CENTER : BLUE_HUB_CENTER;
     }
