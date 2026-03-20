@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-
 public class TurretCam {
     /*
      * Returns the horizontal angle error from the Limelight.

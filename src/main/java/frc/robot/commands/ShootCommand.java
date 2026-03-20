@@ -12,11 +12,7 @@
 
 package frc.robot.commands;
 
-import java.math.RoundingMode;
-
-import edu.wpi.first.hal.simulation.RoboRioDataJNI;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.ColorLED;
 import frc.robot.Constants;
