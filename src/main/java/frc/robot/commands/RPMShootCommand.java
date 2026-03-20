@@ -24,7 +24,7 @@ import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
 
 public class RPMShootCommand extends Command {
-    ColorLED lightStrip;
+    
     private final Shooter m_shooter;
     private final Hopper m_hopper;
     private final LedsSubsystem m_leds;

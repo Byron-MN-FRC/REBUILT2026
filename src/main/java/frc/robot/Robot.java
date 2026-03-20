@@ -18,12 +18,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
     
 
-    public AddressableLED m_led;
     private Command m_autonomousCommand;
-    // private AddressableLEDBuffer m_ledBuffer;
-    //private int m_rainbowFirstPixelHue;
-    // private Color[] redWhiteArray = {Color.kBlueViolet, Color.kBlue};
-    // private Color[] blueWhiteArray = {Color.kBlue, Color.kWhite};
+   
 
     private static final RobotContainer m_robotContainer = new RobotContainer();
     //public static final ColorLED ColorLED = new ColorLED();
