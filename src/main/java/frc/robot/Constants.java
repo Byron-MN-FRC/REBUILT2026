@@ -36,15 +36,17 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 public class Constants {
 
     public static final class Debug {
-        public static final boolean DEBUG_MODE = false;
+        public static final boolean DEBUG_MODE = true;
         public static final boolean INTAKE_ROLLER_EXISTS = true;
-        public static final boolean INTAKE_EXTEND_EXISTS = true;
+        public static final boolean INTAKE_EXTEND_EXISTS = false;
         public static final boolean SHOOTER_SPEED_OVERRIDE = false;
     }
 
     public static final class DriveConstants {
 
-        public static final Alliance MyAlliance() {
+        public static final double LOCK45_SPEED_MULTIPLIER = 0.5;
+
+        public static final Alliance getAlliance() {
             Optional<Alliance> ally = DriverStation.getAlliance();
             if (ally.isPresent()) {
                 return ally.get() == Alliance.Red ? Alliance.Red : Alliance.Blue;
@@ -52,11 +54,11 @@ public class Constants {
                 return null;
             }
         }
-    }
+    } 
 
     public static final class IntakeHopperConstants {
         // Floor transfer constants
-        public static final double HopperFloorTransferSecureSpeed = 0.2;
+        public static final double HopperFloorTransferSecureSpeed = 0.4;
         
         // Hopper extend/retract constants
         public static final double EXTEND_SPEED = -0.25;
@@ -64,6 +66,7 @@ public class Constants {
         public static final double HOLD_SPEED = -0.05;
         public static final int CURRENT_LIMIT = 10;
         public static final double AGITATE_COMMAND_SPEED = 0.4;
+        public static final double EXTEND_TIME_SECONDS = 0.75;
     }
 
     public static final class TurretShooterConstants {
@@ -95,6 +98,8 @@ public class Constants {
         public static final double gateForwardSpeed = 0.3;
         public static final double gateReverseSpeed = -0.2;
 
+        public static final double JAM_CLEAR_SPEED = -0.75;
+        public static final double TURRET_ZEROING_SPEED = -0.04;
     }
 
     public static final class LEDConstants {
@@ -150,7 +155,7 @@ public class Constants {
         public static final double RED_HUB_CENTER_Y = APRIL_TAG_FIELD_LAYOUT.getTagPose(10).get().getY();
         public static final Translation2d RED_HUB_CENTER = new Translation2d(RED_HUB_CENTER_X, RED_HUB_CENTER_Y);
         
-        public static final Translation2d ALLIANCE_HUB_CENTER = DriveConstants.MyAlliance() == Alliance.Red ? RED_HUB_CENTER : BLUE_HUB_CENTER;
+        public static final Translation2d ALLIANCE_HUB_CENTER = DriveConstants.getAlliance() == Alliance.Red ? RED_HUB_CENTER : BLUE_HUB_CENTER;
     }
 
     public static final class ClimbConstants {
@@ -160,9 +165,9 @@ public class Constants {
         public static final double climbCurrentLimit = 25;
     }
     public static final class ShooterConstants {
-        public static final double lowSpeedTarget = 2050.0;
-        public static final double middleSpeedTarget = 2200.0;
-        public static final double highSpeedTarget = 2400.0;
+        public static final double lowSpeedTarget = 2125.0;
+        public static final double middleSpeedTarget = 2350.0;
+        public static final double highSpeedTarget = 2450.0;
         public static final double snowblowSpeedTarget = 3000.0;
     }
 

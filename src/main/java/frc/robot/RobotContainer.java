@@ -102,7 +102,6 @@ public class RobotContainer {
     public final Field2d m_autoField = new Field2d();
 
     public RobotContainer() {
-        // pointer.set(true);
         NamedCommands.registerCommand("AutonStart", new AutonStart(m_turret, m_climb, m_leds));
         NamedCommands.registerCommand("AutonRetract", new AutonRetract(m_hopper));
         NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper, m_leds));
@@ -113,7 +112,10 @@ public class RobotContainer {
         NamedCommands.registerCommand("DepotShootRPM", new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget, m_shooter, m_hopper, m_leds));
         NamedCommands.registerCommand("ShootRPM", new RPMShootCommand(Constants.ShooterConstants.lowSpeedTarget, m_shooter, m_hopper, m_leds));
 
-        NamedCommands.registerCommand("TurretAim", new AutonSetAiming(m_turret, -45));
+        NamedCommands.registerCommand("OutpostAim", new AutonSetAiming(m_turret, -40));
+
+         NamedCommands.registerCommand("DepotAim", new AutonSetAiming(m_turret, 0));
+
 
         NamedCommands.registerCommand("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
         NamedCommands.registerCommand("ClimbLowerAuto", new ClimbLowerAuto(m_climb, m_leds));
@@ -262,7 +264,7 @@ public class RobotContainer {
         
         gamepad.b().onTrue(new Intake(m_hopper, m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     
-        gamepad.rightBumper().onTrue(new FuelJAMMED(m_hopper, m_shooter).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.rightTrigger().whileTrue(new FuelJAMMED(m_hopper, m_shooter).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         gamepad.leftTrigger().whileTrue(new Agitate(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       

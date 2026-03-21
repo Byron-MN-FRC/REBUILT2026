@@ -32,7 +32,6 @@ import frc.robot.subsystems.ClimbSubsystem.LockdownMode;
 
 public class Hopper extends SubsystemBase {
     private SparkMax leftFuelGrabber;
-    private SparkMax rightFuelGrabber;
     private SparkMax hopperFloorTransferSecure;
     private TalonFX hopperExtendMotor;
     // ArmoredCoreAC v4Rusty;
@@ -53,7 +52,6 @@ public class Hopper extends SubsystemBase {
 
         if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
             leftFuelGrabber = new SparkMax(16, MotorType.kBrushless);
-            rightFuelGrabber = new SparkMax(15, MotorType.kBrushless);
  
             SparkMaxConfig leftFuelGrabberConfigLeft = new SparkMaxConfig();
 
@@ -135,15 +133,13 @@ public class Hopper extends SubsystemBase {
 
     public void setFuelGrabberSpeed() {
         if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
-            leftFuelGrabber.set(1);
-            rightFuelGrabber.set(1);
+            leftFuelGrabber.set(1); //1
         }
     }
 
     public void stopFuelGrabber() {
         if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
             leftFuelGrabber.set(0);
-            rightFuelGrabber.set(0);
         }
     }
 
@@ -157,15 +153,13 @@ public class Hopper extends SubsystemBase {
 
     public void ifIntakeJammed() {
         if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
-            leftFuelGrabber.set(-0.2);
-            rightFuelGrabber.set(-0.2);
+            leftFuelGrabber.set(-0.2);;
         }
     }
 
     public void clearIntakeJam() {
         if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
             leftFuelGrabber.set(0);
-            rightFuelGrabber.set(0);
         }
     }
 
@@ -227,7 +221,7 @@ public class Hopper extends SubsystemBase {
                 // hopperExtendMotor.set(0); // Stop when fully extended
                 // }
 
-                if (!m_timer.hasElapsed(0.75)) {
+                if (!m_timer.hasElapsed(Constants.IntakeHopperConstants.EXTEND_TIME_SECONDS)) {
                     hopperExtendMotor.set(Constants.IntakeHopperConstants.EXTEND_SPEED);
                 } else {
                     hopperExtendMotor.set(Constants.IntakeHopperConstants.HOLD_SPEED);

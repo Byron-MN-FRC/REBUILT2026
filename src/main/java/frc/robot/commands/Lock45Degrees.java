@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import static frc.robot.Constants.DriveConstants;
+
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
@@ -59,7 +61,7 @@ public class Lock45Degrees extends Command {
         SmartDashboard.putNumber("target a", targetAngle.getDegrees());
       }
 
-      if (Constants.DriveConstants.MyAlliance() == DriverStation.Alliance.Red) {
+      if (Constants.DriveConstants.getAlliance() == DriverStation.Alliance.Red) {
           targetAngle = targetAngle.plus(new Rotation2d(Math.PI)); // Flip the angle for the red alliance
       }
 
@@ -70,8 +72,8 @@ public class Lock45Degrees extends Command {
   public void execute() {
     drivetrain.setControl(
                 drive45.withTargetDirection(targetAngle) // Lock the robot at 45 degrees
-                    .withVelocityX(-Robot.getInstance().gamepad.getLeftY() * MaxSpeed * 0.5) // Drive forward with negative Y (forward)
-                    .withVelocityY(-Robot.getInstance().gamepad.getLeftX() * MaxSpeed * 0.5) // Drive left with negative X (left)
+                    .withVelocityX(-Robot.getInstance().gamepad.getLeftY() * MaxSpeed * DriveConstants.LOCK45_SPEED_MULTIPLIER) // Drive forward with negative Y (forward)
+                    .withVelocityY(-Robot.getInstance().gamepad.getLeftX() * MaxSpeed * DriveConstants.LOCK45_SPEED_MULTIPLIER) // Drive left with negative X (left)
             );
 
   }

@@ -8,12 +8,13 @@ public class DistanceVelocityMap {
         // 1. distance from target in feet
         // 2. velocity in rotations per minute (RPM)
         {
-            put(0.0, 2175);
-            put(2.5, 2475);
-            // put(5.0, 2000);
-            put(7.5, 2100);
-            put(14.4, 2400);
-            put(18.4, 2600);
+            put(0.0, 2000);
+            put(7.833, 2000); // 7' 10"
+            put(10.0, 2125); // close / climb position
+            put(11.583, 2125); // 11' 7"
+            put(13.67, 2400); // 13' 8" (middle, i think)
+            put(17.83, 2600); // 17' 10" (far)
+
         }
     };
 

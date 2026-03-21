@@ -23,7 +23,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "TurretAim"
+                  "name": "OutpostAim"
                 }
               },
               {
@@ -38,7 +38,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutonShootCommand"
+            "name": "OutpostShootRPM"
           }
         }
       ]

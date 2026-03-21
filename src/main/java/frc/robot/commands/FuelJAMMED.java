@@ -12,6 +12,7 @@
 
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Shooter;
 
@@ -36,8 +37,8 @@ public class FuelJAMMED extends Command {
     @Override
     public void execute() {
         m_hopper.ifIntakeJammed();
-        m_shooter.runMagazine(-0.75);
-        m_shooter.runGate(-0.75);
+        m_shooter.runMagazine(Constants.TurretShooterConstants.JAM_CLEAR_SPEED);
+        m_shooter.runGate(Constants.TurretShooterConstants.JAM_CLEAR_SPEED);
     }
 
     // Called once the command ends or is interrupted.
