@@ -13,10 +13,10 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.HopperSubsystem;
 public class FloorTransfer extends Command {
-    private final Hopper m_subsystem;
-    public FloorTransfer(Hopper subsystem) {
+    private final HopperSubsystem m_subsystem;
+    public FloorTransfer(HopperSubsystem subsystem) {
         m_subsystem = subsystem;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_subsystem);

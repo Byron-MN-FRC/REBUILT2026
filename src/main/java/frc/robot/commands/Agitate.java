@@ -13,14 +13,14 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.LedsSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 public class Agitate extends Command {
-    private final Hopper m_hopper;
+    private final HopperSubsystem m_hopper;
     private final LedsSubsystem m_leds;
     private final Timer m_timer = new Timer();
-    public Agitate(Hopper subsystem, LedsSubsystem ledSubsystem)  {
+    public Agitate(HopperSubsystem subsystem, LedsSubsystem ledSubsystem)  {
         m_hopper = subsystem;
         m_leds = ledSubsystem;
         addRequirements(m_hopper);

@@ -58,7 +58,7 @@ import frc.robot.commands.ledtestcommands.flash;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
@@ -69,7 +69,7 @@ public class RobotContainer {
     public final Shooter m_shooter = new Shooter();
     public final Turret m_turret = new Turret();
     public final ClimbSubsystem m_climb = new ClimbSubsystem();
-    public final Hopper m_hopper = new Hopper();
+    public final HopperSubsystem m_hopper = new HopperSubsystem();
     public final LedsSubsystem m_leds = new LedsSubsystem();
 
    
@@ -101,7 +101,7 @@ public class RobotContainer {
     public final Field2d m_autoField = new Field2d();
 
     public RobotContainer() {
-        NamedCommands.registerCommand("AutonStart", new AutonStart(m_turret, m_climb, m_leds));
+        NamedCommands.registerCommand("AutonStart", new AutonStart(m_turret, m_climb, m_leds, m_hopper));
         NamedCommands.registerCommand("AutonRetract", new AutonRetract(m_hopper));
         NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper, m_leds));
         NamedCommands.registerCommand("AutonIntake", new AutonIntake(m_hopper));

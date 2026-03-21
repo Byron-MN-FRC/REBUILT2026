@@ -18,7 +18,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.DistanceVelocityMap;
 import frc.robot.Robot;
-import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
@@ -26,7 +26,7 @@ import frc.robot.subsystems.Vision;
 public class RPMShootCommand extends Command {
     
     private final Shooter m_shooter;
-    private final Hopper m_hopper;
+    private final HopperSubsystem m_hopper;
     private final LedsSubsystem m_leds;
     private double m_rpm;
     private final Timer m_timer = new Timer();
@@ -36,7 +36,7 @@ public class RPMShootCommand extends Command {
 
     private final boolean dynamicVelocity;
 
-    public RPMShootCommand(double rpm, Shooter shooterSubsystem, Hopper hopperSubsystem, LedsSubsystem ledSubsystem) {
+    public RPMShootCommand(double rpm, Shooter shooterSubsystem, HopperSubsystem hopperSubsystem, LedsSubsystem ledSubsystem) {
         m_rpm = rpm;
         m_shooter = shooterSubsystem;
         m_hopper = hopperSubsystem;
@@ -46,7 +46,7 @@ public class RPMShootCommand extends Command {
         dynamicVelocity = false;
     }
 
-    public RPMShootCommand(Shooter shooterSubsystem, Hopper hopperSubsystem, LedsSubsystem ledSubsystem) {
+    public RPMShootCommand(Shooter shooterSubsystem, HopperSubsystem hopperSubsystem, LedsSubsystem ledSubsystem) {
         m_rpm = 0;
         m_shooter = shooterSubsystem;
         m_hopper = hopperSubsystem;

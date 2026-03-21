@@ -62,11 +62,16 @@ public class Constants {
         public static final double AGITATE_COMMAND_SPEED = 0.4;
         
         // Hopper extend/retract constants
-        public static final double EXTEND_SPEED = -0.25;
-        public static final double RETRACT_SPEED = 0.25;
-        public static final double HOLD_SPEED = -0.05;
-        public static final double EXTEND_TIME_SECONDS = 0.75;
+        // public static final double EXTEND_SPEED = -0.25;
+        // public static final double RETRACT_SPEED = 0.25;
+        // public static final double HOLD_SPEED = -0.05;
+        // public static final double EXTEND_TIME_SECONDS = 0.75;
         public static final int CURRENT_LIMIT = 10;
+        public static final double RETRACT_POSITION_POSITION = 0;
+        public static final double EXTENDED_UP_POSITION_POSITION = 0.3;
+        public static final double EXTENDED_DOWN_POSITION_POSITION = 0.7;
+        public static final double MOTOR_TOLERANCE = 0.05;
+        public static final double HOPPER_ZEROING_SPEED = 0.25;
     }
 
     public static final class TurretShooterConstants {

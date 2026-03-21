@@ -1,11 +1,11 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.HopperSubsystem;
 
 public class AutonIntake extends Command {
-    private final Hopper m_hopper;
+    private final HopperSubsystem m_hopper;
 
-    public AutonIntake(Hopper hopper) {
+    public AutonIntake(HopperSubsystem hopper) {
         m_hopper = hopper;
         addRequirements(m_hopper);
     }
@@ -13,6 +13,7 @@ public class AutonIntake extends Command {
     @Override
     public void initialize() {
         // m_hopper.setHopperExtend();
+        m_hopper.isHopperExtendedDown();
     }
 
     @Override

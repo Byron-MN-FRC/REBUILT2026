@@ -1,11 +1,11 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.HopperSubsystem;
 
 public class AutonRetract extends Command {
-    private final Hopper m_hopper;
+    private final HopperSubsystem m_hopper;
 
-    public AutonRetract(Hopper hopper) {
+    public AutonRetract(HopperSubsystem hopper) {
         m_hopper = hopper;
         addRequirements(m_hopper);
     }
