@@ -40,14 +40,14 @@ public class ClimbZeroing extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_climb.setArmZeroing();
+        m_climb.setClimbZeroing();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         m_climb.setBottom();
-        m_climb.setRaiserPosition(Constants.ClimbConstants.raiserLowerTarget);
+        m_climb.setRaiserPosition(Constants.ClimbConstants.RAISER_LOWER_TARGET);
         m_climb.climbStageReset();
         if (Constants.Debug.DEBUG_MODE) {
             System.out.println("+--------------+");

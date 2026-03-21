@@ -37,7 +37,7 @@ public class Constants {
 
     public static final class Debug {
         public static final boolean DEBUG_MODE = true;
-        public static final boolean INTAKE_ROLLER_EXISTS = true;
+        public static final boolean INTAKE_ROLLER_EXISTS = false;
         public static final boolean INTAKE_EXTEND_EXISTS = false;
         public static final boolean SHOOTER_SPEED_OVERRIDE = false;
     }
@@ -58,15 +58,15 @@ public class Constants {
 
     public static final class IntakeHopperConstants {
         // Floor transfer constants
-        public static final double HopperFloorTransferSecureSpeed = 0.4;
+        public static final double HOPPER_FLOOR_TRANSFER_SECURE_SPEED = 0.4;
+        public static final double AGITATE_COMMAND_SPEED = 0.4;
         
         // Hopper extend/retract constants
         public static final double EXTEND_SPEED = -0.25;
         public static final double RETRACT_SPEED = 0.25;
         public static final double HOLD_SPEED = -0.05;
-        public static final int CURRENT_LIMIT = 10;
-        public static final double AGITATE_COMMAND_SPEED = 0.4;
         public static final double EXTEND_TIME_SECONDS = 0.75;
+        public static final int CURRENT_LIMIT = 10;
     }
 
     public static final class TurretShooterConstants {
@@ -86,17 +86,9 @@ public class Constants {
 
         public static final double TURRET_CAM_TIMEOUT = 0.5;
 
-        public static final double degreesToRotations(double degrees) {
-            return degrees / 360.0;
-        }
-
-        public static final double rotationsToDegrees(double rotations) {
-            return rotations * 360.0;
-        }
-
-        public static final double magazineForwardSpeed = 1.0;
-        public static final double gateForwardSpeed = 0.3;
-        public static final double gateReverseSpeed = -0.2;
+        public static final double MAGAZINE_FORWARD_SPEED = 1.0;
+        public static final double GATE_FORWARD_SPEED = 0.3;
+        public static final double GATE_REVERSE_SPEED = -0.2;
 
         public static final double JAM_CLEAR_SPEED = -0.75;
         public static final double TURRET_ZEROING_SPEED = -0.04;
@@ -159,16 +151,16 @@ public class Constants {
     }
 
     public static final class ClimbConstants {
-        public static final double raiserUpperTarget = 85.0;
-        public static final double raiserLowerTarget = 0.0;
-        public static final double climbZeroingSpeed = -0.25;
-        public static final double climbCurrentLimit = 25;
+        public static final double RAISER_UPPER_TARGET = 85.0;
+        public static final double RAISER_LOWER_TARGET = 0.0;
+        public static final double CLIMB_ZEROING_SPEED = -0.25;
+        public static final double CLIMB_CURRENT_LIMIT = 25;
     }
     public static final class ShooterConstants {
-        public static final double lowSpeedTarget = 2125.0;
-        public static final double middleSpeedTarget = 2350.0;
-        public static final double highSpeedTarget = 2450.0;
-        public static final double snowblowSpeedTarget = 3000.0;
+        public static final double LOW_SPEED_TARGET = 2125.0;
+        public static final double MIDDLE_SPEED_TARGET = 2350.0;
+        public static final double HIGH_SPEED_TARGET = 2450.0;
+        public static final double SNOWBLOW_SPEED_TARGET = 3000.0;
     }
 
 }

@@ -90,7 +90,7 @@ public class LedsSubsystem extends SubsystemBase {
     public void simulationPeriodic() {
         // This method will be called once per scheduler run when in simulation
     }
-    //===============================================================================================================================================================================
+    //========================================================================================================================================================================================================================
     //priority from least to greatest: none, drive, hopper, turret, shooter, climb
     //rank 5 (de jure default)
     public void noSubsystemUsingLeds() { //all commands, when finished, set the LEDs to this but the LEDs go back to using driveTrain LEDs right after the fact because of their higher priority, hence why the lights are always rainbow by default.
@@ -128,7 +128,7 @@ public class LedsSubsystem extends SubsystemBase {
             usingSubsystem = SubsystemUsingLEDS.climb; 
         }
     }
-    //===============================================================================================================================================================================
+    //========================================================================================================================================================================================================================
     //Available: none, rainbow, fasterfaster, climbprogressbar(not tested), blueflashing, greenflashing, red, maroon, orange, yellow, green, lime, blue, lightblue, purple, pink, magenta, white, gold
     public void setColorNone() {
         ledColor = LedColor.none;

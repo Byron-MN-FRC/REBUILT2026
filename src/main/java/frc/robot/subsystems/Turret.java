@@ -125,7 +125,7 @@ public class Turret extends SubsystemBase {
         }
         rotateShooterMotor
                 .setControl(m_motionMagicVoltage
-                        .withPosition(Constants.TurretShooterConstants.degreesToRotations(degrees)));
+                        .withPosition(Units.degreesToRotations(degrees)));
     }
 
     // Decide whether to switch from double to Rotation2d
@@ -149,12 +149,8 @@ public class Turret extends SubsystemBase {
         isActive = false;
     }
 
-    public double getAngleRotations() {
-        return rotateShooterMotor.getPosition().getValueAsDouble();
-    }
-
     public double getAngleDegrees() {
-        return Constants.TurretShooterConstants.rotationsToDegrees(rotateShooterMotor.getPosition().getValueAsDouble());
+        return Units.rotationsToDegrees(rotateShooterMotor.getPosition().getValueAsDouble());
     }
 
     public boolean getZeroSwitch() {

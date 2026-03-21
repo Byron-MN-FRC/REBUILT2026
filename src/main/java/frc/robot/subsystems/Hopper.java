@@ -123,11 +123,6 @@ public class Hopper extends SubsystemBase {
         hopperExtendMotorControl();
     }
 
-    @Override
-    public void simulationPeriodic() {
-        // This method will be called once per scheduler run when in simulation
-    }
-
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -157,16 +152,6 @@ public class Hopper extends SubsystemBase {
         }
     }
 
-    public void clearIntakeJam() {
-        if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
-            leftFuelGrabber.set(0);
-        }
-    }
-
-    public void ifHopperFloorTransferSecureIsBlocked() {
-        hopperFloorTransferSecure.set(-0.1);
-    }
-
     public void setHopperExtend() {
         if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.engaged) {
             // In lockdown mode, don't extend
@@ -186,16 +171,12 @@ public class Hopper extends SubsystemBase {
             System.out.println("Retracting hopper");
     }
 
-    public void retractingHopperForLockdown() {
-        setHopperRetract();
-
-    }
-
     public boolean isHopperExtended() {
         if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
             return hopperExtendSwitch.get();
         } else {
-            return false; // Assume not extended when intake doesn't exist
+            return true; // Assume not extended when intake doesn't exist
+            // TODO false???
         }
     }
 
