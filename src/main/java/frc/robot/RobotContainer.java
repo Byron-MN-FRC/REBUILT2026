@@ -110,7 +110,7 @@ public class RobotContainer {
         
         NamedCommands.registerCommand("OutpostShootRPM", new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget, m_shooter, m_hopper, m_leds));
         NamedCommands.registerCommand("DepotShootRPM", new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget, m_shooter, m_hopper, m_leds));
-        NamedCommands.registerCommand("ShootRPM", new RPMShootCommand(Constants.ShooterConstants.lowSpeedTarget, m_shooter, m_hopper, m_leds));
+        NamedCommands.registerCommand("ClimbShootRPM", new RPMShootCommand(Constants.ShooterConstants.lowSpeedTarget, m_shooter, m_hopper, m_leds));
 
         NamedCommands.registerCommand("OutpostAim", new AutonSetAiming(m_turret, -40));
 
