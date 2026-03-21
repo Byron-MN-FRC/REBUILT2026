@@ -52,6 +52,7 @@ import frc.robot.commands.RPMShootCommand;
 import frc.robot.commands.SnowBlowerCommandGroup;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.TrackHubNew;
+import frc.robot.commands.ZeroIntake;
 import frc.robot.commands.ZeroTurret;
 import frc.robot.commands.ledtestcommands.fasterfaster;
 import frc.robot.commands.ledtestcommands.flash;
@@ -266,6 +267,8 @@ public class RobotContainer {
         accessory.rightTrigger().whileTrue(new FuelJAMMED(m_hopper, m_shooter).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         gamepad.leftTrigger().whileTrue(new Agitate(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        gamepad.back().onTrue(new ZeroIntake(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
         accessory.rightBumper().toggleOnTrue(new TrackHubNew(m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }

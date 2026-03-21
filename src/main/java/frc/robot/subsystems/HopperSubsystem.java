@@ -297,4 +297,8 @@ public class HopperSubsystem extends SubsystemBase {
     public void hopperZeroing() {
         hopperExtendMotor.set(Constants.IntakeHopperConstants.HOPPER_ZEROING_SPEED);
     }
+
+    public void resetPosition() {
+        hopperExtendMotor.setPosition(0);
+    }
 }

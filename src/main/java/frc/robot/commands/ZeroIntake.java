@@ -12,29 +12,27 @@ public class ZeroIntake extends Command {
         addRequirements(m_hopper);
     }
 
-     @Override
-     public void initialize() {
-         // Code to zero the turret goes here
-  
-     }
+    @Override
+    public void initialize() {
+        // Code to zero the turret goes here
 
-     @Override
-     public void execute() {
-         if (m_hopper.isHopperRetracted()) {
-                m_hopper.setHopperRetract();
-            } else {
-                m_hopper.hopperZeroing();
-            }
-     }
-
-     @Override
-     public void end(boolean interrupted) {
-        m_hopper.isHopperRetracted();
     }
 
-     @Override
-     public boolean isFinished() {
-         // Return true when the turret is successfully zeroed
-         return m_hopper.isHopperRetracted();
-     }
+    @Override
+    public void execute() {
+        m_hopper.hopperZeroing();
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        m_hopper.resetPosition();
+        m_hopper.setHopperRetract();
+
+    }
+
+    @Override
+    public boolean isFinished() {
+        // Return true when the turret is successfully zeroed
+        return m_hopper.isHopperRetracted();
+    }
 }

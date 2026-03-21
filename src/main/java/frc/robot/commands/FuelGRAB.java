@@ -21,7 +21,7 @@ public class FuelGRAB extends Command {
         if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.hopper) {
             m_leds.setColorOrange();
         }
-        m_subsystem.isHopperExtendedDown();
+        m_subsystem.setHopperExtendDown();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -33,7 +33,7 @@ public class FuelGRAB extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_subsystem.isHopperExtendedUp();
+        m_subsystem.setHopperExtendUp();
         m_subsystem.stopFuelGrabber();
         m_leds.setColorNone();
         m_leds.noSubsystemUsingLeds();
