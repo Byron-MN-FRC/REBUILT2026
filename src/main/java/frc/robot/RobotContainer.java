@@ -97,7 +97,6 @@ public class RobotContainer {
 
     // TODO fix
     public TagApproaches tagApproaches = new TagApproaches();
-    //public final ColorLED lightStrip = new ColorLED(LED_PORT, LED_LENGTHS);
     public final Field2d m_field = new Field2d();
     public final Field2d m_autoField = new Field2d();
 

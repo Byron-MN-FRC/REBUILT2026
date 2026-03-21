@@ -38,14 +38,14 @@
             }
           },
           {
-            "title": "Zero?",
+            "title": "Turret Switch",
             "x": 128.0,
             "y": 0.0,
             "width": 128.0,
             "height": 128.0,
             "type": "Boolean Box",
             "properties": {
-              "topic": "/SmartDashboard/Zero?",
+              "topic": "/SmartDashboard/Turret Switch",
               "period": 0.06,
               "data_type": "boolean",
               "true_color": 4283215696,
