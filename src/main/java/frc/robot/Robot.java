@@ -18,12 +18,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
     
 
-    public AddressableLED m_led;
     private Command m_autonomousCommand;
-    // private AddressableLEDBuffer m_ledBuffer;
-    //private int m_rainbowFirstPixelHue;
-    // private Color[] redWhiteArray = {Color.kBlueViolet, Color.kBlue};
-    // private Color[] blueWhiteArray = {Color.kBlue, Color.kWhite};
+   
 
     private static final RobotContainer m_robotContainer = new RobotContainer();
     //public static final ColorLED ColorLED = new ColorLED();
@@ -54,7 +50,7 @@ public class Robot extends TimedRobot {
             
             SmartDashboard.putNumber("Robot Gyro", m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees());
 
-            if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("Turret Distance to Hub", TurretCam.getDistance());
+            if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("Turret Distance to Hub", m_robotContainer.m_vision.calculateDistance(Constants.FieldConstants.ALLIANCE_HUB_CENTER));
             if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("Rotational Speed", m_robotContainer.drivetrain.getState().Speeds.omegaRadiansPerSecond);
     }
         

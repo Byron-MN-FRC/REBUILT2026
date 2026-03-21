@@ -161,7 +161,7 @@ public class TagApproaches {
     }
 
     public int FiduciaryNumber(int tagID) {
-        return tagArray[tagID - 1].FiduciaryNumber();
+        return tagArray[tagID - 1].FiducialNumber();
     }
 
     public Alliance TagAlliance(int tagID) {

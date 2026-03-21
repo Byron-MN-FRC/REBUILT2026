@@ -16,7 +16,7 @@ import frc.robot.ColorLED;
 import frc.robot.subsystems.LedsSubsystem;
 
 public class fasterfaster extends Command {
-    ColorLED lightStrip;
+    
     private final LedsSubsystem m_leds;
     
     public fasterfaster( LedsSubsystem ledSubsystem)  {

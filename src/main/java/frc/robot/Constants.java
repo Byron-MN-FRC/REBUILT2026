@@ -76,6 +76,7 @@ public class Constants {
         public static final double NEUTRAL_POSITION = 0;
         public static final double MAX_LEFT_DEGREES = MAX_LEFT_POSITION * 360;
         public static final double MAX_RIGHT_DEGREES = MAX_RIGHT_POSITION * 360;
+        public static final double SNOW_BLOWER_POSITION = 45.0;
         // I think this is wrong
         public static final double RESTRICTED_MAX_LEFT_DEGREES = MAX_LEFT_DEGREES;
         public static final double RESTRICTED_MAX_RIGHT_DEGREES = 0.061844 * 360;
@@ -141,14 +142,15 @@ public class Constants {
             31, 32
         };
 
-        public static final double BLUE_HUB_CENTER_x = APRIL_TAG_FIELD_LAYOUT.getTagPose(21).get().getX();
+        public static final double BLUE_HUB_CENTER_X = APRIL_TAG_FIELD_LAYOUT.getTagPose(21).get().getX();
         public static final double BLUE_HUB_CENTER_Y = APRIL_TAG_FIELD_LAYOUT.getTagPose(20).get().getY();
-        public static final Translation2d BLUE_HUB_CENTER = new Translation2d(BLUE_HUB_CENTER_x, BLUE_HUB_CENTER_Y);
+        public static final Translation2d BLUE_HUB_CENTER = new Translation2d(BLUE_HUB_CENTER_X, BLUE_HUB_CENTER_Y);
 
-        public static final double RED_HUB_CENTER_x = APRIL_TAG_FIELD_LAYOUT.getTagPose(5).get().getX();
+        public static final double RED_HUB_CENTER_X = APRIL_TAG_FIELD_LAYOUT.getTagPose(5).get().getX();
         public static final double RED_HUB_CENTER_Y = APRIL_TAG_FIELD_LAYOUT.getTagPose(10).get().getY();
-        public static final Translation2d RED_HUB_CENTER = new Translation2d(RED_HUB_CENTER_x, RED_HUB_CENTER_Y);
+        public static final Translation2d RED_HUB_CENTER = new Translation2d(RED_HUB_CENTER_X, RED_HUB_CENTER_Y);
         
+        public static final Translation2d ALLIANCE_HUB_CENTER = DriveConstants.MyAlliance() == Alliance.Red ? RED_HUB_CENTER : BLUE_HUB_CENTER;
     }
 
     public static final class ClimbConstants {
@@ -160,8 +162,8 @@ public class Constants {
     public static final class ShooterConstants {
         public static final double lowSpeedTarget = 2050.0;
         public static final double middleSpeedTarget = 2200.0;
-        public static final double highSpeedTarget = 2400;
-        public static final double snowblowSpeedTarget = 2600.0;
+        public static final double highSpeedTarget = 2400.0;
+        public static final double snowblowSpeedTarget = 3000.0;
     }
 
 }

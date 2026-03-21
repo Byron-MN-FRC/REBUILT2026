@@ -50,6 +50,7 @@ import frc.robot.commands.Intake;
 import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.RPMShootCommand;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.SnowBlowerCommandGroup;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.TrackHubNew;
 import frc.robot.commands.ZeroTurret;
@@ -72,7 +73,7 @@ public class RobotContainer {
     public final Hopper m_hopper = new Hopper();
     public final LedsSubsystem m_leds = new LedsSubsystem();
 
-    // private final DigitalOutput pointer = new DigitalOutput(3);
+   
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top
@@ -110,11 +111,11 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutonIntakestop", new AutonIntakestop(m_hopper));
         NamedCommands.registerCommand("AutonShootCommand", new ShootCommand(m_shooter, m_hopper, m_leds));
         
-        NamedCommands.registerCommand("Outpost Shoot RPM", new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget, m_shooter, m_hopper, m_leds));
-        NamedCommands.registerCommand("Depot Shoot RPM", new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget, m_shooter, m_hopper, m_leds));
-        NamedCommands.registerCommand("Shoot RPM", new RPMShootCommand(Constants.ShooterConstants.lowSpeedTarget, m_shooter, m_hopper, m_leds));
+        NamedCommands.registerCommand("OutpostShootRPM", new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget, m_shooter, m_hopper, m_leds));
+        NamedCommands.registerCommand("DepotShootRPM", new RPMShootCommand(Constants.ShooterConstants.highSpeedTarget, m_shooter, m_hopper, m_leds));
+        NamedCommands.registerCommand("ShootRPM", new RPMShootCommand(Constants.ShooterConstants.lowSpeedTarget, m_shooter, m_hopper, m_leds));
 
-        NamedCommands.registerCommand("Set Turret Aim", new AutonSetAiming(-45));
+        NamedCommands.registerCommand("TurretAim", new AutonSetAiming(m_turret, -45));
 
         NamedCommands.registerCommand("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
         NamedCommands.registerCommand("ClimbLowerAuto", new ClimbLowerAuto(m_climb, m_leds));
@@ -238,8 +239,6 @@ public class RobotContainer {
         accessory.a().toggleOnTrue(new FloorTransfer(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.start().onTrue(new ZeroTurret(m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
-        //accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
         accessory.leftBumper().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
                 
@@ -248,14 +247,11 @@ public class RobotContainer {
         // accessory.back().onTrue(new InstantCommand(() -> m_turret.resetPosition())
         //         .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        // accessory.rightTrigger().whileTrue(new ShooterSpin( m_turret, m_leds
-        // ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
-        // accessory.rightTrigger()
-        //         .whileTrue(new ShootCommand(m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        accessory.leftTrigger()
+                .whileTrue(new RPMShootCommand(m_shooter, m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
         final POVButton pOVButtonLeft = new POVButton(accessory.getHID(), 270, 0);
-        pOVButtonLeft.whileTrue(new RPMShootCommand(Constants.ShooterConstants.middleSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        pOVButtonLeft.whileTrue(new SnowBlowerCommandGroup(Constants.ShooterConstants.snowblowSpeedTarget, m_shooter, m_hopper, m_leds, m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     
         final POVButton pOVButtonRight = new POVButton(accessory.getHID(), 90, 0);
         pOVButtonRight.whileTrue(new RPMShootCommand(Constants.ShooterConstants.middleSpeedTarget,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
