@@ -111,7 +111,7 @@ public class ClimbSubsystem extends SubsystemBase {
             SmartDashboard.putNumber("Height Positions", raiser.getPosition().getValueAsDouble());
         }
         SmartDashboard.putString("Lockdown Stage", currentLockdownMode.name());
-        SmartDashboard.putBoolean("Arm Stalled", getBottomSwitch());
+        SmartDashboard.putBoolean("Climb Stalled", getBottomSwitch());
         setLockdownMode();
     }
 

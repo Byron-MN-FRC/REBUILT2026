@@ -11,15 +11,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "LeftShootOnlyPath1"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "DepotAim"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LeftShootOnlyPath1"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "AutonShootCommand"
+            "name": "DepotShootRPM"
           }
         }
       ]

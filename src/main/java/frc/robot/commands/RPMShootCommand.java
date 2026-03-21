@@ -14,7 +14,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.ColorLED;
 import frc.robot.Constants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.DistanceVelocityMap;
@@ -22,6 +21,7 @@ import frc.robot.Robot;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Vision;
 
 public class RPMShootCommand extends Command {
     
@@ -47,8 +47,7 @@ public class RPMShootCommand extends Command {
     }
 
     public RPMShootCommand(Shooter shooterSubsystem, Hopper hopperSubsystem, LedsSubsystem ledSubsystem) {
-        m_rpm = DistanceVelocityMap
-                .getVelocity(Robot.getInstance().m_vision.calculateDistance(FieldConstants.ALLIANCE_HUB_CENTER));
+        m_rpm = 0;
         m_shooter = shooterSubsystem;
         m_hopper = hopperSubsystem;
         m_leds = ledSubsystem;
