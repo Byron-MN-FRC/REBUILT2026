@@ -65,7 +65,7 @@ public class ClimbCommand extends Command {
 
         //LOCKDOWN TODO need to fix
         if ((m_climb.getClimbStage() != 3)) {
-            m_hopper.retractingHopperForLockdown();
+            m_hopper.setHopperRetract();
             m_turret.haltTurretForLockdown();
             System.out.println("Lockdown Engaged");
         }

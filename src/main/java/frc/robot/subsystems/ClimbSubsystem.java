@@ -59,8 +59,8 @@ public class ClimbSubsystem extends SubsystemBase {
         raiser = new TalonFX(26);
         stallDetector = new CombinedStallHandler(raiser);
         // armBottomSwitch = new DigitalInput(9);
-        raiserUpperTarget = Constants.ClimbConstants.raiserUpperTarget;
-        raiserLowerTarget = Constants.ClimbConstants.raiserLowerTarget;
+        raiserUpperTarget = Constants.ClimbConstants.RAISER_UPPER_TARGET;
+        raiserLowerTarget = Constants.ClimbConstants.RAISER_LOWER_TARGET;
         climbing = false;
         isOnTower = false;
 
@@ -141,7 +141,7 @@ public class ClimbSubsystem extends SubsystemBase {
     }
 
     public boolean isLowered() {
-        return Math.abs(raiser.getPosition().getValueAsDouble() - raiserLowerTarget) < .5;
+        return Math.abs(raiser.getPosition().getValueAsDouble() - raiserLowerTarget) < 1.5;
     }
 
     public boolean isClimbing() {
@@ -157,11 +157,11 @@ public class ClimbSubsystem extends SubsystemBase {
         return stallDetector.isStalled();
     }
 
-    public void setArmZeroing() {
+    public void setClimbZeroing() {
         if (getBottomSwitch()) {
             raiser.set(0);
         } else {
-            raiser.set(Constants.ClimbConstants.climbZeroingSpeed);
+            raiser.set(Constants.ClimbConstants.CLIMB_ZEROING_SPEED);
         }
     }
 
@@ -178,22 +178,6 @@ public class ClimbSubsystem extends SubsystemBase {
         return climbing = true;
     }
 
-    public boolean getIsOnTower() {
-        return isOnTower;
-    }
-
-    public boolean toggleIsOnTower() {
-        return isOnTower = !isOnTower;
-    }
-
-    public boolean isOnTower() {
-        return isOnTower = true;
-    }
-
-    public boolean isNotOnTower() {
-        return isOnTower = false;
-    }
-
     public int climbStageReset() {
         return climbStage = 0;
     }
@@ -202,16 +186,12 @@ public class ClimbSubsystem extends SubsystemBase {
         return climbStage;
     }
 
-    public float getRaiserMaxHeightAsFloat() {
-        return (float) ClimbConstants.raiserUpperTarget;
-    }
-
     public float getRaiserPosition() {
         return (float) raiser.getPosition().getValueAsDouble();
     }
 
     public int getRaiserMaxHeightAsInt() {
-        return (int) ClimbConstants.raiserUpperTarget;
+        return (int) ClimbConstants.RAISER_UPPER_TARGET;
     }
 
     public int getRaiserPositionAsInt() {

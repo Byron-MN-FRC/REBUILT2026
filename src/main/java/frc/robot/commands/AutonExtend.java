@@ -40,7 +40,7 @@ private final LedsSubsystem m_leds;
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_hopper.setHopperFloorTransferSecureSpeed(Constants.IntakeHopperConstants.HopperFloorTransferSecureSpeed);
+        m_hopper.setHopperFloorTransferSecureSpeed(Constants.IntakeHopperConstants.HOPPER_FLOOR_TRANSFER_SECURE_SPEED);
     }
 
     // Called once the command ends or is interrupted.
