@@ -133,7 +133,7 @@ public class Hopper extends SubsystemBase {
 
     public void setFuelGrabberSpeed() {
         if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
-            leftFuelGrabber.set(0.75); //1
+            leftFuelGrabber.set(1); //1
         }
     }
 
@@ -221,7 +221,7 @@ public class Hopper extends SubsystemBase {
                 // hopperExtendMotor.set(0); // Stop when fully extended
                 // }
 
-                if (!m_timer.hasElapsed(0.75)) {
+                if (!m_timer.hasElapsed(Constants.IntakeHopperConstants.EXTEND_TIME_SECONDS)) {
                     hopperExtendMotor.set(Constants.IntakeHopperConstants.EXTEND_SPEED);
                 } else {
                     hopperExtendMotor.set(Constants.IntakeHopperConstants.HOLD_SPEED);

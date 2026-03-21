@@ -95,7 +95,7 @@ public class Turret extends SubsystemBase {
         // This method will be called once per scheduler run
         if (Constants.Debug.DEBUG_MODE)
             SmartDashboard.putNumber("Rotation", rotateShooterMotor.getPosition().getValueAsDouble());
-        SmartDashboard.putBoolean("Zero?", zeroSwitch.get());
+        SmartDashboard.putBoolean("Turret Switch", zeroSwitch.get());
 
         SmartDashboard.putBoolean("Target Locked", TurretCam.targetLocked());
     }

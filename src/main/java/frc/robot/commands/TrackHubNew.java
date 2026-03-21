@@ -58,7 +58,7 @@ public class TrackHubNew extends Command {
     // m_turret.aimDegrees(Constants.TurretShooterConstants.NEUTRAL_POSITION);
     // }
     Translation2d target;
-    if (Constants.DriveConstants.MyAlliance() == Alliance.Blue) {
+    if (Constants.DriveConstants.getAlliance() == Alliance.Blue) {
       target = Constants.FieldConstants.BLUE_HUB_CENTER;
     } else {
       target = Constants.FieldConstants.RED_HUB_CENTER;
@@ -71,7 +71,7 @@ public class TrackHubNew extends Command {
     double angleToTarget = Math.atan2(yDistance, xDistance) * (180 / Math.PI);
     
 
-    SmartDashboard.putNumber("angleToTarget", -angleToTarget);
+    if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("angleToTarget", -angleToTarget);
 
     m_turret.aimFieldRelativeAngle(angleToTarget);
 

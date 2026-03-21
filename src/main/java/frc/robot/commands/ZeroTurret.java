@@ -23,7 +23,7 @@ public class ZeroTurret extends Command {
          if (m_turret.zeroSwitch.get()) {
                 m_turret.rotateShooterMotor.setPosition(Constants.TurretShooterConstants.MAX_LEFT_POSITION);
             } else {
-                m_turret.rotateShooterMotor.set(-0.04);
+                m_turret.rotateShooterMotor.set(Constants.TurretShooterConstants.TURRET_ZEROING_SPEED);
             }
      }
 

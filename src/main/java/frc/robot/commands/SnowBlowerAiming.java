@@ -11,7 +11,7 @@ public class SnowBlowerAiming extends Command {
 
     public SnowBlowerAiming(Turret m_turret) {
         this.m_turret = m_turret;
-        this.angle = Constants.DriveConstants.MyAlliance() == Alliance.Red ? 0 : 180;
+        this.angle = Constants.DriveConstants.getAlliance() == Alliance.Red ? 0 : 180;
         addRequirements(m_turret);
     }
 
