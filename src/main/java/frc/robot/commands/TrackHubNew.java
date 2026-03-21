@@ -76,14 +76,10 @@ public class TrackHubNew extends Command {
     m_turret.aimFieldRelativeAngle(angleToTarget);
 
     // Generate LED colors based on how close the turret angle is to the target.
-    // Green is on target, yellow is close, and red is far.
-    if (TurretCam.getAngleError() == 0 && TurretCam.targetLocated() == true) {
+    // Green is on target and red is not.
+    if (TurretCam.getAngleError() <= 2.0 && TurretCam.targetLocated() == true) { //should trigger when target located and the error is less the 0.1
       if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
         m_leds.setColorGreen();
-      }
-    } else if (TurretCam.getAngleError() <= 5 && TurretCam.targetLocated() == false) {
-      if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
-        m_leds.setColorYellow();
       }
     } else {
       if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
