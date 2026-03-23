@@ -84,11 +84,10 @@ public class AimAtTarget extends Command {
     private static final double AIM_GAIN = 0.35;
 
     // Fixed lateral offset applied AFTER tag-based target computation.
-    // Compensates for the camera lens being 3.5cm to the RIGHT of the
-    // shooter/turret rotation axis.  We shift the target point LEFT
-    // (negative X in camera frame) so the shooter centerline aims correctly.
+    // Compensates for the camera lens being offset from the turret rotation axis.
     // Positive = shift aim right, negative = shift aim left.  Units: meters.
-    private static final double AIM_OFFSET_X = 1;
+    // Tunable via SmartDashboard "Targeting/AIM_OFFSET_X"
+    private static final double AIM_OFFSET_X_DEFAULT = -1.0;
 
     private double filteredAngle = 0.0;
     private double filteredDistance = 0.0;
@@ -100,6 +99,9 @@ public class AimAtTarget extends Command {
         // Publish immediately at construction so we can verify the code is loaded
         SmartDashboard.putBoolean(SD_PREFIX + "Command Active", false);
         SmartDashboard.putString(SD_PREFIX + "Debug", "Constructed");
+        // Publish tunable offset — setDefaultNumber won't overwrite a value
+        // you've already changed on the dashboard (unlike putNumber which always overwrites)
+        SmartDashboard.setDefaultNumber("AIM_OFFSET_X", AIM_OFFSET_X_DEFAULT);
     }
 
     @Override
@@ -182,8 +184,9 @@ public class AimAtTarget extends Command {
         double avgTargetX = sumTargetX / tagsToUse;
         double avgTargetZ = sumTargetZ / tagsToUse;
 
-        // Apply fixed lateral aim offset (e.g. to bias shots to the right)
-        avgTargetX += AIM_OFFSET_X;
+        // Apply fixed lateral aim offset (tunable via dashboard)
+        double aimOffsetX = SmartDashboard.getNumber("AIM_OFFSET_X", -.5);
+        avgTargetX += aimOffsetX;
 
         // Compute raw horizontal angle and ground-plane distance
         double rawAngleDeg = Math.toDegrees(Math.atan2(avgTargetX, avgTargetZ));
@@ -218,12 +221,13 @@ public class AimAtTarget extends Command {
             + String.format("%.1f", rawAngleDeg) + " | filtered: "
             + String.format("%.1f", filteredAngle) + " | dist: "
             + String.format("%.2f", filteredDistance)
-            + " | rpm: " + String.format("%.0f", targetRPM));
+            + " | rpm: " + String.format("%.0f", targetRPM)
+            + " | offsetX: " + String.format("%.3f", aimOffsetX));
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_turret.aimDegrees(0);
+        // Hold the current turret position — don't snap back to 0
         m_turret.isActive = false;
         updateDashboard("None", 0.0, 0.0, false, 0, 0);
         SmartDashboard.putBoolean(SD_PREFIX + "Command Active", false);
