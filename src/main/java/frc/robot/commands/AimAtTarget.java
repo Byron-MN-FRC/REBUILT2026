@@ -292,6 +292,7 @@ public class AimAtTarget extends Command {
         }
 
         // Linear interpolation between floor and ceiling entries
+        // y=mx + b (formula for a line)
         double dLow = floor.getKey();
         double dHigh = ceil.getKey();
         double rpmLow = floor.getValue();

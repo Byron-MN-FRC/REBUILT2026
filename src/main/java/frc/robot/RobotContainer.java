@@ -269,8 +269,7 @@ public class RobotContainer {
 
         gamepad.leftTrigger().whileTrue(new Agitate(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
-        // TODO: Switch back to AimAndShootCommand when aiming is dialed in
-        gamepad.x().whileTrue(new AimAtTarget(m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        gamepad.x().whileTrue(new AimAndShootCommand(m_turret, m_shooter, m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.rightBumper().toggleOnTrue(new TrackHubNew(m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
