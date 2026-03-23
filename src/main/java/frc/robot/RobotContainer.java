@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.commands.Agitate;
+import frc.robot.commands.AimAndShootCommand;
 import frc.robot.commands.AutonExtend;
 import frc.robot.commands.AutonIntake;
 import frc.robot.commands.AutonIntakestop;
@@ -267,6 +268,8 @@ public class RobotContainer {
 
         gamepad.leftTrigger().whileTrue(new Agitate(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
       
+        gamepad.x().whileTrue(new AimAndShootCommand(m_turret, m_shooter, m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
         accessory.rightBumper().toggleOnTrue(new TrackHubNew(m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
 

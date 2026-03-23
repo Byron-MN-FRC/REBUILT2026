@@ -1,0 +1,35 @@
+New Command
+I would like to create a new command for this project.   I would like a command that will eventually, when called, Shoots balls at the target.   I want the command to control the speed of the shooter based on the distance to the target.  The target is a point in space defined by the 2d table below.   I want to also want to aim the turret based on the target.   The place I want to aim depends on which tag is seen.  The limelight is used to see the april tags and return position.  Do this work wihtout using robot localization.   Use the data returned by reading the April tag data from the limelight only.
+
+AprilTag    Offset          Offset
+2           58cm Right
+11          58cm Right      36dm Deep
+10          36cm Right      56cm Deep
+9                           56cm Deep
+8           58cm Left       36cm Deep
+5           58cm Left
+
+Also create a new tab shuffleboard tab.  On this tab, show the AprilTag numbers that are being used to calculate.  Show the angle to  to the tar we want the turrent to turn to based on the april tags in sight.  Show the distance to the target.  The distances should ba calculated based on the height of the camera in 2 dimensions (x,y).  Remove Y (Height) when calculating the distance to the target.
+
+For now, I only want to aim the turret and display data in shuffleboard.
+
+Do you have any additional questions for me?   Make sure that only new code is added.  If changes are need to existing code, prompt for approval first.
+
+After asking questions, this is what we (ai and I) came up with:
+Here's what I'll create:
+
+AimAtTarget.java — New command in commands/ that:
+
+Uses limelight-turret to read visible AprilTags via getRawFiducials()
+Filters for tags {2, 5, 8, 9, 10, 11}
+Takes up to 2 best tags (lowest ambiguity)
+Gets each tag's 3D pose relative to camera via getTargetPose_CameraSpace or the JSON results
+Applies the offset table to compute target point position for each tag
+Averages the target positions if 2 tags are used
+Computes horizontal angle to the offset target point (ignoring height)
+Computes ground-plane distance to target (ignoring height)
+Rotates the turret to drive that angle toward 0 (visual servo)
+Publishes to a "Targeting" Shuffleboard tab: visible tag IDs, computed angle, distance
+Button binding — accessory.x().whileTrue(new AimAtTarget(...)) in RobotContainer.java
+
+No modifications to existing files other than adding the binding and import in RobotContainer.java (which I'll flag for approval).
