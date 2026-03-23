@@ -18,7 +18,7 @@ public class AutonIntakestop extends Command {
     @Override
     public void end(boolean interrupted) {
         m_hopper.stopFuelGrabber();
-        m_hopper.isHopperExtendedUp();
+        m_hopper.setHopperExtendUp();
     }
 
     @Override

@@ -13,7 +13,7 @@ public class AutonIntake extends Command {
     @Override
     public void initialize() {
         // m_hopper.setHopperExtend();
-        m_hopper.isHopperExtendedDown();
+        m_hopper.setHopperExtendDown();
     }
 
     @Override

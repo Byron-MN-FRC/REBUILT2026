@@ -47,7 +47,7 @@ public class Intake extends Command {
             }
             m_hopper.setHopperRetract();
         }
-        if (Constants.Debug.DEBUG_MODE) System.out.println("Lights on");
+        if (Constants.Debug.DEBUG_MODE) System.out.println("Lights on (hopper)");
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -59,15 +59,20 @@ public class Intake extends Command {
     public void end(boolean interrupted) {
         m_leds.setColorNone();
         m_leds.noSubsystemUsingLeds();
+        if (m_hopper.targetHopperState == HopperState.retracted) {
+            m_hopper.resetPosition();
+        }
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         if (m_hopper.targetHopperState == HopperState.extendedUp) {
-            return m_hopper.isHopperExtendedUp();
-        } else {
+            return m_hopper.isHopperExtendedUp(); 
+        } else if (m_hopper.targetHopperState == HopperState.retracted) {
             return m_hopper.isHopperRetracted();
+        } else {
+            return m_hopper.isHopperExtendedUp();
         }
     }
 
