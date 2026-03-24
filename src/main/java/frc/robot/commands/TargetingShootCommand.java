@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
 
@@ -22,14 +22,14 @@ public class TargetingShootCommand extends Command {
     private static final String RPM_KEY = "Targeting/Target RPM";
 
     private final Shooter m_shooter;
-    private final Hopper m_hopper;
+    private final HopperSubsystem m_hopper;
     private final LedsSubsystem m_leds;
     private final Timer m_timer = new Timer();
 
     private final double agitateForwardTime = 0.75;
     private final double agitateReverseTime = 0;
 
-    public TargetingShootCommand(Shooter shooter, Hopper hopper, LedsSubsystem leds) {
+    public TargetingShootCommand(Shooter shooter, HopperSubsystem hopper, LedsSubsystem leds) {
         m_shooter = shooter;
         m_hopper = hopper;
         m_leds = leds;

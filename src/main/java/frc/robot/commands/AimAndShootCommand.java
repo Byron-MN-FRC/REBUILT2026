@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
@@ -23,7 +23,7 @@ import frc.robot.subsystems.Turret;
  */
 public class AimAndShootCommand extends ParallelCommandGroup {
 
-    public AimAndShootCommand(Turret turret, Shooter shooter, Hopper hopper, LedsSubsystem leds) {
+    public AimAndShootCommand(Turret turret, Shooter shooter, HopperSubsystem hopper, LedsSubsystem leds) {
         addCommands(
             new AimAtTarget(turret),
             new TargetingShootCommand(shooter, hopper, leds)
