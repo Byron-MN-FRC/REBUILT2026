@@ -37,14 +37,7 @@
                 "data": {
                   "name": "TrackHub"
                 }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
+              },
               {
                 "type": "named",
                 "data": {

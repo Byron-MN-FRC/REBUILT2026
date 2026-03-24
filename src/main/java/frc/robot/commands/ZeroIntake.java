@@ -20,7 +20,9 @@ public class ZeroIntake extends Command {
 
     @Override
     public void execute() {
-        m_hopper.hopperZeroing();
+        if (!m_hopper.getHopperRetractSwitch()) {
+            m_hopper.hopperZeroing();
+        }
     }
 
     @Override
@@ -33,6 +35,6 @@ public class ZeroIntake extends Command {
     @Override
     public boolean isFinished() {
         // Return true when the turret is successfully zeroed
-        return m_hopper.isHopperRetracted();
+        return m_hopper.getHopperRetractSwitch();
     }
 }

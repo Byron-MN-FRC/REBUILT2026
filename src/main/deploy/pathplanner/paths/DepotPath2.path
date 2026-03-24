@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 6.0
+        "x": 0.6036904761904771,
+        "y": 4.985190476190476
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3390727258132165,
-        "y": 6.21404535644319
+        "x": 0.9427632020036936,
+        "y": 5.199235832633666
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "DepotPath1End"
     },
     {
       "anchor": {
@@ -48,7 +48,7 @@
   "folder": "DepotAuton",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 135.0
+    "rotation": 98.26832815789732
   },
   "useDefaultConstraints": true
 }

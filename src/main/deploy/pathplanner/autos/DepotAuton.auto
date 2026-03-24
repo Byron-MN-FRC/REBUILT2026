@@ -11,9 +11,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "DepotPath1"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "DepotPath1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntake"
+                }
+              }
+            ]
           }
         },
         {
@@ -29,22 +42,16 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonShootCommand"
+                  "name": "MidShootRPM"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "TrackHub"
+                  "name": "TrackHubNew"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "DepotPath2"
           }
         },
         {
@@ -60,7 +67,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonExtend"
+                  "name": "AutonIntake"
                 }
               }
             ]
@@ -70,12 +77,6 @@
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "DepotPath4"
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -86,25 +87,19 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "DepotPath5"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonShootCommand"
+                  "name": "DepotShootRPM"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "TrackHub"
+                  "name": "TrackHubNew"
                 }
               }
             ]

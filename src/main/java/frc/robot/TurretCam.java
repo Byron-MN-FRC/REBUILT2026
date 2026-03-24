@@ -12,7 +12,7 @@ public class TurretCam {
      */
     public static double getAngleError() {
         if (targetLocated()) {
-            return -LimelightHelpers.getTX(Constants.VisionConstants.TURRET_CAM);
+            return LimelightHelpers.getTX(Constants.VisionConstants.TURRET_CAM);
         } else {
             return -0;
         }
@@ -20,7 +20,8 @@ public class TurretCam {
 
     public static boolean targetLocated() {
         return !!LimelightHelpers.getTV(Constants.VisionConstants.TURRET_CAM);
-    } 
+    }
+
 
     public static boolean targetLocked() {
         return targetLocated() && Math.abs(getAngleError()) < Constants.VisionConstants.ANGLE_ERROR_THRESHOLD;

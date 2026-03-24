@@ -23,13 +23,13 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 6.0
+                  "waitTime": 5.0
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonShootCommand"
+                  "name": "ClimbShootRPM"
                 }
               },
               {
@@ -37,14 +37,7 @@
                 "data": {
                   "name": "TrackHub"
                 }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
+              },
               {
                 "type": "named",
                 "data": {

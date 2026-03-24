@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.55,
-        "y": 5.08
+        "x": 3.430941512125534,
+        "y": 5.10243937232525
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.03914529999753,
-        "y": 4.8002057385085255
+        "x": 1.684222539229672,
+        "y": 4.921298145506419
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.0,
-        "y": 6.0
+        "x": 0.6036904761904771,
+        "y": 4.985190476190476
       },
       "prevControl": {
-        "x": 1.675544979345808,
-        "y": 6.1711012748823215
+        "x": 0.27923545553628504,
+        "y": 5.156291751072797
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "DepotPath1End"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 135.6
+    "rotation": 98.26832815789732
   },
   "reversed": false,
   "folder": "DepotAuton",
