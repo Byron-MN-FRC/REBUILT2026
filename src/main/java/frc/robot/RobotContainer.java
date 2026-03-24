@@ -63,6 +63,7 @@ import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.HopperSubsystem.HopperState;
 
 public class RobotContainer {
 
@@ -261,7 +262,7 @@ public class RobotContainer {
         final POVButton pOVButtonUp = new POVButton(accessory.getHID(), 0, 0);
         pOVButtonUp.whileTrue(new RPMShootCommand(Constants.ShooterConstants.HIGH_SPEED_TARGET,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
-        gamepad.b().onTrue(new Intake(m_hopper, m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        gamepad.b().onTrue(new Intake(m_hopper, m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf).andThen(new ZeroIntake(m_hopper).onlyIf(() -> m_hopper.getHopperState() == HopperState.retracted)));
     
         accessory.rightTrigger().whileTrue(new FuelJAMMED(m_hopper, m_shooter).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 

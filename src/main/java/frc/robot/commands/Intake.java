@@ -58,15 +58,18 @@ public class Intake extends Command {
     public void end(boolean interrupted) {
         m_leds.setColorNone();
         m_leds.noSubsystemUsingLeds();
+
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (m_hopper.isExtending()) {
-            return m_hopper.isHopperExtended();
+        if (m_hopper.targetHopperState == HopperState.extendedUp) {
+            return m_hopper.isHopperExtendedUp(); 
+        } else if (m_hopper.targetHopperState == HopperState.retracted) {
+            return m_hopper.isHopperRetracted() || m_hopper.getHopperRetractSwitch();
         } else {
-            return m_hopper.isHopperRetracted();
+            return m_hopper.isHopperExtendedUp();
         }
     }
 
