@@ -14,16 +14,18 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.controls.NeutralOut;
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -32,6 +34,7 @@ import frc.robot.subsystems.ClimbSubsystem.LockdownMode;
 
 public class Hopper extends SubsystemBase {
     private SparkMax leftFuelGrabber;
+    //private SparkMax rightFuelGrabber;
     private SparkMax hopperFloorTransferSecure;
     private TalonFX hopperExtendMotor;
     // ArmoredCoreAC v4Rusty;
@@ -39,11 +42,9 @@ public class Hopper extends SubsystemBase {
     private DigitalInput hopperExtendSwitch;
     private DigitalInput hopperRetractSwitch;
     // Motor control modes
-    // private final NeutralOut m_brake = new NeutralOut();
+    private final NeutralOut m_brake = new NeutralOut();
 
     public boolean isExtending = false;
-
-    public Timer m_timer = new Timer();
 
     /**
     *
@@ -56,6 +57,9 @@ public class Hopper extends SubsystemBase {
             SparkMaxConfig leftFuelGrabberConfigLeft = new SparkMaxConfig();
 
             leftFuelGrabberConfigLeft.smartCurrentLimit(10); // Limit gate motor current to 10 A
+
+            leftFuelGrabber.configure(leftFuelGrabberConfigLeft, ResetMode.kResetSafeParameters,
+                PersistMode.kPersistParameters);
 
             leftFuelGrabber.configure(leftFuelGrabberConfigLeft, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
@@ -83,7 +87,7 @@ public class Hopper extends SubsystemBase {
             }
         }
 
-        hopperFloorTransferSecure = new SparkMax(18, MotorType.kBrushless); // floor motor
+        hopperFloorTransferSecure = new SparkMax(18, MotorType.kBrushless); //floor motor
         SparkMaxConfig hopperFloorTransferSecureConfig = new SparkMaxConfig();
         hopperFloorTransferSecureConfig.smartCurrentLimit(10); // Limit gate motor current to 10 A
         hopperFloorTransferSecureConfig.inverted(true); // Invert direction of floor transfer motor
@@ -110,7 +114,7 @@ public class Hopper extends SubsystemBase {
             SmartDashboard.putBoolean("Hopper Extended", isHopperExtended());
             SmartDashboard.putBoolean("Hopper Retracted", isHopperRetracted());
         }
-
+        
         // Check lockdown mode
         if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.engaged) {
             // In lockdown mode, ensure hopper is retracted
@@ -123,14 +127,26 @@ public class Hopper extends SubsystemBase {
         hopperExtendMotorControl();
     }
 
+    @Override
+    public void simulationPeriodic() {
+        // This method will be called once per scheduler run when in simulation
+    }
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void setFuelGrabberSpeed() {
         if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
-            leftFuelGrabber.set(1); //1
+            
+            
+        //: if isHopperRetracted = false, then set speed to 1, else set speed to 0
+            if (!isHopperRetracted()) {
+                leftFuelGrabber.set(Constants.IntakeHopperConstants.FUEL_GRABBER_SPEED);
+            } else {
+                leftFuelGrabber.set(0);
+            }
         }
-    }
+    } 
 
     public void stopFuelGrabber() {
         if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
@@ -148,8 +164,22 @@ public class Hopper extends SubsystemBase {
 
     public void ifIntakeJammed() {
         if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
-            leftFuelGrabber.set(-0.2);;
+            leftFuelGrabber.set(-0.2);
         }
+    }
+
+    public void clearIntakeJam() {
+        if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
+            leftFuelGrabber.set(0);
+        }
+    }
+
+    public void ifHopperFloorTransferSecureIsBlocked() {
+        hopperFloorTransferSecure.set(-0.1);
+    }
+
+    public void clearHopperFloorTransferSecureBlockage() {
+        hopperFloorTransferSecure.set(0);
     }
 
     public void setHopperExtend() {
@@ -166,17 +196,22 @@ public class Hopper extends SubsystemBase {
 
     public void setHopperRetract() {
         isExtending = false;
+        leftFuelGrabber.set(0); // Stop fuel grabber when retracting   
 
         if (Constants.Debug.DEBUG_MODE)
             System.out.println("Retracting hopper");
+    }
+
+    public void retractingHopperForLockdown() {
+        setHopperRetract();
+
     }
 
     public boolean isHopperExtended() {
         if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
             return hopperExtendSwitch.get();
         } else {
-            return true; // Assume not extended when intake doesn't exist
-            // TODO false???
+            return false; // Assume not extended when intake doesn't exist
         }
     }
 
@@ -195,34 +230,19 @@ public class Hopper extends SubsystemBase {
     public void hopperExtendMotorControl() {
         if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
             if (isExtending) {
-                // if (!isHopperExtended()) {
-                // hopperExtendMotor.set(Constants.IntakeHopperConstants.EXTEND_SPEED); //
-                // Extend at half speed
-                // } else {
-                // hopperExtendMotor.set(0); // Stop when fully extended
-                // }
-
-                if (!m_timer.hasElapsed(Constants.IntakeHopperConstants.EXTEND_TIME_SECONDS)) {
-                    hopperExtendMotor.set(Constants.IntakeHopperConstants.EXTEND_SPEED);
+                if (!isHopperExtended()) {
+                    if (Constants.Debug.DEBUG_MODE) SmartDashboard.putString("check", "extend");
+                    hopperExtendMotor.set(Constants.IntakeHopperConstants.EXTEND_SPEED); // Extend at half speed
                 } else {
-                    hopperExtendMotor.set(Constants.IntakeHopperConstants.HOLD_SPEED);
+                    hopperExtendMotor.set(0); // Stop when fully extended
                 }
-
-                if (!m_timer.isRunning()) {
-                    m_timer.restart();
-                }
-
             } else {
                 if (!isHopperRetracted()) {
+                    if (Constants.Debug.DEBUG_MODE) SmartDashboard.putString("check", "retract");
                     hopperExtendMotor.set(Constants.IntakeHopperConstants.RETRACT_SPEED); // Retract at half speed
                 } else {
                     hopperExtendMotor.set(0); // Stop when fully retracted
                 }
-
-                if (m_timer.isRunning()) {
-                    m_timer.stop();
-                }
-                
             }
         }
     }

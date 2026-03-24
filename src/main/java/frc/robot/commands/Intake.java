@@ -13,16 +13,17 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.HopperSubsystem;
+import frc.robot.subsystems.HopperSubsystem.HopperState;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.LedsSubsystem;
 
 public class Intake extends Command {  
-    private final Hopper m_hopper;
+    private final HopperSubsystem m_hopper;
     private final Turret m_turret;
     private final LedsSubsystem m_leds;
     
-    public Intake(Hopper hopperSubsystem, Turret turretSubsystem, LedsSubsystem ledSubsystem)  {
+    public Intake(HopperSubsystem hopperSubsystem, Turret turretSubsystem, LedsSubsystem ledSubsystem)  {
         m_hopper = hopperSubsystem;
         m_turret = turretSubsystem;
         m_leds = ledSubsystem;
@@ -33,11 +34,11 @@ public class Intake extends Command {
     @Override
     public void initialize() {
         m_leds.hopperRequestingLeds();
-        if (!m_hopper.isExtending()) {   
+        if (m_hopper.targetHopperState == HopperState.retracted) {   
             if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.hopper) {
                 m_leds.setModeGreenFlashing();
             }
-            m_hopper.setHopperExtend();
+            m_hopper.setHopperExtendUp();
             m_turret.aimDegrees(Constants.TurretShooterConstants.NEUTRAL_POSITION);
         }
         else {
@@ -46,7 +47,7 @@ public class Intake extends Command {
             }
             m_hopper.setHopperRetract();
         }
-        if (Constants.Debug.DEBUG_MODE) System.out.println("Lights on");
+        if (Constants.Debug.DEBUG_MODE) System.out.println("Lights on (hopper)");
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -58,15 +59,20 @@ public class Intake extends Command {
     public void end(boolean interrupted) {
         m_leds.setColorNone();
         m_leds.noSubsystemUsingLeds();
+        if (m_hopper.targetHopperState == HopperState.retracted) {
+            m_hopper.resetPosition();
+        }
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (m_hopper.isExtending()) {
-            return m_hopper.isHopperExtended();
-        } else {
+        if (m_hopper.targetHopperState == HopperState.extendedUp) {
+            return m_hopper.isHopperExtendedUp(); 
+        } else if (m_hopper.targetHopperState == HopperState.retracted) {
             return m_hopper.isHopperRetracted();
+        } else {
+            return m_hopper.isHopperExtendedUp();
         }
     }
 
