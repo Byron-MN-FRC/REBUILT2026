@@ -13,13 +13,13 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.Shooter;
 
 public class FuelJAMMED extends Command {
-    private final Hopper m_hopper;
+    private final HopperSubsystem m_hopper;
     private final Shooter m_shooter;
-    public FuelJAMMED(Hopper m_hopper, Shooter m_shooter) {
+    public FuelJAMMED(HopperSubsystem m_hopper, Shooter m_shooter) {
         this.m_hopper = m_hopper;
         this.m_shooter = m_shooter;
         // Use addRequirements() here to declare subsystem dependencies.
