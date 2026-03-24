@@ -137,9 +137,16 @@ public class Hopper extends SubsystemBase {
 
     public void setFuelGrabberSpeed() {
         if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
-            leftFuelGrabber.set(1);
+            
+            
+        //: if isHopperRetracted = false, then set speed to 1, else set speed to 0
+            if (!isHopperRetracted()) {
+                leftFuelGrabber.set(Constants.IntakeHopperConstants.FUEL_GRABBER_SPEED);
+            } else {
+                leftFuelGrabber.set(0);
+            }
         }
-    }
+    } 
 
     public void stopFuelGrabber() {
         if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
@@ -189,6 +196,7 @@ public class Hopper extends SubsystemBase {
 
     public void setHopperRetract() {
         isExtending = false;
+        leftFuelGrabber.set(0); // Stop fuel grabber when retracting   
 
         if (Constants.Debug.DEBUG_MODE)
             System.out.println("Retracting hopper");

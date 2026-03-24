@@ -60,7 +60,8 @@ public class Constants {
     public static final class IntakeHopperConstants {
         // Floor transfer constants
         public static final double HopperFloorTransferSecureSpeed = 0.2;
-        
+       
+        public static final double FUEL_GRABBER_SPEED = 1.0;
         // Hopper extend/retract constants
         public static final double EXTEND_SPEED = -0.25;
         public static final double RETRACT_SPEED = 0.25;
@@ -134,7 +135,7 @@ public class Constants {
         public static final double FIELD_LENGTH_METERS = APRIL_TAG_FIELD_LAYOUT.getFieldLength();
 
         public static final int[] TAGS_FOR_AUTO_ALIGNMENT = {15, 16, 31, 32};
-
+        
         public static final int[] TAGS_FOR_POSE_ESTIMATION = {
             // tag numbers --> update for each year with all tags on the field unless there is a reason to not use them
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
