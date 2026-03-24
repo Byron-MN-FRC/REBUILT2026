@@ -36,7 +36,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 public class Constants {
 
     public static final class Debug {
-        public static final boolean DEBUG_MODE = false;
+        public static final boolean DEBUG_MODE = true;
         public static final boolean INTAKE_ROLLER_EXISTS = true;
         public static final boolean INTAKE_EXTEND_EXISTS = true;
         public static final boolean SHOOTER_SPEED_OVERRIDE = false;
@@ -67,12 +67,12 @@ public class Constants {
         // public static final double RETRACT_SPEED = 0.25;
         // public static final double HOLD_SPEED = -0.05;
         // public static final double EXTEND_TIME_SECONDS = 0.75;
-        public static final int CURRENT_LIMIT = 10;
+        public static final int CURRENT_LIMIT = 13;
         public static final double RETRACT_POSITION_POSITION = 0;
         public static final double EXTENDED_UP_POSITION_POSITION = -1.7;
-        public static final double EXTENDED_DOWN_POSITION_POSITION = -3.2;
+        public static final double EXTENDED_DOWN_POSITION_POSITION = -3.4;
         public static final double MOTOR_TOLERANCE = 0.05;
-        public static final double HOPPER_ZEROING_SPEED = 0.25;
+        public static final double HOPPER_ZEROING_SPEED = 0.2;
     }
 
     public static final class TurretShooterConstants {
@@ -118,7 +118,7 @@ public class Constants {
         // adjust for actual camera position and orientation on the robot
         public static final double[] CAMERA_POSE_ROBOT_SPACE = {
                 -0.2855,// X position of camera on robot in meters (positive forward, negative backward)
-                0.2698, // Y position of camera on robot in meters (positive right, negative left)
+                -0.2698, // Y position of camera on robot in meters (positive right, negative left)
                 0.517, // Z position of camera on robot in meters (positive up, negative down)
                 0.0, // Roll of the camera on the robot in degrees
                 0.0, // Pitch of the camera on the robot in degrees

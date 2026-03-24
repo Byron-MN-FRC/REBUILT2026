@@ -78,7 +78,7 @@ public class HopperSubsystem extends SubsystemBase {
             mm.withMotionMagicCruiseVelocity(RotationsPerSecond.of(1))
                     .withMotionMagicAcceleration(RotationsPerSecondPerSecond.of(2)) 
                     // Take approximately 0.1 seconds to reach max accel
-                    .withMotionMagicJerk(RotationsPerSecondPerSecond.per(Second).of(50));
+                    .withMotionMagicJerk(RotationsPerSecondPerSecond.per(Second).of(40));
 
             Slot0Configs slot0 = cfg.Slot0;
             slot0.kS = 0.25; // Add 0.25 V output to overcome static friction
@@ -106,6 +106,8 @@ public class HopperSubsystem extends SubsystemBase {
             if (!status.isOK()) {
                 System.out.println("Could not apply configs, error code: " + status.toString());
             }
+
+            if (Constants.Debug.DEBUG_MODE) SmartDashboard.putData("Subsystem: Intake + Hopper + Floor", this);
         }
 
         hopperFloorMotor = new SparkMax(18, MotorType.kBrushless); // floor motor
@@ -130,9 +132,10 @@ public class HopperSubsystem extends SubsystemBase {
         // This method will be called once per scheduler run
         if (Constants.Debug.DEBUG_MODE) {
             SmartDashboard.putNumber("Hopper Floor Transfer Speed", hopperFloorMotor.get());
+            SmartDashboard.putNumber("Hopper Extend Position", hopperExtendMotor.getPosition().getValueAsDouble());
         }
         if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
-            SmartDashboard.putBoolean("Hopper Retracted", isHopperRetracted());
+            SmartDashboard.putBoolean("Hopper Switch", getHopperRetractSwitch());
         }
 
         // Check lockdown mode
@@ -226,9 +229,31 @@ public class HopperSubsystem extends SubsystemBase {
 
     public boolean isHopperRetracted() {
         if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
+            // return hopperRetractSwitch.get();
+            return Math.abs(hopperExtendMotor.getPosition().getValueAsDouble() - Constants.IntakeHopperConstants.RETRACT_POSITION_POSITION) < Constants.IntakeHopperConstants.MOTOR_TOLERANCE;
+        } else {
+            return true; // Assume retracted when intake doesn't exist
+        }
+    }
+
+    public boolean getHopperRetractSwitch() {
+        if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
             return hopperRetractSwitch.get();
         } else {
             return true; // Assume retracted when intake doesn't exist
+        }
+    }
+
+    public boolean isHopperAtPosition() {
+        switch (targetHopperState) {
+            case extendedUp:
+                return isHopperExtendedUp();
+            case extendedDown:
+                return isHopperExtendedDown();
+            case retracted:
+                return isHopperRetracted();
+            default:
+                return true;
         }
     }
 
@@ -292,6 +317,10 @@ public class HopperSubsystem extends SubsystemBase {
         stopFuelGrabber();
         stopHopperFloorTransferSecure();
 
+    }
+
+    public void stopHopperExtend() {
+        hopperExtendMotor.set(0);
     }
 
     public void hopperZeroing() {
