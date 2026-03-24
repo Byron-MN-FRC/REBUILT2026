@@ -30,4 +30,8 @@ public class DistanceVelocityMap {
         return distanceVelocityMap.get(closestDistance);
         // return 2100; // Placeholder value, replace with actual implementation
     }
+
+    // public static int calculateRegression(double distance) {
+    //     return 
+    // }
 }

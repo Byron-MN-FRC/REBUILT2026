@@ -14,15 +14,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.ClimbSubsystem;
-import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Turret;
 public class ClimbCommand extends Command {
     private final ClimbSubsystem m_climb;
     private final LedsSubsystem m_leds;
-    private final Hopper m_hopper;
+    private final HopperSubsystem m_hopper;
     private final Turret m_turret;   
-    public ClimbCommand(ClimbSubsystem subsystem, LedsSubsystem ledSubsystem, Hopper hopperSubsystem, Turret turretSubsystem)  {
+    public ClimbCommand(ClimbSubsystem subsystem, LedsSubsystem ledSubsystem, HopperSubsystem hopperSubsystem, Turret turretSubsystem)  {
         m_climb = subsystem;
         m_leds = ledSubsystem;
         m_hopper = hopperSubsystem;

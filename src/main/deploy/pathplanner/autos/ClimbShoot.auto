@@ -13,7 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ClimbPath1"
+            "pathName": "DriveToShootAtClimb"
           }
         },
         {
@@ -42,29 +42,21 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "ClimbRaiseAuto"
-                }
-              }
-            ]
+            "pathName": "ReadyClimbAfterShoot"
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "ClimbPath2Right"
-                }
-              }
-            ]
+            "name": "ClimbRaiseAuto"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ClimbAfterReady"
           }
         },
         {
