@@ -62,12 +62,13 @@ public class Constants {
         public static final double AGITATE_COMMAND_SPEED = 0.4;
        
         public static final double FUEL_GRABBER_SPEED = 1.0;
+        public static final double FUEL_GRABBER_AGITATE_SPEED = 0.25;
         // Hopper extend/retract constants
         // public static final double EXTEND_SPEED = -0.25;
         // public static final double RETRACT_SPEED = 0.25;
         // public static final double HOLD_SPEED = -0.05;
         // public static final double EXTEND_TIME_SECONDS = 0.75;
-        public static final int CURRENT_LIMIT = 13;
+        public static final int CURRENT_LIMIT = 15;
         public static final double RETRACT_POSITION_POSITION = 0;
         public static final double EXTENDED_UP_POSITION_POSITION = -1.7;
         public static final double EXTENDED_DOWN_POSITION_POSITION = -3.4;

@@ -1,5 +1,6 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.HopperSubsystem;
 
 public class AutonIntake extends Command {
@@ -18,7 +19,7 @@ public class AutonIntake extends Command {
 
     @Override
     public void execute() {
-        m_hopper.setFuelGrabberSpeed();
+        m_hopper.setFuelGrabberSpeed(Constants.IntakeHopperConstants.FUEL_GRABBER_SPEED);
     }
 
     @Override

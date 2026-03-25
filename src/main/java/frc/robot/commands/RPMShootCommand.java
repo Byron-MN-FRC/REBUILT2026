@@ -12,7 +12,11 @@
 
 package frc.robot.commands;
 
+import static edu.wpi.first.units.Units.Meters;
+
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.FieldConstants;
@@ -72,13 +76,10 @@ public class RPMShootCommand extends Command {
     @Override
     public void execute() {
 
-        if (dynamicVelocity) {
-            m_rpm = DistanceVelocityMap.getVelocity(
-                    Robot.getInstance().m_vision.calculateDistance(FieldConstants.ALLIANCE_HUB_CENTER));
-            m_shooter.setTargetRPM(m_rpm);
-        }
+        updateRPM();
+
         m_shooter.spinShooter(m_shooter.targetRPM);
-        m_hopper.setFuelGrabberSpeed();
+        m_hopper.setFuelGrabberSpeed(Constants.IntakeHopperConstants.FUEL_GRABBER_SPEED);
 
         if (m_shooter.isAtTargetRPM()) {
             if (m_timer.isRunning()) {
@@ -123,5 +124,16 @@ public class RPMShootCommand extends Command {
     @Override
     public boolean runsWhenDisabled() {
         return false;
+    }
+
+    public void updateRPM() {
+        if (!dynamicVelocity) return;
+
+        var distanceMeters = Robot.getInstance().m_vision.calculateDistance(FieldConstants.ALLIANCE_HUB_CENTER);
+        var distanceFeet = Units.metersToFeet(distanceMeters);
+        m_rpm = DistanceVelocityMap.getVelocity(
+                distanceFeet);
+        if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("Distance From Hub", distanceFeet);
+        m_shooter.setTargetRPM(m_rpm);
     }
 }
