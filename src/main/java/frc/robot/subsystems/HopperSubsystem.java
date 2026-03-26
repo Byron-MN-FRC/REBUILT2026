@@ -153,9 +153,9 @@ public class HopperSubsystem extends SubsystemBase {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    public void setFuelGrabberSpeed() {
+    public void setFuelGrabberSpeed(double speed) {
         if (Constants.Debug.INTAKE_ROLLER_EXISTS) {
-            leftFuelGrabber.set(1); // 1
+            leftFuelGrabber.set(speed);
         }
     }
 
@@ -206,8 +206,7 @@ public class HopperSubsystem extends SubsystemBase {
     public void setHopperRetract() {
         targetHopperState = HopperState.retracted;
 
-        if (Constants.Debug.DEBUG_MODE)
-            System.out.println("Retracting hopper");
+    
     }
 
     public boolean isHopperExtendedUp() {

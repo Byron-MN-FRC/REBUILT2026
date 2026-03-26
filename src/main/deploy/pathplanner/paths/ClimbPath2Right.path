@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.65,
-        "y": 3.8
+        "x": 1.75,
+        "y": 4.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.928285198162093,
-        "y": 3.861398976041783
+        "x": 2.028285198162093,
+        "y": 4.261398976041783
       },
       "isLocked": false,
       "linkedName": "EndClimbPath1"
@@ -85,7 +85,7 @@
   "folder": "ClimbAuton",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 175.0
   },
   "useDefaultConstraints": false
 }

@@ -62,12 +62,13 @@ public class Constants {
         public static final double AGITATE_COMMAND_SPEED = 0.4;
        
         public static final double FUEL_GRABBER_SPEED = 1.0;
+        public static final double FUEL_GRABBER_AGITATE_SPEED = 0.25;
         // Hopper extend/retract constants
         // public static final double EXTEND_SPEED = -0.25;
         // public static final double RETRACT_SPEED = 0.25;
         // public static final double HOLD_SPEED = -0.05;
         // public static final double EXTEND_TIME_SECONDS = 0.75;
-        public static final int CURRENT_LIMIT = 13;
+        public static final int CURRENT_LIMIT = 15;
         public static final double RETRACT_POSITION_POSITION = 0;
         public static final double EXTENDED_UP_POSITION_POSITION = -1.7;
         public static final double EXTENDED_DOWN_POSITION_POSITION = -3.4;
@@ -153,8 +154,11 @@ public class Constants {
         public static final double RED_HUB_CENTER_Y = APRIL_TAG_FIELD_LAYOUT.getTagPose(10).get().getY();
         public static final Translation2d RED_HUB_CENTER = new Translation2d(RED_HUB_CENTER_X, RED_HUB_CENTER_Y);
         
-        public static final Translation2d ALLIANCE_HUB_CENTER = DriveConstants.getAlliance() == Alliance.Red ? RED_HUB_CENTER : BLUE_HUB_CENTER;
-    }
+        public static Translation2d getAllianceHubCenter() {
+            return DriveConstants.getAlliance() == Alliance.Red ? RED_HUB_CENTER : BLUE_HUB_CENTER;
+        }
+        }
+
 
     public static final class ClimbConstants {
         public static final double RAISER_UPPER_TARGET = 85.0;
@@ -166,7 +170,7 @@ public class Constants {
         public static final double LOW_SPEED_TARGET = 2125.0;
         public static final double MIDDLE_SPEED_TARGET = 2350.0;
         public static final double HIGH_SPEED_TARGET = 2450.0;
-        public static final double SNOWBLOW_SPEED_TARGET = 3000.0;
+        public static final double SNOWBLOW_SPEED_TARGET = 2500.0;
     }
 
 }

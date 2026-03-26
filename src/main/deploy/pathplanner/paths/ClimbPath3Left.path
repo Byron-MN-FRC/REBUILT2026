@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.9599368686868694,
-        "y": 4.0
+        "x": 1.421,
+        "y": 4.15
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1851726544016863,
-        "y": 4.108484288417397
+        "x": 1.421,
+        "y": 3.9000000000000004
       },
       "isLocked": false,
-      "linkedName": "StartRCAS"
+      "linkedName": "ClimbPath2LeftEnd"
     },
     {
       "anchor": {
-        "x": 1.9599368686868694,
-        "y": 4.0
+        "x": 1.421,
+        "y": 4.05
       },
       "prevControl": {
-        "x": 2.330758607632678,
-        "y": 3.766070116466522
+        "x": 1.421,
+        "y": 4.330531253300641
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

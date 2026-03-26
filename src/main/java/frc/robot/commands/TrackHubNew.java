@@ -57,12 +57,8 @@ public class TrackHubNew extends Command {
     // {
     // m_turret.aimDegrees(Constants.TurretShooterConstants.NEUTRAL_POSITION);
     // }
-    Translation2d target;
-    if (Constants.DriveConstants.getAlliance() == Alliance.Blue) {
-      target = Constants.FieldConstants.BLUE_HUB_CENTER;
-    } else {
-      target = Constants.FieldConstants.RED_HUB_CENTER;
-    }
+    Translation2d target = Constants.FieldConstants.getAllianceHubCenter();
+    
 
     // Calculate distances and angles
     Pose2d currentPose = Robot.getInstance().drivetrain.getState().Pose;
