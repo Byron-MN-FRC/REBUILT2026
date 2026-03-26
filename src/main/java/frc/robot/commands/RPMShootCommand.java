@@ -129,7 +129,7 @@ public class RPMShootCommand extends Command {
     public void updateRPM() {
         if (!dynamicVelocity) return;
 
-        var distanceMeters = Robot.getInstance().m_vision.calculateDistance(FieldConstants.ALLIANCE_HUB_CENTER);
+        var distanceMeters = Robot.getInstance().m_vision.calculateDistance(FieldConstants.getAllianceHubCenter());
         var distanceFeet = Units.metersToFeet(distanceMeters);
         m_rpm = DistanceVelocityMap.getVelocity(
                 distanceFeet);

@@ -50,6 +50,12 @@
                 "data": {
                   "name": "TrackHubNew"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntake"
+                }
               }
             ]
           }
@@ -80,7 +86,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonRetract"
+                  "name": "AutonIntakestop"
                 }
               }
             ]

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.05944365192582,
-        "y": 4.222610556348074
+        "x": 1.75,
+        "y": 4.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5898173558756796,
-        "y": 4.71877482966063
+        "x": 2.2803737039498597,
+        "y": 4.696164273312556
       },
       "isLocked": false,
       "linkedName": "EndClimbPath1"
     },
     {
       "anchor": {
-        "x": 2.05944365192582,
-        "y": 5.352309523809525
+        "x": 2.342107142857144,
+        "y": 4.931202380952381
       },
       "prevControl": {
-        "x": 2.4013323448063666,
-        "y": 5.326010393587945
+        "x": 2.5890474610878575,
+        "y": 5.114121135197353
       },
       "nextControl": {
-        "x": 1.7230385164051354,
-        "y": 5.3781868419264995
+        "x": 2.050571428571429,
+        "y": 4.71525
       },
       "isLocked": false,
       "linkedName": null
@@ -33,20 +33,20 @@
     {
       "anchor": {
         "x": 1.421,
-        "y": 4.07
+        "y": 4.145
       },
       "prevControl": {
-        "x": 1.7914285714285723,
-        "y": 4.14297619047619
+        "x": 1.9749880952380963,
+        "y": 4.012821428571428
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ClimbPath2LeftEnd"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.12664277180406905,
+      "waypointRelativePos": 0.897331240188383,
       "rotationDegrees": 0.20665673533554813
     }
   ],

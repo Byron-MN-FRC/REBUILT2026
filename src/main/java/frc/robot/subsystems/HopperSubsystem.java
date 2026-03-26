@@ -206,8 +206,7 @@ public class HopperSubsystem extends SubsystemBase {
     public void setHopperRetract() {
         targetHopperState = HopperState.retracted;
 
-        if (Constants.Debug.DEBUG_MODE)
-            System.out.println("Retracting hopper");
+    
     }
 
     public boolean isHopperExtendedUp() {

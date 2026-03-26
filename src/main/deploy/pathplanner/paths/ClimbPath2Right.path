@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.05944365192582,
-        "y": 4.222610556348074
+        "x": 1.75,
+        "y": 4.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3377288500879128,
-        "y": 4.284009532389857
+        "x": 2.028285198162093,
+        "y": 4.261398976041783
       },
       "isLocked": false,
       "linkedName": "EndClimbPath1"
