@@ -170,7 +170,7 @@ public class Constants {
         public static final double LOW_SPEED_TARGET = 2125.0;
         public static final double MIDDLE_SPEED_TARGET = 2350.0;
         public static final double HIGH_SPEED_TARGET = 2450.0;
-        public static final double SNOWBLOW_SPEED_TARGET = 2500.0;
+        public static final double SNOWBLOW_SPEED_TARGET = 2600.0;
     }
 
 }
