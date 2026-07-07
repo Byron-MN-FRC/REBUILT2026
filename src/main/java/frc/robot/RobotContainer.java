@@ -42,7 +42,6 @@ import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.ClimbLowerAuto;
 import frc.robot.commands.ClimbRaiseAuto;
 import frc.robot.commands.ClimbZeroing;
-import frc.robot.commands.DriveToPosition;
 import frc.robot.commands.FloorTransfer;
 import frc.robot.commands.FuelGRAB;
 import frc.robot.commands.FuelJAMMED;
@@ -60,11 +59,11 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.HopperSubsystem;
+import frc.robot.subsystems.HopperSubsystem.HopperState;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
-import frc.robot.subsystems.HopperSubsystem.HopperState;
 
 public class RobotContainer {
 
