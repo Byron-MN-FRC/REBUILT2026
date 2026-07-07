@@ -29,7 +29,7 @@ public class ZeroIntake extends Command {
     public void end(boolean interrupted) {
         m_hopper.resetPosition();
         m_hopper.setHopperRetract();
-
+        m_hopper.stopFuelGrabber(); // change
     }
 
     @Override
