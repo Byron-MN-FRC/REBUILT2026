@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
+// POVButton removed — outreach mode uses a single gamepad only
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.commands.Agitate;
 import frc.robot.commands.AutonExtend;
@@ -76,10 +76,9 @@ public class RobotContainer {
    
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-    private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top
-                                                                                        // speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second
-                                                                                      // max angular velocity
+    // Outreach mode: 40% translation speed, 70% rotation speed for safe kid driving
+    private double MaxSpeed = 0.4 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+    private double MaxAngularRate = RotationsPerSecond.of(0.75 * 0.70).in(RadiansPerSecond);
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     public final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -90,8 +89,8 @@ public class RobotContainer {
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
+    // Outreach mode: single gamepad only (port 0) — no accessory controller
     public final CommandXboxController gamepad = new CommandXboxController(0);
-    private final CommandXboxController accessory = new CommandXboxController(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final Vision m_vision = new Vision();
@@ -179,107 +178,75 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        // Note that X is defined as forward according to WPILib convention,
-        // and Y is defined as to the left according to WPILib convention.
-        drivetrain.setDefaultCommand(
-                // Drivetrain will execute this command periodically
-                drivetrain.applyRequest(() ->
+        // ---------------------------------------------------------------
+        // OUTREACH MODE — single CommandXboxController (port 0)
+        // Speed: 40% translation, 70% of nominal angular rate
+        // Turret: fixed at default (no auto-tracking)
+        // Climb: removed for outreach safety
+        // ---------------------------------------------------------------
 
-                drive.withVelocityX(-gamepad.getLeftY() * MaxSpeed) // Drive forward with
-                                                                    // negative Y
-                                                                    // (forward)
-                        .withVelocityY(-gamepad.getLeftX() * MaxSpeed) // Drive left with
-                                                                       // negative X
-                                                                       // (left)
-                        .withRotationalRate(-gamepad.getRightX() * MaxAngularRate) // Drive
-                                                                                    // counterclockwise
-                                                                                                                  // with
-                                                                                                                  // negative
-                                                                                                                  // X
-                                                                                                                  // (left)
+        // Left Stick = translation, Right Stick X = rotation (field-centric)
+        drivetrain.setDefaultCommand(
+                drivetrain.applyRequest(() ->
+                        drive.withVelocityX(-gamepad.getLeftY() * MaxSpeed)   // forward/back
+                             .withVelocityY(-gamepad.getLeftX() * MaxSpeed)   // strafe
+                             .withRotationalRate(-gamepad.getRightX() * MaxAngularRate) // turn
                 ));
 
-        // Idle while the robot is disabled. This ensures the configured
-        // neutral mode is applied to the drive motors while disabled.
+        // Idle while disabled — keeps neutral mode applied to drive motors
         final var idle = new SwerveRequest.Idle();
         RobotModeTriggers.disabled().whileTrue(
                 drivetrain.applyRequest(() -> idle).ignoringDisable(true));
 
-        // gamepad.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        // gamepad.b().whileTrue(drivetrain.applyRequest(() ->
-        // point.withModuleDirection(new Rotation2d(-gamepad.getLeftY(),
-        // -gamepad.getLeftX()))
-        // ));
-
-        // Run SysId routines when holding back/start and X/Y.
-        // Note that each routine should be run exactly once in a single log.
-        // gamepad.back().and(gamepad.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        // gamepad.back().and(gamepad.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        // gamepad.start().and(gamepad.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        // gamepad.start().and(gamepad.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
-        // gamepad.start().and(gamepad.back()).onTrue(new InstantCommand(() ->
-        // SignalLogger.stop()).andThen(new InstantCommand(()
-        // ->System.out.println("Stopping Logger"))));
-
-        // Reset the field-centric heading on left bumper press.
-        // gamepad.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
-        
-        gamepad.start().onTrue(new InstantCommand(() -> m_vision.tempDisable(0.5))
-            .andThen(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())));
-
-        gamepad.leftBumper()
-                .whileTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
-        // gamepad.y()
-            //.whileTrue(new DriveToPosition(drivetrain)
-           // .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-            
-        gamepad.rightTrigger().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-                
-        accessory.y().onTrue(new ClimbCommand(m_climb, m_leds, m_hopper, m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
-        accessory.b().onTrue(new ClimbZeroing(m_climb, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
-        accessory.a().toggleOnTrue(new FloorTransfer(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
-        accessory.start().onTrue(new ZeroTurret(m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        
-        //accessory.leftBumper().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-                
         drivetrain.registerTelemetry(logger::telemeterize);
 
-        // accessory.back().onTrue(new InstantCommand(() -> m_turret.resetPosition())
-        //         .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        // START — reset field-centric heading
+        gamepad.start().onTrue(
+                new InstantCommand(() -> m_vision.tempDisable(0.5))
+                        .andThen(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())));
 
-        accessory.leftTrigger()
-                .whileTrue(new RPMShootCommand(m_shooter, m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-      
-        final POVButton pOVButtonLeft = new POVButton(accessory.getHID(), 270, 0);
-        pOVButtonLeft.whileTrue(new SnowBlowerCommandGroup(Constants.ShooterConstants.SNOWBLOW_SPEED_TARGET, m_shooter, m_hopper, m_leds, m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-    
-        final POVButton pOVButtonRight = new POVButton(accessory.getHID(), 90, 0);
-        pOVButtonRight.whileTrue(new RPMShootCommand(Constants.ShooterConstants.MIDDLE_SPEED_TARGET,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-    
-        final POVButton pOVButtonDown = new POVButton(accessory.getHID(), 180, 0);
-        pOVButtonDown.whileTrue(new RPMShootCommand(Constants.ShooterConstants.LOW_SPEED_TARGET,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        // B — Intake (pick up game piece; auto-zeros intake on retract)
+        gamepad.b().onTrue(
+                new Intake(m_hopper, m_turret, m_leds)
+                        .withInterruptBehavior(InterruptionBehavior.kCancelSelf)
+                        .andThen(new ZeroIntake(m_hopper)
+                                .onlyIf(() -> m_hopper.getHopperState() == HopperState.retracted)));
+
+        // A — Floor Transfer (toggle: press once to start, press again to stop)
+        gamepad.a().toggleOnTrue(
+                new FloorTransfer(m_hopper)
+                        .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        // Right Trigger — FuelGRAB (hold to grab/feed fuel into hopper)
+        gamepad.rightTrigger().whileTrue(
+                new FuelGRAB(m_hopper, m_leds)
+                        .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        // Left Trigger — Shoot at GND_SPEED (hold to spin up and fire)
+        gamepad.leftTrigger().whileTrue(
+                new RPMShootCommand(Constants.ShooterConstants.GND_SPEED_TARGET, m_shooter, m_hopper, m_leds)
+                        .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        // Right Bumper — Agitate (hold to unjam hopper)
+        gamepad.rightBumper().whileTrue(
+                new Agitate(m_hopper, m_leds)
+                        .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        // Back — ZeroIntake (manual intake reset)
+        gamepad.back().onTrue(
+                new ZeroIntake(m_hopper)
+                        .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
-        final POVButton pOVButtonUp = new POVButton(accessory.getHID(), 0, 0);
-        pOVButtonUp.whileTrue(new RPMShootCommand(Constants.ShooterConstants.HIGH_SPEED_TARGET,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        
-        gamepad.b().onTrue(new Intake(m_hopper, m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf).andThen(new ZeroIntake(m_hopper).onlyIf(() -> m_hopper.getHopperState() == HopperState.retracted)));
-    
-        accessory.rightTrigger().whileTrue(new FuelJAMMED(m_hopper, m_shooter).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        gamepad.leftBumper().whileTrue(
+                new FuelJAMMED(m_hopper, m_shooter)
+                        .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        gamepad.leftTrigger().whileTrue(new Agitate(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
-        gamepad.back().onTrue(new ZeroIntake(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-      
-        accessory.rightBumper().toggleOnTrue(new TrackHubNew(m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        gamepad.start().onTrue(
+                new ZeroTurret(m_turret)
+                        .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
 
-    public CommandXboxController getaccessory() {
-        return accessory;
-    }
+    // getaccessory() removed — outreach mode uses a single gamepad only
 
     public Command getAutonomousCommand() {
         return m_chooser.getSelected();

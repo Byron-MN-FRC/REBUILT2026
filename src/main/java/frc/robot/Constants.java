@@ -167,6 +167,7 @@ public class Constants {
         public static final double CLIMB_CURRENT_LIMIT = 25;
     }
     public static final class ShooterConstants {
+        public static final double GND_SPEED_TARGET = 2300.0;
         public static final double LOW_SPEED_TARGET = 2125.0;
         public static final double MIDDLE_SPEED_TARGET = 2350.0;
         public static final double HIGH_SPEED_TARGET = 2450.0;
