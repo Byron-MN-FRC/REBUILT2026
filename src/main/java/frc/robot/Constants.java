@@ -61,7 +61,7 @@ public class Constants {
         public static final double HOPPER_FLOOR_TRANSFER_SECURE_SPEED = 0.4;
         public static final double AGITATE_COMMAND_SPEED = 0.4;
        
-        public static final double FUEL_GRABBER_SPEED = 1.0;
+        public static final double FUEL_GRABBER_SPEED = 1;
         public static final double FUEL_GRABBER_AGITATE_SPEED = 0.25;
         // Hopper extend/retract constants
         // public static final double EXTEND_SPEED = -0.25;

@@ -89,6 +89,7 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
 
     if (Constants.Debug.DEBUG_MODE) {
+      SmartDashboard.putNumber("Shooter Stator Current", leftShoot.getStatorCurrent().getValueAsDouble());
       SmartDashboard.putNumber("Shooter RPM", leftShoot.getVelocity().getValueAsDouble() * 60.0);
       SmartDashboard.putBoolean("Shooter Ready", isAtTargetRPM());
       if (Constants.Debug.SHOOTER_SPEED_OVERRIDE) {
