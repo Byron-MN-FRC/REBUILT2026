@@ -213,9 +213,9 @@ public class RobotContainer {
                                 .onlyIf(() -> m_hopper.getHopperState() == HopperState.retracted)));
 
         // A — Floor Transfer (toggle: press once to start, press again to stop)
-        gamepad.a().toggleOnTrue(
-                new FloorTransfer(m_hopper)
-                        .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        // gamepad.a().toggleOnTrue(
+        //         new FloorTransfer(m_hopper)
+        //                 .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         // Right Trigger — FuelGRAB (hold to grab/feed fuel into hopper)
         gamepad.rightTrigger().whileTrue(
@@ -241,7 +241,7 @@ public class RobotContainer {
                 new FuelJAMMED(m_hopper, m_shooter)
                         .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-        gamepad.start().onTrue(
+        gamepad.y().onTrue(
                 new ZeroTurret(m_turret)
                         .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
