@@ -76,9 +76,16 @@ public class RobotContainer {
    
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-    // Outreach mode: 40% translation speed, 70% rotation speed for safe kid driving
-    private double MaxSpeed = 0.4 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
-    private double MaxAngularRate = RotationsPerSecond.of(0.75 * 0.70).in(RadiansPerSecond);
+    // Speed constants for slow (outreach) and full speed modes
+    private static final double SLOW_SPEED = 0.4 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+    private static final double SLOW_ANGULAR_RATE = RotationsPerSecond.of(0.75 * 0.70).in(RadiansPerSecond);
+    private static final double FULL_SPEED = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+    private static final double FULL_ANGULAR_RATE = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
+
+    // Active speed — starts in slow (outreach) mode
+    private double MaxSpeed = SLOW_SPEED;
+    private double MaxAngularRate = SLOW_ANGULAR_RATE;
+    private boolean fullSpeedMode = false;
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     public final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -244,6 +251,22 @@ public class RobotContainer {
         gamepad.y().onTrue(
                 new ZeroTurret(m_turret)
                         .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        // X — Toggle full speed mode vs slow (outreach) mode
+        gamepad.x().onTrue(new InstantCommand(() -> toggleSpeedMode()));
+
+    }
+
+    /** Toggle between slow (outreach) and full speed driving modes. */
+    private void toggleSpeedMode() {
+        fullSpeedMode = !fullSpeedMode;
+        if (fullSpeedMode) {
+            MaxSpeed = FULL_SPEED;
+            MaxAngularRate = FULL_ANGULAR_RATE;
+        } else {
+            MaxSpeed = SLOW_SPEED;
+            MaxAngularRate = SLOW_ANGULAR_RATE;
+        }
     }
 
     // getaccessory() removed — outreach mode uses a single gamepad only
