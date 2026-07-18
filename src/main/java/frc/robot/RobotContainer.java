@@ -53,6 +53,7 @@ import frc.robot.commands.TrackHub;
 import frc.robot.commands.TrackHubNew;
 import frc.robot.commands.ZeroIntake;
 import frc.robot.commands.ZeroTurret;
+import frc.robot.commands.MacroPlaybackCommand;
 import frc.robot.commands.ledtestcommands.fasterfaster;
 import frc.robot.commands.ledtestcommands.flash;
 import frc.robot.generated.TunerConstants;
@@ -142,6 +143,7 @@ public class RobotContainer {
         configureBindings();
 
         m_chooser = AutoBuilder.buildAutoChooser();
+        m_chooser.addOption("Recorded Playback", new MacroPlaybackCommand(drivetrain, m_hopper, m_shooter, m_turret, m_leds));
         m_chooser.onChange(new Consumer<Command>() {
             public void accept(Command t) {
                 // m_vision.updateAutoStartPosition(m_chooser.getSelected().getName());
@@ -271,5 +273,17 @@ public class RobotContainer {
         field.getObject("trajectory").setPoses(poses);
         field.setRobotPose(poses.get(0));
 
+    }
+
+    public double getTeleopVx() {
+        return -gamepad.getLeftY() * MaxSpeed;
+    }
+
+    public double getTeleopVy() {
+        return -gamepad.getLeftX() * MaxSpeed;
+    }
+
+    public double getTeleopOmega() {
+        return -gamepad.getRightX() * MaxAngularRate;
     }
 }

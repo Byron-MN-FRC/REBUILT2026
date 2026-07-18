@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
             m_timeAndJoystickReplay.update();
+            MacroManager.getInstance().update();
             CommandScheduler.getInstance().run(); 
             m_robotContainer.m_field.setRobotPose(m_robotContainer.drivetrain.getState().Pose);
             
