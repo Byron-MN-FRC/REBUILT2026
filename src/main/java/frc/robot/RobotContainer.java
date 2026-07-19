@@ -42,13 +42,10 @@ import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.ClimbLowerAuto;
 import frc.robot.commands.ClimbRaiseAuto;
 import frc.robot.commands.ClimbZeroing;
-import frc.robot.commands.FloorTransfer;
 import frc.robot.commands.FuelGRAB;
 import frc.robot.commands.FuelJAMMED;
 import frc.robot.commands.Intake;
-import frc.robot.commands.Lock45Degrees;
 import frc.robot.commands.RPMShootCommand;
-import frc.robot.commands.SnowBlowerCommandGroup;
 import frc.robot.commands.TrackHub;
 import frc.robot.commands.TrackHubNew;
 import frc.robot.commands.ZeroIntake;
@@ -77,7 +74,7 @@ public class RobotContainer {
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     // Outreach mode: 40% translation speed, 70% rotation speed for safe kid driving
-    private double MaxSpeed = 0.4 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+    private double MaxSpeed = 0.3 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
     private double MaxAngularRate = RotationsPerSecond.of(0.75 * 0.70).in(RadiansPerSecond);
 
     /* Setting up bindings for necessary control of the swerve drive platform */
