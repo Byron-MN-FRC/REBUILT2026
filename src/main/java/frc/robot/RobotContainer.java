@@ -221,7 +221,7 @@ public class RobotContainer {
 
         // Left Trigger — Shoot at GND_SPEED (hold to spin up and fire)
         gamepad.leftTrigger().whileTrue(
-                new RPMShootCommand(Constants.ShooterConstants.GND_SPEED_TARGET, m_shooter, m_hopper, m_leds)
+                new RPMShootCommand(Constants.ShooterConstants.SNOWBLOW_SPEED_TARGET, m_shooter, m_hopper, m_leds)
                         .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         // Right Bumper — Agitate (hold to unjam hopper)
