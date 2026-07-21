@@ -186,10 +186,10 @@ public class RobotContainer {
                 // Drivetrain will execute this command periodically
                 drivetrain.applyRequest(() ->
 
-                drive.withVelocityX(-gamepad.getLeftY() * MaxSpeed) // Drive forward with
+                drive.withVelocityX(-gamepad.getLeftY() * MaxSpeed * 0.8) // Drive forward with
                                                                     // negative Y
                                                                     // (forward)
-                        .withVelocityY(-gamepad.getLeftX() * MaxSpeed) // Drive left with
+                        .withVelocityY(-gamepad.getLeftX() * MaxSpeed * 0.8) // Drive left with
                                                                        // negative X
                                                                        // (left)
                         .withRotationalRate(-gamepad.getRightX() * MaxAngularRate) // Drive
