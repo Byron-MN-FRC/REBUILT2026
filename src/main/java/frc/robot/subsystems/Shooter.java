@@ -9,8 +9,11 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,9 +22,13 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
   public TalonFX leftShoot;
+  public TalonFX shooterMagazine2;
 
   public SparkMax shooterGate;
   public SparkMax shooterMagazine;
+  private SparkFlex preShooterFlyWheel; 
+  private SparkFlexConfig preShooterFlywheelConfig;
+
 
   final VelocityVoltage m_velocity = new VelocityVoltage(0);
 
@@ -34,6 +41,14 @@ public class Shooter extends SubsystemBase {
 
     shooterGate = new SparkMax(21, MotorType.kBrushless);
     shooterMagazine = new SparkMax(22, MotorType.kBrushless);
+    shooterMagazine2 = new TalonFX(37);
+    preShooterFlyWheel = new SparkFlex(28, MotorType.kBrushless);
+    preShooterFlywheelConfig = new SparkFlexConfig(); 
+    preShooterFlywheelConfig.idleMode(IdleMode.kCoast);
+    preShooterFlyWheel.configure(preShooterFlywheelConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    preShooterFlywheelConfig.smartCurrentLimit(15);
+    preShooterFlywheelConfig.inverted(true);
+    preShooterFlyWheel.configure(preShooterFlywheelConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
     SparkMaxConfig gateConfig = new SparkMaxConfig();
     SparkMaxConfig magazineConfig = new SparkMaxConfig();
@@ -46,7 +61,13 @@ public class Shooter extends SubsystemBase {
 
     shooterGate.configure(gateConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     shooterMagazine.configure(magazineConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+   TalonFXConfiguration magazine2Configs = new TalonFXConfiguration();
+    magazine2Configs.CurrentLimits.SupplyCurrentLimit = 50; // Limit motor supply current to 70
+    magazine2Configs.CurrentLimits.StatorCurrentLimit = 50;
+    magazine2Configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
+   
+   
     TalonFXConfiguration configs = new TalonFXConfiguration();
     configs.CurrentLimits.SupplyCurrentLimit = 70; // Limit motor supply current to 70
     configs.CurrentLimits.StatorCurrentLimit = 96;
@@ -78,6 +99,13 @@ public class Shooter extends SubsystemBase {
     if (!status.isOK()) {
       System.out.println("Could not apply configs, error code: " + status.toString());
     }
+    /* Retry config apply up to 5 times, report if failure */
+    status = StatusCode.StatusCodeNotInitialized;
+    for (int i = 0; i < 5; ++i) {
+      status = shooterMagazine2.getConfigurator().apply(magazine2Configs);
+      if (status.isOK())
+        break;
+    } 
 
     if (Constants.Debug.DEBUG_MODE) {
       SmartDashboard.putData("Subsystem: Shooter", this);
@@ -123,6 +151,15 @@ public class Shooter extends SubsystemBase {
 
   public void runMagazine(double speed) {
     shooterMagazine.set(-speed);
+    shooterMagazine2.set(-speed);
+  }
+
+  //nmh 
+  public void runPreFylWheel(double speed) {
+    preShooterFlyWheel.set(speed);
+  }
+  public void stopPreFylWheel() {
+    preShooterFlyWheel.set(0);
   }
 
   public void stopGate() {
@@ -131,11 +168,14 @@ public class Shooter extends SubsystemBase {
 
   public void stopMagazine() {
     shooterMagazine.set(0);
+    shooterMagazine2.set(0);
   }
 
   public void stopGates() {
     shooterGate.set(0);
+    preShooterFlyWheel.set(0);
     shooterMagazine.set(0);
+    shooterMagazine2.set(0);
   }
 
   public void stopAll() {
