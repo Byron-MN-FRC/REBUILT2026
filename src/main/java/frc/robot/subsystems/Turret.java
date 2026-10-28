@@ -80,7 +80,7 @@ public class Turret extends SubsystemBase {
             System.out.println("Could not apply configs, error code: " + status.toString());
         }
 
-        zeroSwitch = new DigitalInput(2);
+        zeroSwitch = new DigitalInput(5);
         addChild("zeroSwitch", zeroSwitch);
 
         led = new DigitalOutput(8);

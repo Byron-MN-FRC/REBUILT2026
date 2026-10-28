@@ -37,7 +37,7 @@ public class HopperSubsystem extends SubsystemBase {
     private DigitalInput hopperRetractSwitch;
     // Motor control modes
     // private final NeutralOut m_brake = new NeutralOut();
-    private final MotionMagicVoltage m_mmReq = new MotionMagicVoltage(0);
+    private final MotionMagicVoltage m_mmReq = new MotionMagicVoltage(0).withSlot(0);
 
     public enum HopperState {
         retracted,
@@ -91,17 +91,18 @@ public class HopperSubsystem extends SubsystemBase {
             slot0.kD = 0.5; // A velocity error of 1 rps results in 0.5 V output
 
 
-            // Configure current limiting (10 amps)
+        // Configure current limiting
             CurrentLimitsConfigs currentLimits = new CurrentLimitsConfigs()
-                    .withStatorCurrentLimit(Constants.IntakeHopperConstants.CURRENT_LIMIT);
+            .withStatorCurrentLimit(Constants.IntakeHopperConstants.CURRENT_LIMIT)
+            .withStatorCurrentLimitEnable(true);
 
-            // Set neutral mode to brake
-            hopperExtendMotor.setNeutralMode(NeutralModeValue.Coast);
+        cfg.CurrentLimits = currentLimits;
+        cfg.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
             /* Retry config apply up to 5 times, report if failure */
             StatusCode status = StatusCode.StatusCodeNotInitialized;
             for (int i = 0; i < 5; ++i) {
-                status = hopperExtendMotor.getConfigurator().apply(currentLimits);
+        status = hopperExtendMotor.getConfigurator().apply(cfg);
                 if (status.isOK())
                     break;
             }
@@ -132,22 +133,23 @@ public class HopperSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        if (Constants.Debug.DEBUG_MODE) {
+        if (Constants.Debug.DEBUG_MODE && Constants.Debug.INTAKE_EXTEND_EXISTS) {
             SmartDashboard.putNumber("Hopper Floor Transfer Speed", hopperFloorMotor.get());
             SmartDashboard.putNumber("Hopper Extend Position", hopperExtendMotor.getPosition().getValueAsDouble());
+            SmartDashboard.putString("Hopper Target State", targetHopperState.name());
         }
         if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
             SmartDashboard.putBoolean("Hopper Switch", getHopperRetractSwitch());
         }
 
         // Check lockdown mode
-        if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.engaged) {
-            // In lockdown mode, ensure hopper is retracted
-            // setHopperRetract();
-            if (targetHopperState == HopperState.retracted) {
-                setHopperRetract();
-            }
-        }
+        // if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.engaged) {
+        //     // In lockdown mode, ensure hopper is retracted
+        //     // setHopperRetract();
+        //     if (targetHopperState == HopperState.retracted) {
+        //         setHopperRetract();
+        //     }
+        // }
 
         hopperExtendMotorControl();
     }
@@ -182,15 +184,15 @@ public class HopperSubsystem extends SubsystemBase {
     }
 
     public void setHopperExtendDown() {
-        if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.engaged) {
+       // if (Robot.getInstance().m_climb.currentLockdownMode == LockdownMode.engaged) {
             // In lockdown mode, don't extend
-            return;
-        } else {
+       //     return;
+       // } else {
             targetHopperState = HopperState.extendedDown;
 
             if (Constants.Debug.DEBUG_MODE)
-                System.out.println("Extending hopper");
-        }
+                System.out.println("Extending hopper down");
+       // }
     }
 
     public void setHopperExtendUp() {
@@ -201,7 +203,7 @@ public class HopperSubsystem extends SubsystemBase {
             targetHopperState = HopperState.extendedUp;
 
             if (Constants.Debug.DEBUG_MODE)
-                System.out.println("Extending hopper");
+                System.out.println("Extending hopper up");
         }
     }
 
@@ -264,13 +266,17 @@ public class HopperSubsystem extends SubsystemBase {
 
     public void hopperExtendMotorControl() {
         if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
+            //targetHopperState = HopperState.extendedUp;
             if (targetHopperState == HopperState.retracted) {
+                // System.out.println("set to retract position  0");
                 hopperExtendMotor.setControl(m_mmReq.withPosition(Constants.IntakeHopperConstants.RETRACT_POSITION_POSITION));
             }
             else if (targetHopperState == HopperState.extendedUp) {
+                // System.out.println("set to retract position 1.7");
                 hopperExtendMotor.setControl(m_mmReq.withPosition(Constants.IntakeHopperConstants.EXTENDED_UP_POSITION_POSITION));
             }
             else {
+                // System.out.println("set to retract position 3.4");
                 hopperExtendMotor.setControl(m_mmReq.withPosition(Constants.IntakeHopperConstants.EXTENDED_DOWN_POSITION_POSITION));
             }
             // if (isExtending) {
