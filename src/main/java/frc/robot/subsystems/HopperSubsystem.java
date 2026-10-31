@@ -37,7 +37,7 @@ public class HopperSubsystem extends SubsystemBase {
     private DigitalInput hopperRetractSwitch;
     // Motor control modes
     // private final NeutralOut m_brake = new NeutralOut();
-    private final MotionMagicVoltage m_mmReq = new MotionMagicVoltage(0);
+    private final MotionMagicVoltage m_mmReq = new MotionMagicVoltage(0).withSlot(0);
 
     public enum HopperState {
         retracted,

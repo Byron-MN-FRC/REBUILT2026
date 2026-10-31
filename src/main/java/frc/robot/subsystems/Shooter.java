@@ -10,9 +10,14 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.LimitSwitchConfig.Behavior;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -21,7 +26,13 @@ public class Shooter extends SubsystemBase {
   public TalonFX leftShoot;
 
   public SparkMax shooterGate;
+  
   public SparkMax shooterMagazine;
+  public TalonFX shooterMagazineSecond;
+
+  public SparkFlex preFlywheelShooterTransfer;
+  
+  public SparkFlexConfig motorConfigTransfer;
 
   final VelocityVoltage m_velocity = new VelocityVoltage(0);
 
@@ -34,6 +45,8 @@ public class Shooter extends SubsystemBase {
 
     shooterGate = new SparkMax(21, MotorType.kBrushless);
     shooterMagazine = new SparkMax(22, MotorType.kBrushless);
+    shooterMagazineSecond = new TalonFX(37, Constants.TurretShooterConstants.CAN_BUS);
+    preFlywheelShooterTransfer = new SparkFlex(28, MotorType.kBrushless);
 
     SparkMaxConfig gateConfig = new SparkMaxConfig();
     SparkMaxConfig magazineConfig = new SparkMaxConfig();
@@ -52,6 +65,10 @@ public class Shooter extends SubsystemBase {
     configs.CurrentLimits.StatorCurrentLimit = 96;
 
     configs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+  
+    motorConfigTransfer = new SparkFlexConfig();
+
+    motorConfigTransfer.idleMode(IdleMode.kCoast); // Set idle mode to coast
 
     /*
      * Voltage-based velocity requires a velocity feed forward to account for the
@@ -78,7 +95,15 @@ public class Shooter extends SubsystemBase {
     if (!status.isOK()) {
       System.out.println("Could not apply configs, error code: " + status.toString());
     }
-
+    status = StatusCode.StatusCodeNotInitialized;
+    for (int i = 0; i < 5; ++i) {
+      status = shooterMagazineSecond.getConfigurator().apply(configs);
+      if (status.isOK())
+        break;
+    }
+    if (!status.isOK()) {
+      System.out.println("Could not apply configs, error code: " + status.toString());
+    }
     if (Constants.Debug.DEBUG_MODE) {
       SmartDashboard.putData("Subsystem: Shooter", this);
       SmartDashboard.putNumber("Shooter Speed Override", 0);
@@ -121,8 +146,10 @@ public class Shooter extends SubsystemBase {
     shooterGate.set(speed);
   }
 
-  public void runMagazine(double speed) {
+  public void runMagazine(double speed, double speedTransfer) {
     shooterMagazine.set(-speed);
+    shooterMagazineSecond.set(-speed);
+    preFlywheelShooterTransfer.set(-speedTransfer);
   }
 
   public void stopGate() {
@@ -131,11 +158,15 @@ public class Shooter extends SubsystemBase {
 
   public void stopMagazine() {
     shooterMagazine.set(0);
+    shooterMagazineSecond.set(0);
+    preFlywheelShooterTransfer.set(0);
   }
 
   public void stopGates() {
     shooterGate.set(0);
     shooterMagazine.set(0);
+    shooterMagazineSecond.set(0);
+    preFlywheelShooterTransfer.set(0);
   }
 
   public void stopAll() {

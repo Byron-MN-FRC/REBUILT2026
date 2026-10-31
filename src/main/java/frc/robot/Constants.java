@@ -94,6 +94,7 @@ public class Constants {
         public static final double TURRET_CAM_TIMEOUT = 0.5;
 
         public static final double MAGAZINE_FORWARD_SPEED = 1.0;
+        public static final double FLYWHEELSHOOTER_SPEED = 1.0;
         public static final double GATE_FORWARD_SPEED = 0.3;
         public static final double GATE_REVERSE_SPEED = -0.2;
 

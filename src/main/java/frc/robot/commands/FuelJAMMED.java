@@ -37,7 +37,7 @@ public class FuelJAMMED extends Command {
     @Override
     public void execute() {
         m_hopper.ifIntakeJammed();
-        m_shooter.runMagazine(Constants.TurretShooterConstants.JAM_CLEAR_SPEED);
+        m_shooter.runMagazine(Constants.TurretShooterConstants.JAM_CLEAR_SPEED, Constants.TurretShooterConstants.JAM_CLEAR_SPEED);
         m_shooter.runGate(Constants.TurretShooterConstants.JAM_CLEAR_SPEED);
     }
 
