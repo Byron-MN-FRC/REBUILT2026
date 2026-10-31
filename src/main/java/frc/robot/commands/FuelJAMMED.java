@@ -39,6 +39,7 @@ public class FuelJAMMED extends Command {
         m_hopper.ifIntakeJammed();
         m_shooter.runMagazine(Constants.TurretShooterConstants.JAM_CLEAR_SPEED);
         m_shooter.runGate(Constants.TurretShooterConstants.JAM_CLEAR_SPEED);
+        m_shooter.runPreFylWheel(Constants.TurretShooterConstants.JAM_CLEAR_SPEED); 
     }
 
     // Called once the command ends or is interrupted.
