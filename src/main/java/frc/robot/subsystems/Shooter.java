@@ -66,9 +66,18 @@ public class Shooter extends SubsystemBase {
 
     configs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
   
+   TalonFXConfiguration magtwoconfig = new TalonFXConfiguration();
+    magtwoconfig.CurrentLimits.SupplyCurrentLimit = 50; // Limit motor supply current to 70
+    magtwoconfig.CurrentLimits.StatorCurrentLimit = 50;
+
+    magtwoconfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
     motorConfigTransfer = new SparkFlexConfig();
 
     motorConfigTransfer.idleMode(IdleMode.kCoast); // Set idle mode to coast
+    motorConfigTransfer.smartCurrentLimit(15); // Limit transfer motor current
+    motorConfigTransfer.inverted(true); // Invert transfer motor direction
+    preFlywheelShooterTransfer.configure(motorConfigTransfer, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     /*
      * Voltage-based velocity requires a velocity feed forward to account for the
