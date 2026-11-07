@@ -51,7 +51,7 @@ public class Turret extends SubsystemBase {
         TalonFXConfiguration configs = new TalonFXConfiguration();
 
         configs.CurrentLimits = currentLimits;
-        configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        configs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
     
 
         configs.Slot0.kS = 0.25; // Add 0.25 V output to overcome static friction
