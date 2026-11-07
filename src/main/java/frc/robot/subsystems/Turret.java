@@ -17,6 +17,7 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
@@ -50,6 +51,8 @@ public class Turret extends SubsystemBase {
         TalonFXConfiguration configs = new TalonFXConfiguration();
 
         configs.CurrentLimits = currentLimits;
+        configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+    
 
         configs.Slot0.kS = 0.25; // Add 0.25 V output to overcome static friction
         configs.Slot0.kV = 0.12; // A velocity target of 1 rps results in 0.12 V output
