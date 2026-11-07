@@ -64,7 +64,7 @@ public class Shooter extends SubsystemBase {
    TalonFXConfiguration magazine2Configs = new TalonFXConfiguration();
     magazine2Configs.CurrentLimits.SupplyCurrentLimit = 50; // Limit motor supply current to 70
     magazine2Configs.CurrentLimits.StatorCurrentLimit = 50;
-    magazine2Configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+    magazine2Configs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
    
    
