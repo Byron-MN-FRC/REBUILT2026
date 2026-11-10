@@ -70,7 +70,7 @@ public class Constants {
         // public static final double EXTEND_TIME_SECONDS = 0.75;
         public static final int CURRENT_LIMIT = 15;
         public static final double RETRACT_POSITION_POSITION = 0;
-        public static final double EXTENDED_UP_POSITION_POSITION = -1.7;
+        public static final double EXTENDED_UP_POSITION_POSITION = -1.6;
         public static final double EXTENDED_DOWN_POSITION_POSITION = -3.4;
         public static final double MOTOR_TOLERANCE = 0.05;
         public static final double HOPPER_ZEROING_SPEED = 0.2;
