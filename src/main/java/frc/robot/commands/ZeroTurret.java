@@ -20,7 +20,7 @@ public class ZeroTurret extends Command {
 
      @Override
      public void execute() {
-         if (m_turret.zeroSwitch.get()) {
+         if (m_turret.isZeroSwitchActive()) {
                 m_turret.rotateShooterMotor.setPosition(Constants.TurretShooterConstants.MAX_LEFT_POSITION);
             } else {
                 m_turret.rotateShooterMotor.set(Constants.TurretShooterConstants.TURRET_ZEROING_SPEED);
@@ -29,12 +29,16 @@ public class ZeroTurret extends Command {
 
      @Override
      public void end(boolean interrupted) {
-        m_turret.aimDegrees(Constants.TurretShooterConstants.NEUTRAL_POSITION);
+        if (interrupted) {
+            m_turret.spinStop();
+        } else if (m_turret.isZeroSwitchActive()) {
+            m_turret.aimDegrees(Constants.TurretShooterConstants.NEUTRAL_POSITION);
+        }
     }
 
      @Override
      public boolean isFinished() {
          // Return true when the turret is successfully zeroed
-         return m_turret.zeroSwitch.get();
+         return m_turret.isZeroSwitchActive();
      }
 }

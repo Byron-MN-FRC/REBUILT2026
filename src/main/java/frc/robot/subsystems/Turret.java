@@ -31,6 +31,7 @@ import frc.robot.TurretCam;
 
 public class Turret extends SubsystemBase {
     public TalonFX rotateShooterMotor;
+    private boolean configOk = false;
 
     public DigitalInput zeroSwitch;
 
@@ -79,8 +80,15 @@ public class Turret extends SubsystemBase {
             if (status.isOK())
                 break;
         }
+        configOk = status.isOK();
+        SmartDashboard.putBoolean("Turret/Config OK", configOk);
         if (!status.isOK()) {
             System.out.println("Could not apply configs, error code: " + status.toString());
+            SmartDashboard.putString("Turret/Config Error", status.toString());
+        } else {
+            rotateShooterMotor.setPosition(0);
+            rotateShooterMotor.set(0);
+            SmartDashboard.putNumber("Turret/Boot Position", rotateShooterMotor.getPosition().getValueAsDouble());
         }
 
         zeroSwitch = new DigitalInput(5);
@@ -99,6 +107,8 @@ public class Turret extends SubsystemBase {
         if (Constants.Debug.DEBUG_MODE)
             SmartDashboard.putNumber("Rotation", rotateShooterMotor.getPosition().getValueAsDouble());
         SmartDashboard.putBoolean("Turret Switch", zeroSwitch.get());
+        SmartDashboard.putBoolean("Turret/Zero Switch Raw", isZeroSwitchRaw());
+        SmartDashboard.putBoolean("Turret/Zero Switch Active", isZeroSwitchActive());
 
         SmartDashboard.putBoolean("Target Locked", TurretCam.targetLocked());
     }
@@ -118,6 +128,11 @@ public class Turret extends SubsystemBase {
     }
 
     public void aimDegrees(double degrees) {
+        if (!configOk) {
+            SmartDashboard.putString("Turret/Aim Status", "Blocked: config not OK");
+            return;
+        }
+        SmartDashboard.putNumber("Turret/Commanded Degrees", degrees);
         // if (Robot.getInstance().m_hopper.isExtending == false) {
         if (Robot.getInstance().m_hopper.isHopperRetracted()) {
             degrees = Math.max(Constants.TurretShooterConstants.MAX_LEFT_DEGREES, degrees);
@@ -133,6 +148,9 @@ public class Turret extends SubsystemBase {
 
     // Decide whether to switch from double to Rotation2d
     public void aimFieldRelativeAngle(double degrees) {
+        if (!configOk) {
+            return;
+        }
 
         var robotAngle = Robot.getInstance().drivetrain.getState().Pose.getRotation().getDegrees();
         var backRobotAngle = robotAngle + 180;
@@ -158,6 +176,14 @@ public class Turret extends SubsystemBase {
 
     public boolean getZeroSwitch() {
         return zeroSwitch.get();
+    }
+
+    public boolean isZeroSwitchRaw() {
+        return zeroSwitch.get();
+    }
+
+    public boolean isZeroSwitchActive() {
+        return isZeroSwitchRaw();
     }
 
     public boolean atTarget(double pos) {
