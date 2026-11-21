@@ -5,6 +5,7 @@ import static edu.wpi.first.units.Units.Volts;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.hardware.DeviceIdentifier;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.revrobotics.PersistMode;
@@ -34,7 +35,7 @@ public class Shooter extends SubsystemBase {
 
   public double targetRPM = 2375;
 
-  private final double rpmTol = 50; // Tolerance in RPM
+  private final double rpmTol = 100; // Tolerance in RPM
 
   public Shooter() {
     leftShoot = new TalonFX(24, Constants.TurretShooterConstants.CAN_BUS);
