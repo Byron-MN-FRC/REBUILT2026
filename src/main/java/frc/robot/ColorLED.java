@@ -29,7 +29,7 @@ public class ColorLED {
     public ColorLED(int port, int[] lengths) {
         int totalLength = 0;
         for (int len : lengths) totalLength += len;
-        
+
         m_led = new AddressableLED(port);
         m_ledBuffer = new AddressableLEDBuffer(totalLength);
         m_led.setLength(m_ledBuffer.getLength());
@@ -51,12 +51,12 @@ public class ColorLED {
     //     Available: none, rainbow, fasterfaster, climbprogressbar(not tested), blueflashing, greenflashing, red, maroon, orange, yellow, green, lime, blue, lightblue, purple, pink, magenta, white, gold
     // ====================================================================================================================================================================================================
 
-     public Color getCurrentColor() {
+    public Color getCurrentColor() {
         Color firstLEDColor = m_ledBuffer.getLED(0);
         return firstLEDColor;
-     }
+    }
 
-     public void none() {
+    public void none() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 0, 0, 0);
         }
@@ -66,12 +66,12 @@ public class ColorLED {
     public void rainbow() {
         // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-           // Calculate the hue - hue is easier for rainbows because the color
-             // shape is a circle so only one value needs to precess
-              var hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
+            // Calculate the hue - hue is easier for rainbows because the color
+            // shape is a circle so only one value needs to precess
+            var hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
 
-             // Set the value
-             m_ledBuffer.setHSV(i, hue, 255, 128);
+            // Set the value
+            m_ledBuffer.setHSV(i, hue, 255, 128);
         }
         // Increase by to make the rainbow "move"
         m_rainbowFirstPixelHue += 3; //higher number = faster
@@ -134,12 +134,12 @@ public class ColorLED {
         }
         m_led.setData(m_ledBuffer);
     }
-     
+
     public void red() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 255, 0, 0);
         }
-        
+
         m_led.setData(m_ledBuffer);
     }
 
@@ -147,38 +147,38 @@ public class ColorLED {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 128, 0, 0);
         }
-        
+
         m_led.setData(m_ledBuffer);
     }
 
     public void orange() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 255, 165, 0);
-         }
-         m_led.setData(m_ledBuffer);
+        }
+        m_led.setData(m_ledBuffer);
     }
 
     public void yellow() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 255, 255, 0);
-         }
-         m_led.setData(m_ledBuffer);
+        }
+        m_led.setData(m_ledBuffer);
     }
-    
+
     public void green() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 17, 125, 0);
         }
         m_led.setData(m_ledBuffer);
     }
-    
+
     public void lime() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 0, 255, 0);
         }
         m_led.setData(m_ledBuffer);
     }
-      
+
     public void blue() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 0, 0, 255);
@@ -196,35 +196,35 @@ public class ColorLED {
     public void purple() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 128, 0, 128);
-         }
-         m_led.setData(m_ledBuffer);
+        }
+        m_led.setData(m_ledBuffer);
     }
 
     public void pink() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 255, 145, 255);
-         }
-         m_led.setData(m_ledBuffer);
+        }
+        m_led.setData(m_ledBuffer);
     }
 
     public void magenta() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 255, 0, 255);
-         }
-         m_led.setData(m_ledBuffer);
+        }
+        m_led.setData(m_ledBuffer);
     }
-    
+
     public void white() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 255, 255, 255);
         }
         m_led.setData(m_ledBuffer);
     }
-    
+
     public void gold() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 255, 215, 0);
-         }
-         m_led.setData(m_ledBuffer);
+        }
+        m_led.setData(m_ledBuffer);
     }
 }

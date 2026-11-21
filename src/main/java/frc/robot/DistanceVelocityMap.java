@@ -44,7 +44,7 @@ public class DistanceVelocityMap {
 
         var ceilVelocity = distanceVelocityMap.ceilingEntry(distance).getValue().doubleValue();
         var floorVelocity = distanceVelocityMap.floorEntry(distance).getValue().doubleValue();
-        
+
         var m = (ceilVelocity - floorVelocity) / (ceilDistance - floorDistance);
         var y = m * (distance - floorDistance) + floorVelocity;
 

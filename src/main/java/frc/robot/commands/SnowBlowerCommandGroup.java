@@ -14,18 +14,18 @@ import frc.robot.subsystems.Turret;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SnowBlowerCommandGroup extends ParallelCommandGroup {
-  /** Creates a new SnowBlowerCommandGroup. */
-  public SnowBlowerCommandGroup(double rpm, Shooter shooterSubsystem, HopperSubsystem hopperSubsystem,
-      LedsSubsystem ledSubsystem, Turret m_turret) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-        new RPMShootCommand(
-            rpm,
-            shooterSubsystem,
-            hopperSubsystem,
-            ledSubsystem),
-        new SnowBlowerAiming(
-            m_turret));
-  }
+    /** Creates a new SnowBlowerCommandGroup. */
+    public SnowBlowerCommandGroup(double rpm, Shooter shooterSubsystem, HopperSubsystem hopperSubsystem,
+            LedsSubsystem ledSubsystem, Turret m_turret) {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+                new RPMShootCommand(
+                        rpm,
+                        shooterSubsystem,
+                        hopperSubsystem,
+                        ledSubsystem),
+                new SnowBlowerAiming(
+                        m_turret));
+    }
 }

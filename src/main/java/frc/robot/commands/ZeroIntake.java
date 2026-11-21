@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.HopperSubsystem;
 
 public class ZeroIntake extends Command {
@@ -15,7 +14,6 @@ public class ZeroIntake extends Command {
     @Override
     public void initialize() {
         // Code to zero the turret goes here
-
     }
 
     @Override

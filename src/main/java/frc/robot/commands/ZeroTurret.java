@@ -12,29 +12,28 @@ public class ZeroTurret extends Command {
         addRequirements(m_turret);
     }
 
-     @Override
-     public void initialize() {
-         // Code to zero the turret goes here
-  
-     }
+    @Override
+    public void initialize() {
+        // Code to zero the turret goes here
+    }
 
-     @Override
-     public void execute() {
-         if (m_turret.zeroSwitch.get()) {
-                m_turret.rotateShooterMotor.setPosition(Constants.TurretShooterConstants.MAX_LEFT_POSITION);
-            } else {
-                m_turret.rotateShooterMotor.set(Constants.TurretShooterConstants.TURRET_ZEROING_SPEED);
-            }
-     }
+    @Override
+    public void execute() {
+        if (m_turret.zeroSwitch.get()) {
+            m_turret.rotateShooterMotor.setPosition(Constants.TurretShooterConstants.MAX_LEFT_POSITION);
+        } else {
+            m_turret.rotateShooterMotor.set(Constants.TurretShooterConstants.TURRET_ZEROING_SPEED);
+        }
+    }
 
-     @Override
-     public void end(boolean interrupted) {
+    @Override
+    public void end(boolean interrupted) {
         m_turret.aimDegrees(Constants.TurretShooterConstants.NEUTRAL_POSITION);
     }
 
-     @Override
-     public boolean isFinished() {
-         // Return true when the turret is successfully zeroed
-         return m_turret.zeroSwitch.get();
-     }
+    @Override
+    public boolean isFinished() {
+        // Return true when the turret is successfully zeroed
+        return m_turret.zeroSwitch.get();
+    }
 }

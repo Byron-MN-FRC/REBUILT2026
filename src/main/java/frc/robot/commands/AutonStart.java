@@ -10,6 +10,6 @@ public class AutonStart extends SequentialCommandGroup {
     public AutonStart(Turret turret, ClimbSubsystem climb, LedsSubsystem leds, HopperSubsystem hopper) {
         addCommands(
             new ZeroAll(turret, climb, leds, hopper)
-        );
+                );
     }
 }

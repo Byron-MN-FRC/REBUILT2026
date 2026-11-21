@@ -1,99 +1,94 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.TurretCam;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.Turret;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class TrackHubNew extends Command {
 
-  private Turret m_turret;
-  private final LedsSubsystem m_leds;
-  private Timer m_timer = new Timer();
+    private Turret m_turret;
+    private final LedsSubsystem m_leds;
+    private Timer m_timer = new Timer();
 
-  /** Creates a new trackHub. */
-  public TrackHubNew(Turret subsystem, LedsSubsystem leds) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
-    m_leds = leds;
-    m_turret = subsystem;
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    m_leds.turretRequestingLeds();
-    m_timer.reset();
-    m_timer.stop();
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-
-    // if (TurretCam.targetLocated() == true) {
-    // m_turret
-    // .aimDegrees((m_turret.getAngleDegrees()) + TurretCam.getAngleError());
-    // m_timer.stop();
-    // m_timer.reset();
-
-    // } else if (!TurretCam.targetLocated() && !m_timer.isRunning()) {
-    // m_timer.start();
-    // }
-
-    // if (m_timer.hasElapsed(Constants.TurretShooterConstants.TURRET_CAM_TIMEOUT))
-    // {
-    // m_turret.aimDegrees(Constants.TurretShooterConstants.NEUTRAL_POSITION);
-    // }
-    Translation2d target = Constants.FieldConstants.getAllianceHubCenter();
-    
-
-    // Calculate distances and angles
-    Pose2d currentPose = Robot.getInstance().drivetrain.getState().Pose;
-    double yDistance = target.getY() - currentPose.getTranslation().getY();
-    double xDistance = target.getX() - currentPose.getTranslation().getX();
-    double angleToTarget = Math.atan2(yDistance, xDistance) * (180 / Math.PI);
-    
-
-    if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("angleToTarget", -angleToTarget);
-
-    m_turret.aimFieldRelativeAngle(angleToTarget);
-
-    // Generate LED colors based on how close the turret angle is to the target.
-    // Green is on target and red is not.
-    if (TurretCam.getAngleError() <= 2.0 && TurretCam.targetLocated() == true) { //should trigger when target located and the error is less the 0.1
-      if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
-        m_leds.setColorGreen();
-      }
-    } else {
-      if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
-        m_leds.setColorRed();
-      }
+    /** Creates a new trackHub. */
+    public TrackHubNew(Turret subsystem, LedsSubsystem leds) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(subsystem);
+        m_leds = leds;
+        m_turret = subsystem;
     }
-  }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    m_turret.aimDegrees(0);
-    m_leds.noSubsystemUsingLeds();
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        m_leds.turretRequestingLeds();
+        m_timer.reset();
+        m_timer.stop();
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        m_leds.turretRequestingLeds();
+
+        // if (TurretCam.targetLocated() == true) {
+        // m_turret
+        // .aimDegrees((m_turret.getAngleDegrees()) + TurretCam.getAngleError());
+        // m_timer.stop();
+        // m_timer.reset();
+
+        // } else if (!TurretCam.targetLocated() && !m_timer.isRunning()) {
+        // m_timer.start();
+        // }
+
+        // if (m_timer.hasElapsed(Constants.TurretShooterConstants.TURRET_CAM_TIMEOUT))
+        // {
+        // m_turret.aimDegrees(Constants.TurretShooterConstants.NEUTRAL_POSITION);
+        // }
+        Translation2d target = Constants.FieldConstants.getAllianceHubCenter();
+
+
+        // Calculate distances and angles
+        Pose2d currentPose = Robot.getInstance().drivetrain.getState().Pose;
+        double yDistance = target.getY() - currentPose.getTranslation().getY();
+        double xDistance = target.getX() - currentPose.getTranslation().getX();
+        double angleToTarget = Math.atan2(yDistance, xDistance) * (180 / Math.PI);
+
+
+        if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("angleToTarget", -angleToTarget);
+
+        m_turret.aimFieldRelativeAngle(angleToTarget);
+
+        // Generate LED colors based on how close the turret angle is to the target.
+        // Green is on target and red is not.
+        if (m_turret.onTarget() && !m_turret.isSetpointClamped()) {
+            if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
+                m_leds.setColorGreen();
+            }
+        } else {
+            if (m_leds.usingSubsystem == LedsSubsystem.SubsystemUsingLEDS.turret) {
+                m_leds.setColorRed();
+            }
+        }
+    }
+
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        m_turret.aimDegrees(0);
+        m_leds.noSubsystemUsingLeds();
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

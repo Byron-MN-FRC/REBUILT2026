@@ -41,8 +41,8 @@ public class HopperSubsystem extends SubsystemBase {
 
     public enum HopperState {
         retracted,
-        extendedUp,
-        extendedDown
+                extendedUp,
+                extendedDown
     };
 
     public HopperState targetHopperState = HopperState.retracted;
@@ -68,7 +68,7 @@ public class HopperSubsystem extends SubsystemBase {
         if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
 
             hopperExtendMotor = new TalonFX(17);
-            
+
             TalonFXConfiguration cfg = new TalonFXConfiguration();
 
             /* Configure gear ratio */
@@ -78,8 +78,8 @@ public class HopperSubsystem extends SubsystemBase {
             /* Configure Motion Magic */
             MotionMagicConfigs mm = cfg.MotionMagic;
             mm.withMotionMagicCruiseVelocity(RotationsPerSecond.of(1))
-                    .withMotionMagicAcceleration(RotationsPerSecondPerSecond.of(2)) 
-                    // Take approximately 0.1 seconds to reach max accel
+                    .withMotionMagicAcceleration(RotationsPerSecondPerSecond.of(2))
+            // Take approximately 0.1 seconds to reach max accel
                     .withMotionMagicJerk(RotationsPerSecondPerSecond.per(Second).of(40));
 
             Slot0Configs slot0 = cfg.Slot0;
@@ -134,7 +134,9 @@ public class HopperSubsystem extends SubsystemBase {
         // This method will be called once per scheduler run
         if (Constants.Debug.DEBUG_MODE) {
             SmartDashboard.putNumber("Hopper Floor Transfer Speed", hopperFloorMotor.get());
-            SmartDashboard.putNumber("Hopper Extend Position", hopperExtendMotor.getPosition().getValueAsDouble());
+            if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
+                SmartDashboard.putNumber("Hopper Extend Position", hopperExtendMotor.getPosition().getValueAsDouble());
+            }
         }
         if (Constants.Debug.INTAKE_EXTEND_EXISTS) {
             SmartDashboard.putBoolean("Hopper Switch", getHopperRetractSwitch());
@@ -208,7 +210,7 @@ public class HopperSubsystem extends SubsystemBase {
     public void setHopperRetract() {
         targetHopperState = HopperState.retracted;
 
-    
+
     }
 
     public boolean isHopperExtendedUp() {

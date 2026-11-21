@@ -31,12 +31,12 @@ public class DriveToPosition extends Command {
     private final ProfiledPIDController omegaController = new ProfiledPIDController(4, 0, .1, OMEGA_CONSTRAINTS);
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity    
-    
+    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+
     private final CommandSwerveDrivetrain drivetrain;
     private Pose2d goalPose;
     private Pose2d currentPose;
-    
+
     /**
      * @param subsystem
      * @param goalPose
@@ -56,22 +56,22 @@ public class DriveToPosition extends Command {
     public void initialize() {
 
         goalPose = TagApproaches.getInstance().DesiredRobotPos(Robot.getInstance().m_vision.lastAlignmentTarget);
-        
+
         currentPose = drivetrain.getState().Pose;
         magnitudeController.reset(currentPose.getTranslation().getDistance(goalPose.getTranslation()));
         omegaController.reset(currentPose.getRotation().getRadians());
-        
+
         magnitudeController.setGoal(0);
         omegaController.setGoal(goalPose.getRotation().getRadians());
 
-    // Optional: set the dashboard field target for visualization.
-    // Robot.getInstance().targetPoseField.setRobotPose(goalPose);
+        // Optional: set the dashboard field target for visualization.
+        // Robot.getInstance().targetPoseField.setRobotPose(goalPose);
     }
-    
+
     // // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        
+
         // Calculate distances and angles
         currentPose = drivetrain.getState().Pose;
         double currentDistance = currentPose.getTranslation().getDistance(goalPose.getTranslation());
@@ -79,10 +79,10 @@ public class DriveToPosition extends Command {
         double xDistance = goalPose.getTranslation().getX() - currentPose.getTranslation().getX();
         // TODO explain
         double angle = Math.atan2(yDistance, xDistance);
-        
+
         // Calculate speeds from controllers
         var combinedSpeed = magnitudeController.calculate(currentDistance);
-        
+
         double xSpeedFromPolar = Math.cos(angle) * combinedSpeed;
         double ySpeedFromPolar = Math.sin(angle) * combinedSpeed;
 
@@ -92,14 +92,14 @@ public class DriveToPosition extends Command {
         }
 
         var omegaSpeed = omegaController.calculate(currentPose.getRotation().getRadians());
-        
+
         if (omegaController.atGoal()) {
             omegaSpeed = 0;
         }
 
         /*
         * DEBUGGING INFO
-        * 
+        *
         * SmartDashboard.putString("goal pose", goalPose.toString());
         * SmartDashboard.putString("currentPose", drivetrain.getState().Pose.toString());
         * SmartDashboard.putNumber("combinedSpeed", combinedSpeed);
@@ -110,28 +110,28 @@ public class DriveToPosition extends Command {
         * SmartDashboard.putNumber("dCXGX", xDistance);
         *
         */
-        
+
         // Drive
 
         Optional<Alliance> ally = DriverStation.getAlliance();
-        
+
         if (ally.get() == Alliance.Red) {
             drivetrain.setControl(
-            Robot.getInstance().drive
-            .withVelocityX(xSpeedFromPolar * MaxSpeed)
-            .withVelocityY(ySpeedFromPolar * MaxSpeed)
-            .withRotationalRate(omegaSpeed * MaxAngularRate)
-            );
+                    Robot.getInstance().drive
+                    .withVelocityX(xSpeedFromPolar * MaxSpeed)
+                    .withVelocityY(ySpeedFromPolar * MaxSpeed)
+                    .withRotationalRate(omegaSpeed * MaxAngularRate)
+                    );
         } else {
             drivetrain.setControl(
                 Robot.getInstance().drive
                 .withVelocityX(-xSpeedFromPolar * MaxSpeed)
-            .withVelocityY(-ySpeedFromPolar * MaxSpeed)
-            .withRotationalRate(omegaSpeed * MaxAngularRate)
-            );
+                    .withVelocityY(-ySpeedFromPolar * MaxSpeed)
+                    .withRotationalRate(omegaSpeed * MaxAngularRate)
+                    );
         }
     }
-    
+
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {}

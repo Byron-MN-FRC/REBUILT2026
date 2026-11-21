@@ -102,7 +102,7 @@ public class Vision extends SubsystemBase {
      * TODO fix
      * The purpose of this method is to remove errors caused during resetting
      * the rotation of the robot when the cameras can see an April Tag
-     * 
+     *
      * @Param seconds The time period to disable for (tested at .5 seconds)
      * @return void
      */

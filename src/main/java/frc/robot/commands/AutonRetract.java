@@ -1,4 +1,5 @@
 package frc.robot.commands;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.HopperSubsystem;
 
@@ -10,7 +11,7 @@ public class AutonRetract extends Command {
         addRequirements(m_hopper);
     }
 
-    @Override 
+    @Override
     public void initialize() {
 
         m_hopper.setHopperRetract();

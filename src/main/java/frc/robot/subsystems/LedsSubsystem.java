@@ -10,32 +10,32 @@ import frc.robot.subsystems.ClimbSubsystem.LockdownMode;
 public class LedsSubsystem extends SubsystemBase {
     public enum LedColor {
         none, //no color, lights are off and the smartdashboard displays black.
-        red,
+                red,
             maroon,
-        orange,
-        yellow,
-        green,
+                orange,
+                yellow,
+                green,
             lime,
-        blue,
+                blue,
             lightblue,
-        purple,
+                purple,
             pink,
             magenta,
-        gold,
-        white,
-        rainbow,
-        fasterfaster,
-        climbProgressBar,
-        blueFlashing,
-        greenFlashing
+                gold,
+                white,
+                rainbow,
+                fasterfaster,
+                climbProgressBar,
+                blueFlashing,
+                greenFlashing
     };
     public enum SubsystemUsingLEDS {
         none,
-        drive,
-        hopper,
-        turret,
-        shooter,
-        climb
+                drive,
+                hopper,
+                turret,
+                shooter,
+                climb
     };
     public String hexValue;
     public LedColor ledColor = LedColor.none;
@@ -50,7 +50,7 @@ public class LedsSubsystem extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         if (Constants.Debug.DEBUG_MODE) SmartDashboard.putString("Subsystem Using LEDs", usingSubsystem.name());
-        if (Constants.Debug.DEBUG_MODE) SmartDashboard.putString("LED Hex Value", lightStrip.getCurrentColor().toHexString());  
+        if (Constants.Debug.DEBUG_MODE) SmartDashboard.putString("LED Hex Value", lightStrip.getCurrentColor().toHexString());
         //these are being run because they require being always set to function properly. Their methods just set the color enumerator and then the rest is done by this when it reads one of those values.
         if (ledColor == LedColor.rainbow || ledColor == LedColor.none) {
             lightStrip.rainbow();
@@ -78,9 +78,7 @@ public class LedsSubsystem extends SubsystemBase {
     //priority from least to greatest: none, drive, hopper, turret, shooter, climb
     //rank 5 (de jure default)
     public void noSubsystemUsingLeds() { //all commands, when finished, set the LEDs to this but the LEDs go back to using driveTrain LEDs right after the fact because of their higher priority, hence why the lights are always rainbow by default.
-        if (usingSubsystem != SubsystemUsingLEDS.none && usingSubsystem != SubsystemUsingLEDS.shooter && usingSubsystem != SubsystemUsingLEDS.turret && usingSubsystem != SubsystemUsingLEDS.hopper && usingSubsystem != SubsystemUsingLEDS.drive  && usingSubsystem != SubsystemUsingLEDS.climb) {
-            usingSubsystem = SubsystemUsingLEDS.none;
-        }
+        usingSubsystem = SubsystemUsingLEDS.none;
     }
     //rank 4 (de facto default)
     public void driveTrainRequestingLeds() {
@@ -103,13 +101,13 @@ public class LedsSubsystem extends SubsystemBase {
     //rank 1
     public void shooterRequestingLeds() {
         if (usingSubsystem != SubsystemUsingLEDS.climb) {
-            usingSubsystem = SubsystemUsingLEDS.shooter; 
+            usingSubsystem = SubsystemUsingLEDS.shooter;
         }
     }
     //rank 0
-    public void climbRequestingLeds() { //nothing can override climb, this only sets the enumerator to climb. 
-        if (usingSubsystem != SubsystemUsingLEDS.climb) { //Also lockdown leds are considered to be climb using them because lockdown is a minion of the all powerful climb subsystem I believe. 
-            usingSubsystem = SubsystemUsingLEDS.climb; 
+    public void climbRequestingLeds() { //nothing can override climb, this only sets the enumerator to climb.
+        if (usingSubsystem != SubsystemUsingLEDS.climb) { //Also lockdown leds are considered to be climb using them because lockdown is a minion of the all powerful climb subsystem I believe.
+            usingSubsystem = SubsystemUsingLEDS.climb;
         }
     }
     //========================================================================================================================================================================================================================
@@ -141,12 +139,12 @@ public class LedsSubsystem extends SubsystemBase {
     }
     public void setColorGreen() {
         ledColor = LedColor.green;
-        lightStrip.green(); 
+        lightStrip.green();
         hexValue = "#117d00";
     }
     public void setColorLime() {
         ledColor = LedColor.lime;
-        lightStrip.lime(); 
+        lightStrip.lime();
         hexValue = "#00FF00";
     }
     public void setColorBlue() {
@@ -162,7 +160,7 @@ public class LedsSubsystem extends SubsystemBase {
     public void setColorPurple() {
         ledColor = LedColor.purple;
         lightStrip.purple();
-        hexValue = "#800080";  
+        hexValue = "#800080";
     }
     public void setColorWhite() {
         ledColor = LedColor.white;

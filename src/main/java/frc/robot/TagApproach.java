@@ -6,19 +6,19 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 public class TagApproach {
     enum gameTarget {
         Hub,
-        Trench,
-        Outpost, 
-        Tower,
-        None
+                Trench,
+                Outpost,
+                Tower,
+                None
     }
-    
+
     private int _fiducialNumber;
     private Alliance _alliance;
     private gameTarget _targetType;
     private Pose2d _desiredPose;
     private String _descriptor;
-    
-    public TagApproach(int id, Alliance alliance, gameTarget targetType, 
+
+    public TagApproach(int id, Alliance alliance, gameTarget targetType,
         Pose2d desiredPose) {
         _fiducialNumber = id;
         _descriptor = "";
@@ -46,7 +46,7 @@ public class TagApproach {
     public gameTarget GameTarget(){
         return _targetType;
     }
-    
+
     public Pose2d DesiredPos(){
         return _desiredPose;
     }

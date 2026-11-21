@@ -9,17 +9,16 @@ import com.ctre.phoenix6.HootAutoReplay;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
-    
+
 
     private Command m_autonomousCommand;
-   
+
 
     private static final RobotContainer m_robotContainer = new RobotContainer();
     //public static final ColorLED ColorLED = new ColorLED();
@@ -34,26 +33,26 @@ public class Robot extends TimedRobot {
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         enableLiveWindowInTest(true);
     }
-    
+
     public static RobotContainer getInstance(){
         return m_robotContainer;
     }
-    
+
     @Override
     public void robotInit() {}
-        
+
     @Override
     public void robotPeriodic() {
-            m_timeAndJoystickReplay.update();
-            CommandScheduler.getInstance().run(); 
-            m_robotContainer.m_field.setRobotPose(m_robotContainer.drivetrain.getState().Pose);
-            
-            SmartDashboard.putNumber("Robot Gyro", m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees());
+        m_timeAndJoystickReplay.update();
+        CommandScheduler.getInstance().run();
+        m_robotContainer.m_field.setRobotPose(m_robotContainer.drivetrain.getState().Pose);
 
-            if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("Turret Distance to Hub", m_robotContainer.m_vision.calculateDistance(Constants.FieldConstants.getAllianceHubCenter()));
-            if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("Rotational Speed", m_robotContainer.drivetrain.getState().Speeds.omegaRadiansPerSecond);
+        SmartDashboard.putNumber("Robot Gyro", m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees());
+
+        if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("Turret Distance to Hub", m_robotContainer.m_vision.calculateDistance(Constants.FieldConstants.getAllianceHubCenter()));
+        if (Constants.Debug.DEBUG_MODE) SmartDashboard.putNumber("Rotational Speed", m_robotContainer.drivetrain.getState().Speeds.omegaRadiansPerSecond);
     }
-        
+
     @Override
     public void disabledInit() {
         Robot.getInstance().m_climb.stopAll();

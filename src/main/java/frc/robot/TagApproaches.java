@@ -188,7 +188,7 @@ public class TagApproaches {
         return FieldLayout.getTagPose(tagID).get().getRotation().toRotation2d().getDegrees();
     }
 
-    
+
 
     /**
      * Rotates a field-relative pose to the opposite side of the field.
@@ -216,7 +216,7 @@ public class TagApproaches {
      * @param tagRelativeOffset offset expressed relative to the tag
      * @return new field-relative pose after applying the offset
      */
-    public Pose2d addTagCentricOffset(Pose2d goalBeforeShift, Pose2d tagRelativeOffset) { 
+    public Pose2d addTagCentricOffset(Pose2d goalBeforeShift, Pose2d tagRelativeOffset) {
 
         Translation2d TagTranslation = goalBeforeShift.getTranslation();
         Rotation2d TagAngle = goalBeforeShift.getRotation();
@@ -240,28 +240,28 @@ public class TagApproaches {
 
     /**
      * Shifts the robot's goal position laterally based on the selected scoring pose.
-     * 
+     *
      * This method adjusts the robot's target position to align with different scoring
      * positions (left, center, or right) by applying a lateral offset perpendicular
      * to the goal orientation. The offset values are hardcoded for each position:
      * - Left: +0.1234 meters
-     * - Right: -0.235 meters  
+     * - Right: -0.235 meters
      * - Center: 0 meters (no offset)
-     * 
+     *
      * The offset is applied perpendicular to the goal angle (90 degrees offset)
      * to move the robot left or right relative to its facing direction.
-     * 
+     *
      * @param goalBeforeShift The original goal pose before any lateral adjustment
      * @return A new Pose2d with the lateral offset applied
      */
     // public Pose2d shiftAlign(Pose2d goalBeforeShift) {
     //     double offset = 0;
 
-    //     if (Constants.Selector.PlacementSelector.getScoringPose() == 
+    //     if (Constants.Selector.PlacementSelector.getScoringPose() ==
     //         Constants.Selector.PlacementSelector.left) {
     //         offset = 0.1234;
     //         System.out.println("moving left");
-    //     } else if (Constants.Selector.PlacementSelector.getScoringPose() == 
+    //     } else if (Constants.Selector.PlacementSelector.getScoringPose() ==
     //                Constants.Selector.PlacementSelector.right) {
     //         offset = -0.235;
     //         System.out.println("moving right");
@@ -272,7 +272,7 @@ public class TagApproaches {
 
     //     Rotation2d goalAngle = goalBeforeShift.getRotation();
     //     Translation2d oldTranslation = goalBeforeShift.getTranslation();
-    //     Translation2d offsetTranslation = new Translation2d(offset, 
+    //     Translation2d offsetTranslation = new Translation2d(offset,
     //         goalAngle.plus(Rotation2d.fromDegrees(90)));
     //     Translation2d newGoalTranslation = oldTranslation.plus(offsetTranslation);
 

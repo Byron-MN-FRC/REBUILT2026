@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -73,13 +74,13 @@ public class RobotContainer {
     public final HopperSubsystem m_hopper = new HopperSubsystem();
     public final LedsSubsystem m_leds = new LedsSubsystem();
 
-   
+
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top
-                                                                                        // speed
+    // speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second
-                                                                                      // max angular velocity
+    // max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     public final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -107,7 +108,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutonExtend", new AutonExtend(m_hopper, m_leds));
         NamedCommands.registerCommand("AutonIntake", new AutonIntake(m_hopper));
         NamedCommands.registerCommand("AutonIntakestop", new AutonIntakestop(m_hopper));
-        
+
         NamedCommands.registerCommand("OutpostShootRPM", new RPMShootCommand(Constants.ShooterConstants.HIGH_SPEED_TARGET, m_shooter, m_hopper, m_leds));
         NamedCommands.registerCommand("DepotShootRPM", new RPMShootCommand(Constants.ShooterConstants.HIGH_SPEED_TARGET, m_shooter, m_hopper, m_leds));
         NamedCommands.registerCommand("ClimbShootRPM", new RPMShootCommand(Constants.ShooterConstants.LOW_SPEED_TARGET, m_shooter, m_hopper, m_leds));
@@ -117,8 +118,8 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("OutpostAim", new AutonSetAiming(m_turret, -42.5));
 
-         NamedCommands.registerCommand("DepotAim", new AutonSetAiming(m_turret, 0));
-         NamedCommands.registerCommand("TrackHubNew", new TrackHubNew(m_turret, m_leds));
+        NamedCommands.registerCommand("DepotAim", new AutonSetAiming(m_turret, 0));
+        NamedCommands.registerCommand("TrackHubNew", new TrackHubNew(m_turret, m_leds));
 
 
         NamedCommands.registerCommand("ClimbRaiseAuto", new ClimbRaiseAuto(m_climb, m_leds));
@@ -161,20 +162,20 @@ public class RobotContainer {
                     }
                 }
             }
-        });
+                });
         SmartDashboard.putData("Auto Mode", m_chooser);
 
         PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {
             m_field.setRobotPose(pose);
-        });
+                });
 
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
             m_field.getObject("target pose").setPose(pose);
-        });
+                });
 
         PathPlannerLogging.setLogActivePathCallback((poses) -> {
             m_field.getObject("path").setPoses(poses);
-        });
+                });
 
     }
 
@@ -223,7 +224,7 @@ public class RobotContainer {
 
         // Reset the field-centric heading on left bumper press.
         // gamepad.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
-        
+
         gamepad.start().onTrue(new InstantCommand(() -> m_vision.tempDisable(0.5))
             .andThen(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())));
 
@@ -231,11 +232,11 @@ public class RobotContainer {
                 .whileTrue(new Lock45Degrees(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         // gamepad.y()
-            //.whileTrue(new DriveToPosition(drivetrain)
-           // .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-            
+        //.whileTrue(new DriveToPosition(drivetrain)
+        // .withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
         gamepad.rightTrigger().whileTrue(new FuelGRAB(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-                
+
         accessory.y().onTrue(new ClimbCommand(m_climb, m_leds, m_hopper, m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.b().onTrue(new ClimbZeroing(m_climb, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
@@ -243,9 +244,9 @@ public class RobotContainer {
         accessory.a().toggleOnTrue(new FloorTransfer(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         accessory.start().onTrue(new ZeroTurret(m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        
+
         //accessory.leftBumper().toggleOnTrue(new TrackHub( m_turret, m_leds ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-                
+
         drivetrain.registerTelemetry(logger::telemeterize);
 
         // accessory.back().onTrue(new InstantCommand(() -> m_turret.resetPosition())
@@ -253,27 +254,32 @@ public class RobotContainer {
 
         accessory.leftTrigger()
                 .whileTrue(new RPMShootCommand(m_shooter, m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-      
+
         final POVButton pOVButtonLeft = new POVButton(accessory.getHID(), 270, 0);
         pOVButtonLeft.whileTrue(new SnowBlowerCommandGroup(Constants.ShooterConstants.SNOWBLOW_SPEED_TARGET, m_shooter, m_hopper, m_leds, m_turret).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-    
+
         final POVButton pOVButtonRight = new POVButton(accessory.getHID(), 90, 0);
         pOVButtonRight.whileTrue(new RPMShootCommand(Constants.ShooterConstants.MIDDLE_SPEED_TARGET,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-    
+
         final POVButton pOVButtonDown = new POVButton(accessory.getHID(), 180, 0);
         pOVButtonDown.whileTrue(new RPMShootCommand(Constants.ShooterConstants.LOW_SPEED_TARGET,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        
+
         final POVButton pOVButtonUp = new POVButton(accessory.getHID(), 0, 0);
         pOVButtonUp.whileTrue(new RPMShootCommand(Constants.ShooterConstants.HIGH_SPEED_TARGET,m_shooter,m_hopper,m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        
-        gamepad.b().onTrue(new Intake(m_hopper, m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf).andThen(new ZeroIntake(m_hopper).onlyIf(() -> m_hopper.getHopperState() == HopperState.retracted)));
-    
+
+        gamepad.b().onTrue(Commands.either(
+                new Intake(m_hopper, m_turret, m_leds, true).asProxy(),
+                new Intake(m_hopper, m_turret, m_leds, false).asProxy(),
+                () -> m_hopper.getHopperState() == HopperState.retracted)
+            .withInterruptBehavior(InterruptionBehavior.kCancelSelf)
+            .andThen(new ZeroIntake(m_hopper).onlyIf(() -> m_hopper.getHopperState() == HopperState.retracted)));
+
         accessory.rightTrigger().whileTrue(new FuelJAMMED(m_hopper, m_shooter).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         gamepad.leftTrigger().whileTrue(new Agitate(m_hopper, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         gamepad.back().onTrue(new ZeroIntake(m_hopper).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-      
+
         accessory.rightBumper().toggleOnTrue(new TrackHubNew(m_turret, m_leds).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
     }
 

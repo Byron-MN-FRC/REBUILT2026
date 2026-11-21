@@ -13,13 +13,13 @@ public class SnowBlowerAiming extends Command {
         this.m_turret = m_turret;
         addRequirements(m_turret);
     }
-    
+
     @Override
     public void initialize() {
         this.angle = Constants.DriveConstants.getAlliance() == Alliance.Red ? 0 : 180;
         // This command doesn't require any subsystems, so we don't need to add any requirements.
     }
-    
+
     @Override
     public void execute() {
         // This command doesn't have any ongoing execution logic, so we can leave this empty.

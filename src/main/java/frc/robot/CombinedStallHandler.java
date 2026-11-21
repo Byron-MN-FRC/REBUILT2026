@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * CombinedStallHandler - Detects motor stalling by monitoring current draw and motion over time.
- * 
+ *
  * <p>Create as a variable in motor subsystems requiring stall detection.
  * Call {@link #isStalled()} from commands to check for stall conditions.</p>
  * <p><strong>Note:</strong> This class only works with TalonFX motors due to its reliance on
@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  *      private CombinedStallHandler stallDetector = new CombinedStallHandler(motor);
  * }</pre>
  * In command: <pre>{@code if (stallDetector.isStalled()) { &#47;* handle stall *&#47; } </pre>
- * 
+ *
  * <p>Use cases: arm/elevator mechanisms, any system where stalling could cause damage.</p>
  */
 public class CombinedStallHandler extends SubsystemBase {
@@ -31,7 +31,7 @@ public class CombinedStallHandler extends SubsystemBase {
 
     /**
      * Creates a new CombinedStallHandler with default stall parameters.
-     * 
+     *
      * @param motor The TalonFX motor to monitor for stalling conditions
      */
     public CombinedStallHandler(TalonFX motor) {
@@ -40,7 +40,7 @@ public class CombinedStallHandler extends SubsystemBase {
 
     /**
      * Creates a new CombinedStallHandler with custom stall parameters.
-     * 
+     *
      * @param motor The TalonFX motor to monitor for stalling conditions
      * @param stallTime Time in seconds that both stall conditions must be met before
      *                  reporting a stall (default: 0.75 seconds)
@@ -55,7 +55,7 @@ public class CombinedStallHandler extends SubsystemBase {
 
     /**
      * Periodic method that monitors stall conditions and manages the stall timer.
-     * 
+     *
      * Checks current draw and velocity, starts timer when both conditions are met,
      * stops timer when either condition is no longer true.
      */
@@ -78,7 +78,7 @@ public class CombinedStallHandler extends SubsystemBase {
 
     /**
      * Returns true if motor is stalled (both conditions met for configured duration).
-     * 
+     *
      * @return true if stalled, false otherwise
      */
     public boolean isStalled() {

@@ -33,7 +33,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
     public enum LockdownMode {
         disengaged,
-        engaged
+                engaged
     };
 
     public LockdownMode currentLockdownMode = LockdownMode.disengaged;

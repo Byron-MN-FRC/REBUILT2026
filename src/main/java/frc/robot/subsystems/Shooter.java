@@ -5,7 +5,6 @@ import static edu.wpi.first.units.Units.Volts;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityVoltage;
-import com.ctre.phoenix6.hardware.DeviceIdentifier;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.revrobotics.PersistMode;
@@ -22,171 +21,173 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
-  public TalonFX leftShoot;
-  public TalonFX shooterMagazine2;
+    public TalonFX leftShoot;
+    public TalonFX shooterMagazine2;
 
-  public SparkMax shooterGate;
-  public SparkMax shooterMagazine;
-  private SparkFlex preShooterFlyWheel; 
-  private SparkFlexConfig preShooterFlywheelConfig;
+    public SparkMax shooterGate;
+    public SparkMax shooterMagazine;
+    private SparkFlex preShooterFlyWheel;
+    private SparkFlexConfig preShooterFlywheelConfig;
 
+    final VelocityVoltage m_velocity = new VelocityVoltage(0);
 
-  final VelocityVoltage m_velocity = new VelocityVoltage(0);
+    public double targetRPM = 2375;
 
-  public double targetRPM = 2375;
+    private final double rpmTol = 100; // Tolerance in RPM
 
-  private final double rpmTol = 100; // Tolerance in RPM
+    public Shooter() {
+        leftShoot = new TalonFX(24, Constants.TurretShooterConstants.CAN_BUS);
 
-  public Shooter() {
-    leftShoot = new TalonFX(24, Constants.TurretShooterConstants.CAN_BUS);
+        shooterGate = new SparkMax(21, MotorType.kBrushless);
+        shooterMagazine = new SparkMax(22, MotorType.kBrushless);
+        shooterMagazine2 = new TalonFX(37);
+        preShooterFlyWheel = new SparkFlex(28, MotorType.kBrushless);
+        preShooterFlywheelConfig = new SparkFlexConfig();
+        preShooterFlywheelConfig.idleMode(IdleMode.kCoast);
+        preShooterFlyWheel.configure(preShooterFlywheelConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+        preShooterFlywheelConfig.smartCurrentLimit(15);
+        preShooterFlywheelConfig.inverted(true);
+        preShooterFlyWheel.configure(preShooterFlywheelConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
-    shooterGate = new SparkMax(21, MotorType.kBrushless);
-    shooterMagazine = new SparkMax(22, MotorType.kBrushless);
-    shooterMagazine2 = new TalonFX(37);
-    preShooterFlyWheel = new SparkFlex(28, MotorType.kBrushless);
-    preShooterFlywheelConfig = new SparkFlexConfig(); 
-    preShooterFlywheelConfig.idleMode(IdleMode.kCoast);
-    preShooterFlyWheel.configure(preShooterFlywheelConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
-    preShooterFlywheelConfig.smartCurrentLimit(15);
-    preShooterFlywheelConfig.inverted(true);
-    preShooterFlyWheel.configure(preShooterFlywheelConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+        SparkMaxConfig gateConfig = new SparkMaxConfig();
+        SparkMaxConfig magazineConfig = new SparkMaxConfig();
 
-    SparkMaxConfig gateConfig = new SparkMaxConfig();
-    SparkMaxConfig magazineConfig = new SparkMaxConfig();
+        gateConfig.smartCurrentLimit(15); // Limit gate motor current
+        magazineConfig.smartCurrentLimit(30); // Limit gate motor current
 
-    gateConfig.smartCurrentLimit(15); // Limit gate motor current
-    magazineConfig.smartCurrentLimit(30); // Limit gate motor current
+        gateConfig.inverted(false); // Invert left gate motor direction
+        magazineConfig.inverted(false); // Invert right gate motor direction
 
-    gateConfig.inverted(false); // Invert left gate motor direction
-    magazineConfig.inverted(false); // Invert right gate motor direction
+        shooterGate.configure(gateConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        shooterMagazine.configure(magazineConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        TalonFXConfiguration magazine2Configs = new TalonFXConfiguration();
+        magazine2Configs.CurrentLimits.SupplyCurrentLimit = 50; // Limit motor supply current to 70
+        magazine2Configs.CurrentLimits.StatorCurrentLimit = 50;
+        magazine2Configs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
-    shooterGate.configure(gateConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    shooterMagazine.configure(magazineConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-   TalonFXConfiguration magazine2Configs = new TalonFXConfiguration();
-    magazine2Configs.CurrentLimits.SupplyCurrentLimit = 50; // Limit motor supply current to 70
-    magazine2Configs.CurrentLimits.StatorCurrentLimit = 50;
-    magazine2Configs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        TalonFXConfiguration configs = new TalonFXConfiguration();
+        configs.CurrentLimits.SupplyCurrentLimit = 70; // Limit motor supply current to 70
+        configs.CurrentLimits.StatorCurrentLimit = 96;
 
-   
-   
-    TalonFXConfiguration configs = new TalonFXConfiguration();
-    configs.CurrentLimits.SupplyCurrentLimit = 70; // Limit motor supply current to 70
-    configs.CurrentLimits.StatorCurrentLimit = 96;
+        configs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
-    configs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        /*
+         * Voltage-based velocity requires a velocity feed forward to account for the
+         * back-emf of the motor
+         */
+        configs.Slot0.kS = 0.00806; // 0.1; // To account for friction, add 0.1 V of static feedforward
+        configs.Slot0.kV = 0.12396; // Kraken X60 is a 500 kV motor, 500 rpm per V = 8.333 rps per V, 1/8.33 = 0.12
+        // volts / rotation per second
+        // configs.Slot0.kP = 0.015; // 0.11; // An error of 1 rotation per second results in 0.11 V output
+        configs.Slot0.kP = 0.015355;
+        configs.Slot0.kI = 0.0; // No output for integrated error
+        configs.Slot0.kD = 0.00115;// No output for error derivative
+        // Peak output of 8 volts
+        configs.Voltage.withPeakForwardVoltage(Volts.of(8))
+                .withPeakReverseVoltage(Volts.of(-8));
 
-    /*
-     * Voltage-based velocity requires a velocity feed forward to account for the
-     * back-emf of the motor
-     */
-    configs.Slot0.kS = 0.00806; // 0.1; // To account for friction, add 0.1 V of static feedforward
-    configs.Slot0.kV = 0.12396; // Kraken X60 is a 500 kV motor, 500 rpm per V = 8.333 rps per V, 1/8.33 = 0.12
-                              // volts / rotation per second
-    // configs.Slot0.kP = 0.015; // 0.11; // An error of 1 rotation per second results in 0.11 V output
-    configs.Slot0.kP = 0.015355;
-    configs.Slot0.kI = 0.0; // No output for integrated error
-    configs.Slot0.kD = 0.00115;// No output for error derivative
-    // Peak output of 8 volts
-    configs.Voltage.withPeakForwardVoltage(Volts.of(8))
-        .withPeakReverseVoltage(Volts.of(-8));
+        /* Retry config apply up to 5 times, report if failure */
+        StatusCode status = StatusCode.StatusCodeNotInitialized;
+        for (int i = 0; i < 5; ++i) {
+            status = leftShoot.getConfigurator().apply(configs);
+            if (status.isOK())
+                break;
+        }
+        if (!status.isOK()) {
+            System.out.println("Could not apply configs, error code: " + status.toString());
+        }
+        /* Retry config apply up to 5 times, report if failure */
+        status = StatusCode.StatusCodeNotInitialized;
+        for (int i = 0; i < 5; ++i) {
+            status = shooterMagazine2.getConfigurator().apply(magazine2Configs);
+            if (status.isOK())
+                break;
+        }
 
-    /* Retry config apply up to 5 times, report if failure */
-    StatusCode status = StatusCode.StatusCodeNotInitialized;
-    for (int i = 0; i < 5; ++i) {
-      status = leftShoot.getConfigurator().apply(configs);
-      if (status.isOK())
-        break;
-    }
-    if (!status.isOK()) {
-      System.out.println("Could not apply configs, error code: " + status.toString());
-    }
-    /* Retry config apply up to 5 times, report if failure */
-    status = StatusCode.StatusCodeNotInitialized;
-    for (int i = 0; i < 5; ++i) {
-      status = shooterMagazine2.getConfigurator().apply(magazine2Configs);
-      if (status.isOK())
-        break;
-    } 
-
-    if (Constants.Debug.DEBUG_MODE) {
-      SmartDashboard.putData("Subsystem: Shooter", this);
-      SmartDashboard.putNumber("Shooter Speed Override", 0);
-    }
-  }
-
-  @Override
-  public void periodic() {
-
-    if (Constants.Debug.DEBUG_MODE) {
-      SmartDashboard.putNumber("Shooter Stator Current", leftShoot.getStatorCurrent().getValueAsDouble());
-      SmartDashboard.putNumber("Shooter RPM", leftShoot.getVelocity().getValueAsDouble() * 60.0);
-      SmartDashboard.putBoolean("Shooter Ready", isAtTargetRPM());
-      if (Constants.Debug.SHOOTER_SPEED_OVERRIDE) {
-        targetRPM = SmartDashboard.getNumber("Shooter Speed Override", 0);
-      }
+        if (Constants.Debug.DEBUG_MODE) {
+            SmartDashboard.putData("Subsystem: Shooter", this);
+            SmartDashboard.putNumber("Shooter Speed Override", 0);
+        }
     }
 
-    // spinKrakens(targetRPM);
+    @Override
+    public void periodic() {
 
-    // targetRPM = DistanceVelocityMap.getVelocity(0);
+        if (Constants.Debug.DEBUG_MODE) {
+            SmartDashboard.putNumber("Shooter Stator Current", leftShoot.getStatorCurrent().getValueAsDouble());
+            SmartDashboard.putNumber("Shooter RPM", leftShoot.getVelocity().getValueAsDouble() * 60.0);
+            SmartDashboard.putBoolean("Shooter Ready", isAtTargetRPM());
+            if (Constants.Debug.SHOOTER_SPEED_OVERRIDE) {
+                targetRPM = SmartDashboard.getNumber("Shooter Speed Override", 0);
+            }
+        }
 
-  }
+        // spinKrakens(targetRPM);
 
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run when in simulation
-  }
+        // targetRPM = DistanceVelocityMap.getVelocity(0);
 
-  public boolean isAtTargetRPM() {
-    double currentRPM = leftShoot.getVelocity().getValueAsDouble() * 60.0;
-    return (targetRPM > 0) && (Math.abs(currentRPM - targetRPM) <= rpmTol);
-  }
+    }
 
-  public void setTargetRPM(double rpm) {
-    targetRPM = rpm;
-  }
+    @Override
+    public void simulationPeriodic() {
+        // This method will be called once per scheduler run when in simulation
+    }
 
-  public void runGate(double speed) {
-    shooterGate.set(speed);
-  }
+    public boolean isAtTargetRPM() {
+        double currentRPM = leftShoot.getVelocity().getValueAsDouble() * 60.0;
+        return (targetRPM > 0) && (Math.abs(currentRPM - targetRPM) <= rpmTol);
+    }
 
-  public void runMagazine(double speed) {
-    shooterMagazine.set(-speed);
-    shooterMagazine2.set(-speed);
-  }
+    public boolean isNearTargetRPM(double tolerance) {
+        double currentRPM = leftShoot.getVelocity().getValueAsDouble() * 60.0;
+        return (targetRPM > 0) && (Math.abs(currentRPM - targetRPM) <= tolerance);
+    }
 
-  //nmh 
-  public void runPreFylWheel(double speed) {
-    preShooterFlyWheel.set(speed);
-  }
-  public void stopPreFylWheel() {
-    preShooterFlyWheel.set(0);
-  }
+    public void setTargetRPM(double rpm) {
+        targetRPM = rpm;
+    }
 
-  public void stopGate() {
-    shooterGate.set(0);
-  }
+    public void runGate(double speed) {
+        shooterGate.set(speed);
+    }
 
-  public void stopMagazine() {
-    shooterMagazine.set(0);
-    shooterMagazine2.set(0);
-  }
+    public void runMagazine(double speed) {
+        shooterMagazine.set(-speed);
+        shooterMagazine2.set(-speed);
+    }
 
-  public void stopGates() {
-    shooterGate.set(0);
-    preShooterFlyWheel.set(0);
-    shooterMagazine.set(0);
-    shooterMagazine2.set(0);
-  }
+    //nmh
+    public void runPreFylWheel(double speed) {
+        preShooterFlyWheel.set(speed);
+    }
+    public void stopPreFylWheel() {
+        preShooterFlyWheel.set(0);
+    }
 
-  public void stopAll() {
-    spinShooter(0);
-    stopGates();
-  }
+    public void stopGate() {
+        shooterGate.set(0);
+    }
 
-  public void spinShooter(double rpm) {
-    double targetRPS = rpm / 60.0;
-    leftShoot.setControl(m_velocity.withVelocity(targetRPS));
-  }
+    public void stopMagazine() {
+        shooterMagazine.set(0);
+        shooterMagazine2.set(0);
+    }
+
+    public void stopGates() {
+        shooterGate.set(0);
+        preShooterFlyWheel.set(0);
+        shooterMagazine.set(0);
+        shooterMagazine2.set(0);
+    }
+
+    public void stopAll() {
+        spinShooter(0);
+        stopGates();
+    }
+
+    public void spinShooter(double rpm) {
+        double targetRPS = rpm / 60.0;
+        leftShoot.setControl(m_velocity.withVelocity(targetRPS));
+    }
 
 }
