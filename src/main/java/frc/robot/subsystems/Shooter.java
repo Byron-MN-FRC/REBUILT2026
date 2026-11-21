@@ -34,7 +34,7 @@ public class Shooter extends SubsystemBase {
 
   public double targetRPM = 2375;
 
-  private final double rpmTol = 100; // Tolerance in RPM
+  private final double rpmTol = 50; // Tolerance in RPM
 
   public Shooter() {
     leftShoot = new TalonFX(24, Constants.TurretShooterConstants.CAN_BUS);
